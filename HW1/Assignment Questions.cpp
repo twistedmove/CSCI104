@@ -17,6 +17,12 @@
 	[ ] I can use any compiler I want, so long as it works on my machine.
 	[X] I can use any compiler I want, but the submission has to work with G++ in the end.	
 
+
+
+/****************************************************/
+/*     Using loop to add sums in numbers.txt        */
+/*				Average: 3.5e-05		            */
+/****************************************************/
 wireless-plus-010-002:HW1 BryanChong$ ./loop
 Please type in the file name and extension to import.
 numbers.txt
@@ -54,6 +60,11 @@ The sum of all numbers is: 13178
 It took 2.7e-05 seconds to execute.
 
 
+
+/****************************************************/
+/*     Recursively adding sums in numbers.txt       */
+/*				 Average: 4.4e-05		            */
+/****************************************************/
 wireless-plus-010-002:HW1 BryanChong$ ./one
 Please type in the file name and extension to import.
 numbers.txt
@@ -106,4 +117,106 @@ The sum of all numbers is: 13178
 It took 4.3e-05 seconds to execute.
 
 
-Using the average, there is a 55.0725% increase in time when using the recursive script versus the loop to calculate numbers. 
+
+/*********************************************/
+/*   Loop finding maximum in numbers.txt     */
+/*			 Average: 2.9e-05			     */
+/*********************************************/
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The biggest number in the list is 99999.
+It took 2.9e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The biggest number in the list is 99999.
+It took 3e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The biggest number in the list is 99999.
+It took 2.9e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The biggest number in the list is 99999.
+It took 2.9e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The biggest number in the list is 99999.
+It took 2.8e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The biggest number in the list is 99999.
+It took 2.8e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The biggest number in the list is 99999.
+It took 2.9e-05 seconds to execute.
+
+
+
+
+/****************************************************/
+/*   Recursively finding maximum in numbers.txt     */
+/*				 Average: 3.5e-05		            */
+/****************************************************/
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+99999
+The biggest number in the list is 99999.
+It took 3.5e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+99999
+The biggest number in the list is 99999.
+It took 3.5e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+99999
+The biggest number in the list is 99999.
+It took 3.6e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+99999
+The biggest number in the list is 99999.
+It took 3.6e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+99999
+The biggest number in the list is 99999.
+It took 3.4e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+99999
+The biggest number in the list is 99999.
+It took 3.4e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+99999
+The biggest number in the list is 99999.
+It took 3.4e-05 seconds to execute.
+
+
+Using the average, there is a 25.7142% increase in time when using the recursive script versus the loop to add numbers. 
+Using the average, there is a 20.6896% increase in time when using the recursive script versus the loop to find the max number.
+
+
+
+
+
+
+
+
+
