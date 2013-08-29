@@ -3,9 +3,7 @@
 	// Do not include the time to read the input.
 // Infer roughly how much overhead you get from recursion compared to loops (as a percentage).	
 
-// Bubble Sorting by Recursive
-
-// Average: 
+// Average: 3.5e-05
 
 #include <iostream>
 #include <fstream>
@@ -15,6 +13,26 @@
 #include <vector>
 #include <sstream>
 using namespace std;
+
+// int swap(int *array, int counter){} // Swap function if you want to preserve the values in array
+
+int recursive(int max, int *array, int size, int counter){
+	int returnVal = 0;
+	if (size == 0){
+		return 0;
+	} else if (size == 1){
+		max = array[0];
+		return max;
+	} else if (counter == size){
+//		cout << max << endl;
+		return max;
+	} else if (max < array[counter])
+	//	swap(array, counter); // Swap to preserve array values otherwise just replace since only finding max
+		max = array[counter];
+		counter++;
+		returnVal = recursive(max,array,size,counter);
+		return returnVal;
+}
 
 int main (void){
 	int *a;
@@ -51,19 +69,25 @@ int main (void){
 	n = numbers.size();
 	a = new int[n];
 
+	// Stored each element from the vector to the pre-defined n array.
 	for (int i=0; i<n; i++){
 		a[i] = numbers[i];
 	}
 
 	// the next part is the loop you are supposed to replace by recursion.
 	m = a[0];
-//	cout << m << endl;
+	int counter = 0;
+	int biggest = recursive(m, a, n, counter);
+
+	/*
+	cout << m << endl;
 
 	for (int i = 1; i < n; i ++)
 		if (a[i] > m) 
 			m = a[i]; // This is the end of the loop.
-		
-	cout << "The biggest number in the list is " << m << "." << endl;
+	*/
+
+	cout << "The biggest number in the list is " << biggest << "." << endl;
 
 	timeEnd = clock();
 	cout << "It took " << (double)(timeEnd - timeStart)/CLOCKS_PER_SEC << " seconds to execute." << endl;
