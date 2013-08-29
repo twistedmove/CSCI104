@@ -3,9 +3,7 @@
 	// Do not include the time to read the input.
 // Infer roughly how much overhead you get from recursion compared to loops (as a percentage).	
 
-// Bubble Sorting by Loops
-
-// Average: 
+// Average: 2.9e-05
 
 #include <iostream>
 #include <fstream>
