@@ -17,4 +17,93 @@
 	[ ] I can use any compiler I want, so long as it works on my machine.
 	[X] I can use any compiler I want, but the submission has to work with G++ in the end.	
 
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 2.8e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 2.3e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 2.1e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 3.2e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 2.4e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 2.1e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./loop
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 2.7e-05 seconds to execute.
 
+
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.6e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.3e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.4e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.2e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.2e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.5e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.4e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.4e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.3e-05 seconds to execute.
+wireless-plus-010-002:HW1 BryanChong$ ./one
+Please type in the file name and extension to import.
+numbers.txt
+The sum of all numbers is: 13178
+It took 4.3e-05 seconds to execute.
+
+
+Using the average, there is a 55.0725% increase in time when using the recursive script versus the loop to calculate numbers. 
