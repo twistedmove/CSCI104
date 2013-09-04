@@ -62,11 +62,15 @@ int main (void){
 	}
 	importFile.close();
 
+	// Time starts after importfile closes as designed
 	clock_t timeStart;
 	clock_t timeEnd;
 	timeStart = clock();
 
+	// stream-lined way of obtaining size without iterating twice. approved in lab
 	n = numbers.size();
+
+	// dynamically created a new int size of n
 	a = new int[n];
 
 	// Stored each element from the vector to the pre-defined n array.
@@ -79,19 +83,13 @@ int main (void){
 	int counter = 0;
 	int biggest = recursive(m, a, n, counter);
 
-	/*
-	cout << m << endl;
-
-	for (int i = 1; i < n; i ++)
-		if (a[i] > m) 
-			m = a[i]; // This is the end of the loop.
-	*/
-
 	cout << "The biggest number in the list is " << biggest << "." << endl;
 
 	timeEnd = clock();
 	cout << "It took " << (double)(timeEnd - timeStart)/CLOCKS_PER_SEC << " seconds to execute." << endl;
 
+	delete[] a;
+	a = NULL;
 
 	return 0;
 }

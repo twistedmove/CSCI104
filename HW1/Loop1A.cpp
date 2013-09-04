@@ -14,21 +14,6 @@
 #include <sstream>
 using namespace std;
 
-int recursion(int *array, int size, int total, int counter){
-	int returnVal = 0;
-
-	if (size == 0){
-		return total; // should be zero since nothing in array
-
-	} else if (counter == size){
-		return total;
-	} else{
-		total += array[counter];
-		counter++;
-		returnVal = recursion(array, size, total, counter);
-		return returnVal;
-	}
-}
 
 int main (void){
 	int *a; // initialized pointer a
@@ -59,20 +44,21 @@ int main (void){
 	}
 	importFile.close();
 
+	// Time starts after importfile closes as designed
 	clock_t timeStart;
 	clock_t timeEnd;
 	timeStart = clock();
 
-
+	// stream-lined way of obtaining size without iterating twice. approved in lab
 	n = numbers.size();
-
+	// dynamically created a new int size of n
 	a = new int[n];
 
 	for (int i=0; i<n; i++){
 		a[i] = numbers[i];
 	}
 
-	// the next part is the loop you are supposed to replace by recursion.
+	// Using loop to add up the numbers in the array
 	sum = 0;
 	
 	for (int i = 0; i < n; i ++)
@@ -82,13 +68,8 @@ int main (void){
 	timeEnd = clock();
 	cout << "It took " << (double)(timeEnd - timeStart)/CLOCKS_PER_SEC << " seconds to execute." << endl;
 
-	return 0;
+	delete[] a;
+	a = NULL;
 
-
-/*
-	for (int i = 0; i < n; i ++)
-		sum += a[i]; // This is the end of the loop.
-		cout << sum << endl;
 	return 0;
-*/
 }
