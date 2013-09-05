@@ -19,21 +19,33 @@ int main (void){
 	int n; // number of elements in the array a
 	int m; // we'll use this for the maximum number
 
-	vector<int> numbers;
-	string temp;
+	// vector<int> numbers;
 
+	// please note that that first number in numbers.txt defines the size of the array (and was suggested by prof kempe)
+	// i had to change it from vector based to the suggested solution above
+	// commented code is from the use of vector methods
+
+	string temp;
 	string fileName;
 	string temphold;
-	cout << "Please type in the file name and extension to import." << endl;
+	int counter;
+	cout << "Please type in the file name and extension to import. (numbers.txt)" << endl;
 	cin >> fileName;
 	ifstream importFile(fileName.c_str());
 	if (importFile.good()){
+			string temp;
+			getline(importFile, temp);
+			stringstream ss(temp);
+			ss >> n;
+			a = new int[n];
 		while (importFile.good()){
 			getline(importFile, temphold);
 			stringstream ss(temphold);
 			int integer;
 			ss >> integer;
-			numbers.push_back(integer);
+			a[counter] = integer;
+			counter++;
+			// numbers.push_back(integer);
 		}
 	}
 	else if(importFile.fail()){
@@ -42,20 +54,21 @@ int main (void){
 	}
 	importFile.close();
 
+
 	// Time starts after importfile closes as designed
 	clock_t timeStart;
 	clock_t timeEnd;
 	timeStart = clock();
 
 	// stream-lined way of obtaining size without iterating twice. approved in lab
-	n = numbers.size();
+	// n = numbers.size();
 
 	// dynamically created a new int size of n
-	a = new int[n];
+	// a = new int[n];
 
-	for (int i=0; i<n; i++){
-		a[i] = numbers[i];
-	}
+	// for (int i=0; i<n; i++){
+	//	a[i] = numbers[i];
+	// }
 
 	// the next part is the loop you are supposed to replace by recursion.
 	m = a[0];

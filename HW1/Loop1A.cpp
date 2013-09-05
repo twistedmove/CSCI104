@@ -20,22 +20,33 @@ int main (void){
 	int n; // number of elements in the array a
 	int sum; // we'll use this for adding numbers
 
-	vector<int> numbers;
+	// vector<int> numbers;
+
+	// please note that that first number in numbers.txt defines the size of the array (and was suggested by prof kempe)
+	// i had to change it from vector based to the suggested solution above
+	// commented code is from the use of vector methods
+
 	string temp;
-	/* here goes code to read n numbers into a, probably from a file
-	Make sure to allocate space to a */
 	string fileName;
 	string temphold;
-	cout << "Please type in the file name and extension to import." << endl;
+	int counter;
+	cout << "Please type in the file name and extension to import. (numbers.txt)" << endl;
 	cin >> fileName;
 	ifstream importFile(fileName.c_str());
 	if (importFile.good()){
+			string temp;
+			getline(importFile, temp);
+			stringstream ss(temp);
+			ss >> n;
+			a = new int[n];
 		while (importFile.good()){
 			getline(importFile, temphold);
 			stringstream ss(temphold);
 			int integer;
 			ss >> integer;
-			numbers.push_back(integer);
+			a[counter] = integer;
+			counter++;
+			// numbers.push_back(integer);
 		}
 	}
 	else if(importFile.fail()){
@@ -50,13 +61,13 @@ int main (void){
 	timeStart = clock();
 
 	// stream-lined way of obtaining size without iterating twice. approved in lab
-	n = numbers.size();
+	// n = numbers.size();
 	// dynamically created a new int size of n
-	a = new int[n];
+	// a = new int[n];
 
-	for (int i=0; i<n; i++){
-		a[i] = numbers[i];
-	}
+	// for (int i=0; i<n; i++){
+	//	a[i] = numbers[i];
+	// }
 
 	// Using loop to add up the numbers in the array
 	sum = 0;
