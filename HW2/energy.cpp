@@ -12,12 +12,25 @@ struct node{
 
 
 
+
+int traveling(node* array[20]){
+	for (int i=0; i<20; i++){
+		if(array[i]->checked == false){
+			set array[i]->checked = true;
+		}
+		else if(array[i]->checked == true){ 
+			return
+		}
+	}
+}
+
+
 int main(){
 	string fileName;
 	int tempNum;
 	int tempNodeNum;
 	node *tempNode;
-	node *array[20];
+	node* array[20];
 
 // This is initializing dynamically 20 node structs
 	for (int i=0; i<20; i++){
@@ -54,7 +67,7 @@ int main(){
 	}
 	importFile.close();
 
-
+/* Just a loop check if array is exported correctly
 	for (int i=0 ; i<20; i++){
 		cout << i << " ";
 		cout << array[i]->value << " ";
@@ -64,5 +77,11 @@ int main(){
 		cout << array[i]->neighbors[2]->value << " ";
 		cout << endl;
 	}	
+*/
+
+	traveling(array);
+
+	delete[] tempNode;
+	tempNode = NULL;
 }
 
