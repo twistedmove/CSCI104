@@ -43,7 +43,6 @@ int main (void){
 
 	// please note that that first number in numbers.txt defines the size of the array (and was suggested by prof kempe)
 	// i had to change it from vector based to the suggested solution above
-	// commented code is from the use of vector methods
 
 	string temp;
 	string fileName;
