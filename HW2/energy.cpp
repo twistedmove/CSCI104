@@ -13,7 +13,7 @@ struct node{
 
 
 int traveling(node* array[20], int energyCons, int counter, int current, int previous){
-	// If all the "neighbors->checked = true" AND "counter < 20" is done;	
+	// If the current array is not checked and neighbor[0] is not checked
 	if(array[counter]->checked == false && array[counter]->neighbors[current]->checked == false){
 		cout << array[counter]->value << endl;
 		cout << "Entered 1" << endl;
@@ -23,21 +23,25 @@ int traveling(node* array[20], int energyCons, int counter, int current, int pre
 		counter = array[counter]->neighbors[current]->value;
 		return traveling(array, energyCons, counter-1, current, previous);
 	} 
+	// if the current array is not checked and neighbor[1] is checked
 	if(array[counter]->checked == false && array[counter]->neighbors[current]->checked == true){
 		cout << array[counter]->value << endl;
 		cout << "Entered 2" << endl;
 		previous = counter;
 		array[counter]->checked = true;
+		// if the next neighbor is not checked, then go to next neighbor
 		if(array[counter]->neighbors[current+1]->checked == false){
 			cout << "Entered 3" << endl;
 			energyCons += abs(array[counter]->value - array[counter]->neighbors[current+1]->value);
 			counter = array[counter]->neighbors[current+1]->value;
 			return traveling(array, energyCons, counter-1, current, previous);
+		// if neighbor[1] is checked and neighbor[2] is not, then go there
 		} else if (array[counter]->neighbors[current+2]->checked == false){
 			cout << "Entered 3" << endl;
 			energyCons += abs(array[counter]->value - array[counter]->neighbors[current+2]->value);
 			counter = array[counter]->neighbors[current+2]->value;
 			return traveling(array, energyCons, counter-1, current, previous);
+		// otherwise go back to previous array since we went to all neighbors
 		} else{
 			cout << "Entered 3" << endl;
 			energyCons = energyCons - array[counter]->value;
@@ -45,9 +49,11 @@ int traveling(node* array[20], int energyCons, int counter, int current, int pre
 			return traveling(array, energyCons, previous, current, previous);
 		}	
 	}
+	// if the current array is checked and the neighbor[0][1][2] are all checked -- backtrack
 	if(array[counter]->checked == true && array[counter]->neighbors[0]->checked == true && array[counter]->neighbors[1]->checked == true && array[counter]->neighbors[2]->checked == true){
 		cout << "Dead End" << endl;
 	}
+	// if all the members are checked and no error
 	for (int i=0; i<20; i++){
 		if(array[i]->checked == true){
 			cout << "Done" << endl;
