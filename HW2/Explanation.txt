@@ -1,0 +1,3 @@
+20! / (17! * 3!) which would be 20C3
+
+Actual counter shows me that there are 162 iterations. This is much lower because if a node is "checked" it disregards the children of that node quite substantially minimizing the number of iterations.

@@ -11,6 +11,7 @@ struct node{
 	node* neighbors[2];
 };
 
+int counter = 0;
 
 int traveling(node* array[20], int minEnergy, int currentEnergy, int currentNode, int depthCounter){
 	array[currentNode-1]->checked = true;
@@ -19,6 +20,7 @@ int traveling(node* array[20], int minEnergy, int currentEnergy, int currentNode
 		if (currentEnergy < minEnergy){
 			minEnergy = currentEnergy;
 		}
+		counter++;
 		array[currentNode-1]->checked = false;
 		return minEnergy;
 	}
@@ -110,7 +112,9 @@ int main(){
 */
 
 	finalEnergy = traveling(array, minEnergy, currentEnergy, currentNode, depthCounter);
-	cout << "Final energy is:  " << finalEnergy << endl;
+	cout << "Final energy is: " << finalEnergy << endl;
+	cout << "Iterations: " << counter << endl;
+
 
 	delete[] tempNode;
 	tempNode = NULL;
