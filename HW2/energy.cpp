@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <cmath>
 using namespace std;
 
 struct node{
@@ -11,17 +12,52 @@ struct node{
 };
 
 
-
-
-int traveling(node* array[20]){
+int traveling(node* array[20], int energyCons, int counter, int current, int previous){
+	// If all the "neighbors->checked = true" AND "counter < 20" is done;	
+	if(array[counter]->checked == false && array[counter]->neighbors[current]->checked == false){
+		cout << array[counter]->value << endl;
+		cout << "Entered 1" << endl;
+		previous = counter;
+		array[counter]->checked = true;
+		energyCons += abs(array[counter]->value - array[counter]->neighbors[current]->value);
+		counter = array[counter]->neighbors[current]->value;
+		return traveling(array, energyCons, counter-1, current, previous);
+	} 
+	if(array[counter]->checked == false && array[counter]->neighbors[current]->checked == true){
+		cout << array[counter]->value << endl;
+		cout << "Entered 2" << endl;
+		previous = counter;
+		array[counter]->checked = true;
+		if(array[counter]->neighbors[current+1]->checked == false){
+			cout << "Entered 3" << endl;
+			energyCons += abs(array[counter]->value - array[counter]->neighbors[current+1]->value);
+			counter = array[counter]->neighbors[current+1]->value;
+			return traveling(array, energyCons, counter-1, current, previous);
+		} else if (array[counter]->neighbors[current+2]->checked == false){
+			cout << "Entered 3" << endl;
+			energyCons += abs(array[counter]->value - array[counter]->neighbors[current+2]->value);
+			counter = array[counter]->neighbors[current+2]->value;
+			return traveling(array, energyCons, counter-1, current, previous);
+		} else{
+			cout << "Entered 3" << endl;
+			energyCons = energyCons - array[counter]->value;
+			counter = array[counter]->neighbors[current]->value;
+			return traveling(array, energyCons, previous, current, previous);
+		}	
+	}
+	if(array[counter]->checked == true && array[counter]->neighbors[0]->checked == true && array[counter]->neighbors[1]->checked == true && array[counter]->neighbors[2]->checked == true){
+		cout << "Dead End" << endl;
+	}
 	for (int i=0; i<20; i++){
-		if(array[i]->checked == false){
-			set array[i]->checked = true;
-		}
-		else if(array[i]->checked == true){ 
-			return
+		if(array[i]->checked == true){
+			cout << "Done" << endl;
+			cout << energyCons << endl;
+			return energyCons;
 		}
 	}
+
+	// If current is not checked and all neighbors are checked, then +1 the counter and try the next tree
+
 }
 
 
@@ -31,6 +67,10 @@ int main(){
 	int tempNodeNum;
 	node *tempNode;
 	node* array[20];
+	int energyCons; 		// Energy consumed
+	int counter = 0;		// Counter		
+	int current = 0;	
+	int previous = 0;
 
 // This is initializing dynamically 20 node structs
 	for (int i=0; i<20; i++){
@@ -79,7 +119,7 @@ int main(){
 	}	
 */
 
-	traveling(array);
+	traveling(array, energyCons, counter, current, previous);
 
 	delete[] tempNode;
 	tempNode = NULL;
