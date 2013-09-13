@@ -12,58 +12,44 @@ struct node{
 };
 
 
-int traveling(node* array[20], int energyCons, int counter, int current, int previous){
-	// If the current array is not checked and neighbor[0] is not checked
-	if(array[counter]->checked == false && array[counter]->neighbors[current]->checked == false){
-		cout << array[counter]->value << endl;
-		cout << "Entered 1" << endl;
-		previous = counter;
-		array[counter]->checked = true;
-		energyCons += abs(array[counter]->value - array[counter]->neighbors[current]->value);
-		counter = array[counter]->neighbors[current]->value;
-		return traveling(array, energyCons, counter-1, current, previous);
-	} 
-	// if the current array is not checked and neighbor[1] is checked
-	if(array[counter]->checked == false && array[counter]->neighbors[current]->checked == true){
-		cout << array[counter]->value << endl;
-		cout << "Entered 2" << endl;
-		previous = counter;
-		array[counter]->checked = true;
-		// if the next neighbor is not checked, then go to next neighbor
-		if(array[counter]->neighbors[current+1]->checked == false){
-			cout << "Entered 3" << endl;
-			energyCons += abs(array[counter]->value - array[counter]->neighbors[current+1]->value);
-			counter = array[counter]->neighbors[current+1]->value;
-			return traveling(array, energyCons, counter-1, current, previous);
-		// if neighbor[1] is checked and neighbor[2] is not, then go there
-		} else if (array[counter]->neighbors[current+2]->checked == false){
-			cout << "Entered 3" << endl;
-			energyCons += abs(array[counter]->value - array[counter]->neighbors[current+2]->value);
-			counter = array[counter]->neighbors[current+2]->value;
-			return traveling(array, energyCons, counter-1, current, previous);
-		// otherwise go back to previous array since we went to all neighbors
-		} else{
-			cout << "Entered 3" << endl;
-			energyCons = energyCons - array[counter]->value;
-			counter = array[counter]->neighbors[current]->value;
-			return traveling(array, energyCons, previous, current, previous);
-		}	
+int traveling(node* array[20], int minEnergy, int currentEnergy, int currentNode, int depthCounter){
+	array[currentNode-1]->checked = true;
+	// Base case
+	if (depthCounter == 20){
+		if (currentEnergy < minEnergy){
+			minEnergy = currentEnergy;
+		}
+		array[currentNode-1]->checked = false;
+		return minEnergy;
 	}
-	// if the current array is checked and the neighbor[0][1][2] are all checked -- backtrack
-	if(array[counter]->checked == true && array[counter]->neighbors[0]->checked == true && array[counter]->neighbors[1]->checked == true && array[counter]->neighbors[2]->checked == true){
-		cout << "Dead End" << endl;
+	if(array[currentNode-1]->neighbors[0]->checked == false){
+		currentEnergy += abs(array[currentNode-1]->value - array[currentNode-1]->neighbors[0]->value);
+		minEnergy = traveling(array, minEnergy, currentEnergy, array[currentNode-1]->neighbors[0]->value, depthCounter+1);
+		currentEnergy -= abs(array[currentNode-1]->value - array[currentNode-1]->neighbors[0]->value);
 	}
-	// if all the members are checked and no error
-	for (int i=0; i<20; i++){
-		if(array[i]->checked == true){
-			cout << "Done" << endl;
-			cout << energyCons << endl;
-			return energyCons;
+	if(array[currentNode-1]->neighbors[1]->checked == false){
+		currentEnergy += abs(array[currentNode-1]->value - array[currentNode-1]->neighbors[1]->value);
+		minEnergy = traveling(array, minEnergy, currentEnergy, array[currentNode-1]->neighbors[1]->value, depthCounter+1);
+		currentEnergy -= abs(array[currentNode-1]->value - array[currentNode-1]->neighbors[1]->value);
+	}
+	if(array[currentNode-1]->neighbors[2]->checked == false){
+		currentEnergy += abs(array[currentNode-1]->value - array[currentNode-1]->neighbors[2]->value);
+		minEnergy = traveling(array, minEnergy, currentEnergy, array[currentNode-1]->neighbors[2]->value, depthCounter+1);
+		currentEnergy -= abs(array[currentNode-1]->value - array[currentNode-1]->neighbors[2]->value);
+	}
+
+
+/*	
+	for (int i=0; i<3; i++){
+		if(array[currentNode-1]->neighbors[i]->checked == false){
+			currentEnergy += abs(array[currentNode-1]->value - array[currentNode-1]->neighbors[i]->value);
+			minEnergy = traveling(array, minEnergy, currentEnergy, array[currentNode-1]->neighbors[i]->value, depthCounter+1);
+			currentEnergy -= abs(array[currentNode-1]->value - array[currentNode-1]->neighbors[i]->value);
 		}
 	}
-
-	// If current is not checked and all neighbors are checked, then +1 the counter and try the next tree
-
+*/
+	array[currentNode-1]->checked = false;
+	return minEnergy;
 }
 
 
@@ -73,10 +59,12 @@ int main(){
 	int tempNodeNum;
 	node *tempNode;
 	node* array[20];
-	int energyCons; 		// Energy consumed
-	int counter = 0;		// Counter		
-	int current = 0;	
-	int previous = 0;
+	//int energyCons; 		// Energy consumed
+	int minEnergy = 99999;		// Counter		
+	int currentEnergy = 0;	
+	int currentNode = 1;
+	int depthCounter = 1;
+	int finalEnergy = 0;
 
 // This is initializing dynamically 20 node structs
 	for (int i=0; i<20; i++){
@@ -97,14 +85,10 @@ int main(){
 			if(importFile.eof()){
 				break;
 			}
-//			cout << tempNum << " ";
 			for (int i=0; i<3; i++){
 				importFile >> tempNodeNum;
 				array[tempNum-1]->neighbors[i] = array[tempNodeNum-1];
-//				cout << tempNodeNum << " ";
-//				cout << array[tempNum-1].neighbors[i] << endl;
 			}
-//			cout << endl;	
 		}	
 	}
 	else if(importFile.fail()){
@@ -125,7 +109,8 @@ int main(){
 	}	
 */
 
-	traveling(array, energyCons, counter, current, previous);
+	finalEnergy = traveling(array, minEnergy, currentEnergy, currentNode, depthCounter);
+	cout << "Final energy is:  " << finalEnergy << endl;
 
 	delete[] tempNode;
 	tempNode = NULL;
