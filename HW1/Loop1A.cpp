@@ -29,7 +29,7 @@ int main (void){
 	string temp;
 	string fileName;
 	string temphold;
-	int counter;
+	int counter = 0;
 	cout << "Please type in the file name and extension to import. (numbers.txt)" << endl;
 	cin >> fileName;
 	ifstream importFile(fileName.c_str());

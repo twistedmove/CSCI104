@@ -3,16 +3,10 @@ CC = g++
 CFLAGS  = -c -Wall
 FLAGS = 
 
-all: energy linked linkedlist
+all: energy
 
-energy: energy.cpp
+ant: energy.cpp
 	${CC} energy.cpp -o $@ ${CPPFLAGS}
-
-linked: linked.cpp
-	${CC} linked.cpp -o $@ ${CPPFLAGS}
-
-linkedlist: linkedlist.cpp
-	${CC} linkedlist.cpp -o $@ ${CPPFLAGS}
 
 .PHONY: clean
 
