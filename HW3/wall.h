@@ -8,16 +8,22 @@
 #ifndef WALL_H_
 #define WALL_H_
 
+#include <string>
+#include "linklist.h"
+#include "wallpost.h"
+
 class Wall{
 	public:
 		Wall();
 		~Wall();
-		void addWallPost();
-		void removeWallPost();
+		void addPost(std::string wallmessagem, std::string author);
+		void removePost(int id);
+		void printWallPosts();
 		void writetoString();
 		void readtoString();
 	private:
-
+		LinkedList<WallPost*> *UserWallPosts;
+		int wallCounter;
 
 };
 

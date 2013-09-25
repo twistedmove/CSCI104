@@ -1,33 +1,62 @@
 /*
- * wallpost.hpp
+ * wallpost.cpp
  *
  *  Created on: Sep 24, 2013
  *      Author: BryanChong
  */
 
-#ifndef WALLPOST_HPP_
-#define WALLPOST_HPP_
+#ifndef WALLPOST_CPP_
+#define WALLPOST_CPP_
 
+#include <iostream>
 #include "wallpost.h"
 
-template <typename T>
-WallPost<T>::WallPost(){
 
+WallPost::WallPost(){
+	id = -1;
 }
 
-template <typename T>
-WallPost<T>::~WallPost(){
+WallPost::~WallPost(){}
 
+void WallPost::readWallPost(){
+	std::cout << "User " << author << "left you a message!" << std::endl;
+	std::cout << "Your message is: " << std::endl;
+	std::cout << wallmessage << std::endl;
 }
 
-template <typename T>
-void WallPost<T>::readWallPost(){
-
+void WallPost::editWallPost(std::string editedMessage){
+	wallmessage = editedMessage;
 }
 
-template <typename T>
-void WallPost<T>::editWallPost(){
-
+void WallPost::setMessage(std::string message){
+	wallmessage = message;
 }
 
-#endif /* WALLPOST_HPP_ */
+void WallPost::setAuthor(std::string a){
+	author = a;
+}
+
+void WallPost::setID(int wallCounter){
+	id = wallCounter;
+}
+
+int WallPost::getID(){
+	return id;
+}
+
+std::string WallPost::getAuthor(){
+	return author;
+}
+
+std::string WallPost::getMessage(){
+	return wallmessage;
+}
+
+void WallPost::printWallPost(){
+	std::cout << "ID: " << id << std::endl;
+	std::cout << "Author: " << author << std::endl;
+	std::cout << "Message: " << std::endl;
+	std::cout << wallmessage << std::endl;
+}
+
+#endif /* WALLPOST_CPP_ */

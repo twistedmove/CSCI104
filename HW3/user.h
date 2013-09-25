@@ -10,20 +10,26 @@
 
 #include <cstdlib>
 #include <string>
+#include "wall.h"
 
 
 class User{
 	public:
 		User();
 		~User();
-		void addWallPost();
-		void removeWallPost();
+		void addWallPost(std::string wallmessage);
+		void removeWallPost(int id);
 		void printInformation();
 		void editInformation();
+		Wall* getWall();
+		void setUsername(std::string usern);
+		std::string returnUsername();
 	private:
 		std::string username;
 		std::string password;
 		std::string address;
+		std::string email;
+		Wall *UserWall;
 
 
 };

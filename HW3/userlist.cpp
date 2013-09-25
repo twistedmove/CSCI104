@@ -1,17 +1,18 @@
 /*
- * userlist.hpp
+ * userlist.cpp
  *
  *  Created on: Sep 24, 2013
  *      Author: BryanChong
  */
 
-#ifndef USERLIST_HPP_
-#define USERLIST_HPP_
+#ifndef USERLIST_CPP_
+#define USERLIST_CPP_
 
 #include "userlist.h"
 #include "user.h"
 #include "linklist.h"
 #include <iostream>
+#include <cstdlib>
 
 
 UserList::UserList(){
@@ -37,7 +38,22 @@ void UserList::addUser(User& u){
 }
 
 void UserList::deleteUser(User& u){
-	UserLinkList->pop_back();
+	UserLinkList->removeObject(u);
 }
 
-#endif /* USERLIST_HPP_ */
+User* UserList::checkUser(std::string username){
+	UserLinkList->SetIteratorBegin();
+		for (int i = 0; i < UserLinkList->size(); i++) {
+			if (username == UserLinkList->IteratorValue().returnUsername()) {
+				return &(UserLinkList->IteratorValue());
+			}
+			UserLinkList->IncrementIterator();
+		}
+		return NULL;
+}
+
+void UserList::removeUser(User* todelete){
+	UserLinkList->removeObject(*todelete);
+}
+
+#endif /* USERLIST_CPP_ */

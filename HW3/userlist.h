@@ -12,6 +12,7 @@
 
 #include "user.h"
 #include "linklist.h"
+#include "wall.h"
 
 class UserList{
 	public:
@@ -21,6 +22,8 @@ class UserList{
 		void deleteUser(User&);
 		void printUserDatabase();
 		void importUserDatabase(std::string);
+		void removeUser(User* todelete);
+		User* checkUser(std::string username);
 	private:
 		 LinkedList<User> *UserLinkList;
 };

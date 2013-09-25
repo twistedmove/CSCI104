@@ -8,16 +8,25 @@
 #ifndef WALLPOST_H_
 #define WALLPOST_H_
 
+#include <string>
 
-template <typename T>
 class WallPost{
 	public:
 		WallPost();
 		~WallPost();
+		void setMessage(std::string message);
+		void setAuthor(std::string author);
 		void readWallPost();
-		void editWallPost();
+		void setID(int wallCounter);
+		int getID();
+		std::string getAuthor();
+		std::string getMessage();
+		void editWallPost(std::string editedMessage);
+		void printWallPost();
 	private:
-
+		std::string wallmessage;
+		std::string author;
+		int id;
 };
 
 
