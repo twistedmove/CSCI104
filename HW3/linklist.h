@@ -9,6 +9,7 @@
 #define LINKLIST_H_
 
 #include <cstdlib>
+#include <iostream>
 
 template <typename T>
 struct UserElement{
@@ -77,14 +78,15 @@ void LinkedList<T>::push_back(T& newElement){
 	newUser->next = NULL;				// precautionary to initialize
 	newUser->item = newElement;			// put newElement into item slot
 	if (_size == 0){
-		_head = _tail = newUser;
+		_head = newUser;
+		_tail = newUser;
 //		_head->previous = NULL;
 //		_tail->previous = NULL;
 	}
 	else {
 		_tail->next = newUser;
 //		_tail->next->previous = _tail;
-		_tail = _tail->next;
+		_tail = newUser;
 	}
 	_size++;
 }
@@ -143,16 +145,28 @@ template <typename T>
 void LinkedList<T>::removeObject(T& todelete){
 	UserElement<T> * tempPrev = NULL;
 	UserElement<T> * tempCurrent = _head;
-
+	if (&todelete == &(_head->item)){
+		_head = _head->next;
+		delete tempCurrent;
+		_size--;
+		return;
+	}
 	while (&todelete != &(tempCurrent->item)){
+//		std::cout << "todeleteinside" << std::endl;
 		tempPrev = tempCurrent;
 		tempCurrent = tempCurrent->next;
+	}
+	if (&todelete == &(_tail->item)){
+		delete _tail;
+		_tail = tempPrev;
+		tempPrev->next = NULL;
 	}
 	if (tempPrev != NULL){
 		tempPrev->next = tempCurrent->next;
 		delete tempCurrent;
 	}
 	else{
+		_head = tempCurrent->next;
 		delete tempCurrent;
 	}
 	_size--;

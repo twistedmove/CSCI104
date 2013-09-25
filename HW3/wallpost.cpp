@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "wallpost.h"
+#include <cstdlib>
 
 
 WallPost::WallPost(){
@@ -52,10 +53,12 @@ std::string WallPost::getMessage(){
 	return wallmessage;
 }
 
+
 void WallPost::printWallPost(){
 	std::cout << "ID: " << id << std::endl;
 	std::cout << "Author: " << author << std::endl;
 	std::cout << "Message: " << wallmessage << std::endl;
+	std::cout << std::endl;
 }
 
 #endif /* WALLPOST_CPP_ */

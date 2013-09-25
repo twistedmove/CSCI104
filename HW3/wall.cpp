@@ -11,6 +11,8 @@
 #include "wall.h"
 #include "linklist.h"
 #include <string>
+#include <cstdlib>
+//#include <iostream>
 
 Wall::Wall(){
 	UserWallPosts = new LinkedList<WallPost*>;
@@ -36,7 +38,9 @@ void Wall::removePost(int id){
 	UserWallPosts->SetIteratorBegin();
 			for (int i = 0; i < UserWallPosts->size(); i++) {
 				if (id == UserWallPosts->IteratorValue()->getID()) {
+				//	std::cout << id << " " << UserWallPosts->IteratorValue()->getID() << std::endl;
 					UserWallPosts->removeObject(UserWallPosts->IteratorValue());
+					return;
 				}
 					UserWallPosts->IncrementIterator();
 			}
@@ -50,11 +54,11 @@ void Wall::printWallPosts(){
 			}
 }
 
-void Wall::readtoString(){
+void Wall::importtoString(){
 
 }
 
-void Wall::writetoString(){
+void Wall::exporttoString(){
 
 }
 

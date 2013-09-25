@@ -23,7 +23,7 @@ UserList::~UserList(){
 	delete UserLinkList;
 }
 
-void UserList::printUserDatabase(){
+void UserList::exportUserDatabase(){
 
 }
 

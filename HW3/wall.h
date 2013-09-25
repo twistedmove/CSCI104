@@ -19,8 +19,8 @@ class Wall{
 		void addPost(std::string wallmessagem, std::string author);
 		void removePost(int id);
 		void printWallPosts();
-		void writetoString();
-		void readtoString();
+		void exporttoString();
+		void importtoString();
 	private:
 		LinkedList<WallPost*> *UserWallPosts;
 		int wallCounter;

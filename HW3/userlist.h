@@ -20,7 +20,7 @@ class UserList{
 		~UserList();
 		void addUser(User&);
 		void deleteUser(User&);
-		void printUserDatabase();
+		void exportUserDatabase();
 		void importUserDatabase(std::string);
 		void removeUser(User* todelete);
 		User* checkUser(std::string username);
