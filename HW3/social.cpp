@@ -97,10 +97,12 @@ int main(){
 											}
 											case 2: // create a new wall post
 											{
-												string messagepost;
+												string newmessage;
+												char messagepost[512];
 												cout << "Please enter a status update to your wall." << endl;
-												cin >> messagepost;
-												currentUser->addWallPost(messagepost);
+												cin.getline(messagepost,512);
+												newmessage = messagepost;
+												currentUser->addWallPost(newmessage);
 												cout << endl;
 												usermenu();
 												break;

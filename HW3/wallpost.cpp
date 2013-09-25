@@ -55,8 +55,7 @@ std::string WallPost::getMessage(){
 void WallPost::printWallPost(){
 	std::cout << "ID: " << id << std::endl;
 	std::cout << "Author: " << author << std::endl;
-	std::cout << "Message: " << std::endl;
-	std::cout << wallmessage << std::endl;
+	std::cout << "Message: " << wallmessage << std::endl;
 }
 
 #endif /* WALLPOST_CPP_ */
