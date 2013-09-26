@@ -23,6 +23,7 @@ class WallPost{
 		std::string getMessage();
 		void editWallPost(std::string editedMessage);
 		void printWallPost();
+		std::string exportprintWallPost();
 	private:
 		std::string wallmessage;
 		std::string author;

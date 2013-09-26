@@ -12,7 +12,9 @@
 #include "linklist.h"
 #include <string>
 #include <cstdlib>
-//#include <iostream>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 Wall::Wall(){
 	UserWallPosts = new LinkedList<WallPost*>;
@@ -54,12 +56,31 @@ void Wall::printWallPosts(){
 			}
 }
 
-void Wall::importtoString(){
+void Wall::importfromString(std::string id, std::string author, std::string message){
+	WallPost *newWallPost = new WallPost;
+	UserWallPosts->push_back(newWallPost);
 
+	int intid;
+	std::stringstream(id) >> intid;
+
+//	std::cout << message << " in wall.cpp" << std::endl;
+
+	newWallPost->setID(intid);
+	newWallPost->setAuthor(author);
+	newWallPost->setMessage(message);
 }
 
-void Wall::exporttoString(){
 
+void Wall::exporttoString(std::ofstream * exportFile){
+	UserWallPosts->SetIteratorBegin();
+			for (int i = 0; i < UserWallPosts->size(); i++) {
+					std::string tempvalue;
+					tempvalue = UserWallPosts->IteratorValue()->exportprintWallPost();
+			//		std::cout << tempvalue << std::endl;
+					*(exportFile) << tempvalue;
+					*(exportFile) << "|";
+					UserWallPosts->IncrementIterator();
+			}
 }
 
 

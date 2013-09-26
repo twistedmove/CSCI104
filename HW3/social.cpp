@@ -6,6 +6,7 @@
 #include "wallpost.h"
 #include "user.h"
 #include "userlist.h"
+#include <fstream>
 using namespace std;
 
 void menu(){
@@ -31,12 +32,13 @@ void usermenu(){
 
 
 int main(){
-
 	int selection = 0;
 	int userselection = 0;
 	std::string username;
 	UserList *UserListDatabase = new UserList;
 
+
+		UserListDatabase->importUserDatabase();
 
 		cout << "         ConnectMe v1.0          " << endl;
 		cout << "*-------------------------------*" << endl;
@@ -71,6 +73,7 @@ int main(){
 									User* currentUser = UserListDatabase->checkUser(username);
 									if (currentUser != NULL){
 									cout << "Welcome back " << username << "!" << endl;
+									cout << endl;
 
 									usermenu();
 
@@ -131,7 +134,9 @@ int main(){
 											}
 											case 6:
 											{
-												cout << "You have been logged out." << endl;
+												UserListDatabase->exportUserDatabase();
+												cout << "Database exported." << endl;
+												cout << "You have successfully been logged out." << endl;
 												cout << "Program has exited." << endl;
 												break;
 											}
@@ -177,9 +182,11 @@ int main(){
 						// This quits the program
 							case 3:
 								{
-									cout << "*---------------------------------------*" << endl;
-									cout << "| Program has been exited successfully. |" << endl;
-									cout << "*---------------------------------------*" << endl;
+									UserListDatabase->exportUserDatabase();
+									cout << "* Database has been exported successfully *" << endl;
+									cout << "*-----------------------------------------*" << endl;
+									cout << "| Program has been exited successfully.   |" << endl;
+									cout << "*-----------------------------------------*" << endl;
 									cout << endl;
 								break;
 								}

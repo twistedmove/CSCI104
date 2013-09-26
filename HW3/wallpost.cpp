@@ -11,6 +11,7 @@
 #include <iostream>
 #include "wallpost.h"
 #include <cstdlib>
+#include <sstream>
 
 
 WallPost::WallPost(){
@@ -59,6 +60,17 @@ void WallPost::printWallPost(){
 	std::cout << "Author: " << author << std::endl;
 	std::cout << "Message: " << wallmessage << std::endl;
 	std::cout << std::endl;
+}
+
+
+// every ';' is a new wallpost
+std::string WallPost::exportprintWallPost(){
+	std::string tempholder;
+	std::stringstream ss;
+	ss << id;
+	ss >> tempholder;
+	tempholder += "`" + author + "`" + wallmessage;
+	return tempholder;
 }
 
 #endif /* WALLPOST_CPP_ */

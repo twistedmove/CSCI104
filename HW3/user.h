@@ -22,8 +22,15 @@ class User{
 		void printInformation();
 		void editInformation();
 		Wall* getWall();
+		void exportWall(std::ofstream *);
+		void importWall(std::string[]);
 		void setUsername(std::string usern);
+		std::string exportprintUser();
 		std::string returnUsername();
+		void setusername(std::string);
+		void setpassword(std::string);
+		void setaddress(std::string);
+		void setemail(std::string);
 	private:
 		std::string username;
 		std::string password;

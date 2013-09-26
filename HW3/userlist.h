@@ -21,7 +21,7 @@ class UserList{
 		void addUser(User&);
 		void deleteUser(User&);
 		void exportUserDatabase();
-		void importUserDatabase(std::string);
+		void importUserDatabase();
 		void removeUser(User* todelete);
 		User* checkUser(std::string username);
 	private:
