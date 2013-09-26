@@ -7,6 +7,6 @@ USC CS104 Assignments and Lab
 3. **Homework Three**: **[The Social Network: Templates, Linked Lists, Classes][3]**
 
 
-[1]: https://bitbucket.org/bryanchong/cs104_fa2013/src/32806a99d19a592afc52728fb5e01067e405e42c/HW1?at=master
-[2]: https://bitbucket.org/bryanchong/cs104_fa2013/src/32806a99d19a592afc52728fb5e01067e405e42c/HW2?at=master
-[3]: https://bitbucket.org/bryanchong/cs104_fa2013/src/32806a99d19a592afc52728fb5e01067e405e42c/HW3?at=master
+[1]: https://bitbucket.org/bryanchong/cs104_fa2013/src/526c46db63a1355ff9f1a0208cbdfbbb4faefee4/HW1?at=master
+[2]: https://bitbucket.org/bryanchong/cs104_fa2013/src/526c46db63a1355ff9f1a0208cbdfbbb4faefee4/HW2?at=master
+[3]: https://bitbucket.org/bryanchong/cs104_fa2013/src/526c46db63a1355ff9f1a0208cbdfbbb4faefee4/HW3?at=master
