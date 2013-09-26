@@ -1,6 +1,0 @@
-```
-
-Bryan`password1`1234 Address Street`bryan@chong.com
-
-BC`hunter0`1234 Trojan Blvd.`bc@email.com
-
