@@ -152,7 +152,6 @@ void LinkedList<T>::removeObject(T& todelete){
 		return;
 	}
 	while (&todelete != &(tempCurrent->item)){
-//		std::cout << "todeleteinside" << std::endl;
 		tempPrev = tempCurrent;
 		tempCurrent = tempCurrent->next;
 	}
