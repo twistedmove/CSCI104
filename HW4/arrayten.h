@@ -29,7 +29,7 @@ template <typename T>
 void ArrayTen<T>::expandArray(){
 	float temp = ArrayList<T>::_capacity * 1.1;
 	ArrayList<T>::_capacity = (int)temp;
-	T newarray = new T[ArrayList<T>::_capacity];
+	T *newarray = new T[ArrayList<T>::_capacity];
 
 	for (int i = 0; i<ArrayList<T>::_size; i++){
 		newarray[i] = ArrayList<T>::array[i];

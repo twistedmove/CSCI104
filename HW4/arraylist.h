@@ -36,6 +36,7 @@ class ArrayList {
 		 */
 		void clear ();
 		void push_back(T & item);
+		int getsize();
 
 	protected:
 		virtual void expandArray() = 0;
@@ -44,6 +45,11 @@ class ArrayList {
 		int _capacity;
 
 };
+
+template <typename T>
+int ArrayList<T>::getsize(){
+	return _size;
+}
 
 template <typename T>
 void ArrayList<T>::push_back(T & item){
@@ -73,8 +79,8 @@ T const & ArrayList<T>::get(int pos) const{
 
 template <typename T>
 ArrayList<T>::ArrayList(int _capacity = 10){
+	this->_capacity = 10;	// size of the array
 	this->_size = 0;			//elements in the array
-	this->_capacity = _size;	// size of the array
 	array = new T[_capacity];
 }
 
@@ -90,9 +96,10 @@ void ArrayList<T>::insert(int pos, const T & item){
 		return;
 	}
 	// if the array is full
-	if (_size == _capacity){
+	if (_size == _capacity-1){
 		expandArray();
 	}
+	//std::cout << _size << " and " << _capacity << std::endl;
 	// not full
 	for (int i=_size-1; i >= pos ;i--){
 			array[i+1] = array[i];

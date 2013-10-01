@@ -178,6 +178,7 @@ void LinkedList<T>::push_back(T & item){
 		_tail->next = newItem;
 		_tail = newItem;
 	}
+
 	_size++;
 }
 

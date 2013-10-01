@@ -8,6 +8,7 @@
 #ifndef ARRAYDOUBLE_H_
 #define ARRAYDOUBLE_H_
 
+#include <iostream>
 
 template <typename T>
 class ArrayDouble:public ArrayList<T>{
@@ -28,7 +29,7 @@ ArrayDouble<T>::~ArrayDouble(){}
 template <typename T>
 void ArrayDouble<T>::expandArray(){
 	T *newarray = new T[ArrayList<T>::_capacity *= 2];
-	for (int i = 0; i<ArrayList<T>::_size; i++){
+	for (int i = 0; i < ArrayList<T>::_size; i++){
 		newarray[i] = ArrayList<T>::array[i];
 	}
 	ArrayList<T>::array = newarray;

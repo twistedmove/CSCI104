@@ -4,39 +4,46 @@
 #include "arrayten.h"
 #include "arrayone.h"
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 int main(){
 
-	int num;
-	int pos;
+//	int num;
+//	int pos;
 	int zero = 0;
 	int one = 1;
 	int two = 2;
-	int three = 3;
-/*
+//	int three = 3;
+
 
 	// LinkedList
-	int four = 4;
-	int five = 5;
+//	int size = 0;
 
 	LinkedList<int> *newList = new LinkedList<int>;
+	newList->push_back(zero);
 	newList->push_back(one);
 	newList->push_back(two);
-	newList->push_back(three);
-	newList->push_back(four);
-	newList->push_back(five);
 
-	cout << "Enter number. Should be 9" << endl;
-	cin >> num;
-	cout << "Enter position. Should be 1" << endl;
-	cin >> pos;
+	for (int i = 0; i < 3; i++){
+		cout << newList->get(i) << endl;
+	}
 
-	cout << endl;
-	cout << endl;
+/*
+	clock_t timeStart;
+	clock_t timeEnd;
+	timeStart = clock();
 
-	newList->insert(one,num);
+	for (int i=0; i<2000 ;i++){
+		size = newList->getsize();
+		newList->insert(size/2,i);
+	}
 
+	timeEnd = clock();
+	cout << (double)(timeEnd - timeStart)/CLOCKS_PER_SEC << endl;
+*/
+
+/*
 	cout << newList->get(zero) << endl;
 	cout << newList->get(one) << endl;
 	cout << newList->get(two) << endl;
@@ -61,36 +68,26 @@ int main(){
 	}
 */
 
+/*
 	// ArrayList
-	ArrayDouble<int> *newarray = new ArrayDouble<int>;
-	newarray->push_back(one);
-	newarray->push_back(two);
-	newarray->push_back(three);
+	ArrayTen<int> *newarray = new ArrayTen<int>;
+	int size;
 
-	cout << "Enter number. Should be 9" << endl;
-	cin >> num;
-	cout << "Enter position. Should be 1" << endl;
-	cin >> pos;
+	newarray->push_back(zero);
+	cout << "Size is: " << newarray->getsize() << " Number stored is: " << newarray->get(0) << endl;
 
-	cout << endl;
-	cout << endl;
+	clock_t timeStart;
+	clock_t timeEnd;
+	timeStart = clock();
 
+	for (int i=0; i<2000; i++){
+		size = newarray->getsize();
+		newarray->insert(size/2,i+1);
+		cout << "Size is: " << newarray->getsize() << " Array number is: " << newarray->get(i) << endl;
+	}
 
-	newarray->insert(one, num);
+	timeEnd = clock();
+	cout << (double)(timeEnd - timeStart)/CLOCKS_PER_SEC << endl;
 
-	cout << newarray->get(zero) << endl;
-	cout << newarray->get(one) << endl;
-	cout << newarray->get(two) << endl;
-	cout << newarray->get(three) << endl;
-
-	cout << endl;
-	cout << endl;
-
-	newarray->remove(one);
-	cout << newarray->get(zero) << endl;
-	cout << newarray->get(one) << endl;
-	cout << newarray->get(two) << endl;
-
-	cout << endl;
-	cout << "DONE" << endl;
+*/
 }

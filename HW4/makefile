@@ -8,6 +8,7 @@ all : $(OBJS)
 comparison.o : comparison.cpp arraydouble.h arrayten.h arrayone.h arraylist.h linkedlist.h
 	$(CC) $(CFLAGS) -c comparison.cpp
 
+
 .PHONY: clean
 
 clean:

@@ -8,6 +8,8 @@
 #ifndef ARRAYONE_H_
 #define ARRAYONE_H_
 
+#include <iostream>
+
 template <typename T>
 class ArrayOne:public ArrayList<T>{
 	public:
@@ -25,7 +27,7 @@ ArrayOne<T>::~ArrayOne(){}
 
 template <typename T>
 void ArrayOne<T>::expandArray(){
-	T newarray = new T[ArrayList<T>::_capacity++];
+	T *newarray = new T[ArrayList<T>::_capacity++];
 
 	for (int i = 0; i<ArrayList<T>::_size; i++){
 		newarray[i] = ArrayList<T>::array[i];
