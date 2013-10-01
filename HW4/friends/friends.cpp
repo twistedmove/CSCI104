@@ -48,13 +48,13 @@ int guesting(node * nodearray[20], int number){
 				bool isUnwanted = false;
 				bool isInvited = false;
 				if (isEnemy == false ){
-					for(int b = 0; b< unwanted->size(); b++){
+					for(unsigned int b = 0; b< unwanted->size(); b++){
 						if (unwanted->at(b) == j){
 							isUnwanted = true;
 							break;
 						}
 					}
-					for (int b =0 ; b< invited->size(); b++){
+					for (unsigned int b =0 ; b< invited->size(); b++){
 						if (invited->at(b) == j){
 							isInvited = true;
 						}
@@ -70,13 +70,13 @@ int guesting(node * nodearray[20], int number){
 			}
 
 
-			for (int j=0; j < unwanted->size(); j++){
+			for (unsigned int j=0; j < unwanted->size(); j++){
 				if (tempvar == unwanted->at(j)){
 					inunwanted = true;
 				}
 			}
 
-			for (int j=0; j < invited->size(); j++){
+			for (unsigned int j=0; j < invited->size(); j++){
 				if (tempvar == invited->at(j)){
 					ininvited = true;
 				}
@@ -91,7 +91,7 @@ int guesting(node * nodearray[20], int number){
 		}
 		//calculate invited score
 		int tempscore = 0;
-		for (int m=0; m<invited->size(); m++){
+		for (unsigned int m=0; m<invited->size(); m++){
 			tempscore += nodearray[invited->at(m)]->value;
 		}
 		if (tempscore > score){
@@ -157,9 +157,9 @@ int main(){
 					while (!ss.eof()){
 						ss >> tempenemies;
 						nodearray[tempnum]->enemies->push_back(tempenemies);
-						cout <<  tempenemies << " ";
+//						cout <<  tempenemies << " ";
 					}
-					cout << endl;
+//					cout << endl;
 				}
 		}
 
@@ -176,7 +176,7 @@ int main(){
 		nodearray[i]->value = array[i];
 	}
 
-	cout << "Score is: " << guesting(nodearray,20) << endl;
+	cout << "Score is: " << guesting(nodearray,totalnumber) << endl;
 
 }
 
