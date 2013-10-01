@@ -8,7 +8,7 @@ USC CS104 Assignments and Lab
 4. **Homework Four**: **[Linked List and Array Lists with Backtracking][4]**
 
 
-[1]: https://bitbucket.org/bryanchong/cs104_fa2013/src/526c46db63a1355ff9f1a0208cbdfbbb4faefee4/HW1?at=master
-[2]: https://bitbucket.org/bryanchong/cs104_fa2013/src/526c46db63a1355ff9f1a0208cbdfbbb4faefee4/HW2?at=master
-[3]: https://bitbucket.org/bryanchong/cs104_fa2013/src/526c46db63a1355ff9f1a0208cbdfbbb4faefee4/HW3?at=master
-[4]: https://bitbucket.org/bryanchong/cs104_fa2013/src/bf228d0b538f178a46c82b7ecfbf03da8e0eea85/HW4?at=master
+[1]: https://bitbucket.org/bryanchong/cs104_fa2013/src/6e1b0a8851e076c4aeb6fbbf570c3b4d9648001c/HW1?at=master
+[2]: https://bitbucket.org/bryanchong/cs104_fa2013/src/6e1b0a8851e076c4aeb6fbbf570c3b4d9648001c/HW2?at=master
+[3]: https://bitbucket.org/bryanchong/cs104_fa2013/src/6e1b0a8851e076c4aeb6fbbf570c3b4d9648001c/HW3?at=master
+[4]: https://bitbucket.org/bryanchong/cs104_fa2013/src/6e1b0a8851e076c4aeb6fbbf570c3b4d9648001c/HW4?at=master
