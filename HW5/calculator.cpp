@@ -45,7 +45,6 @@ bool stopOperator(char input){
 }
 
 mathVector calculate(Stack<Item> input){
-	cout << "calculate : " << endl;
 /*
 	cout << input.top().getVector().toString() << endl;
 	input.pop();
@@ -121,7 +120,7 @@ int main(){
 		}
 	*/
 
-		cout << i << endl;
+		//cout << i << endl;
 		if(userInput[i] == ')'){
 			Stack<Item> tempStack;
 			Item tempItem;
@@ -153,7 +152,7 @@ int main(){
 			itemQ.push(*newItem);
 		}
 		else if (stopOperator(userInput[i])){
-			cout<<"operator"<<endl;
+		//	cout<<"operator"<<endl;
 			Item *newItem = new Item;
 			newItem->setCharacter(userInput[i]);
 			itemQ.push(*newItem);
@@ -177,7 +176,6 @@ int main(){
 
 	}
 
-	cout << "poop" << endl;
 	Item finalItem = itemQ.top();
 	mathVector finalVector = finalItem.getVector();
 	cout << "Final calculation is: " << finalVector.toString() << endl;
