@@ -37,7 +37,7 @@ class LinkedList {
 		 *  Does not change the length of the list.
 		 *  pos must be between 0 and the current length of the list minus 1.
 		 */
-		T const & get (int pos) const;
+		T& get (int pos);
 		/*  returns the item at position pos, not changing the list.
 		 *  pos must be between 0 and the current length of the list minus 1.
 		 */
@@ -46,10 +46,12 @@ class LinkedList {
 		int getsize();
 
 	private:
-		int _size;
 		element<T> *_head;
 		element<T> *_tail;
 		element<T> *_iterator;
+
+	protected:
+		int _size;
 
 };
 
@@ -88,7 +90,7 @@ void LinkedList<T>::set(int pos, const T & newitem){
 
 
 template <typename T>
-T const & LinkedList<T>::get(int pos) const{
+T& LinkedList<T>::get(int pos) {
 	if (pos > _size-1 || pos < 0){
 		throw std::invalid_argument("Index out of bounds.");
 	}
@@ -143,8 +145,14 @@ void LinkedList<T>::remove(int pos){
 		tempPrev = tempCurrent;
 		tempCurrent = tempCurrent->next;
 	}
+	if (_size == 1){
+		_head = NULL;
+		_tail = NULL;
+		delete tempCurrent;
+	}
+
 	// i'm on the last node
-	if (tempCurrent == _tail){
+	else if (tempCurrent == _tail){
 		tempPrev->next = NULL;
 		_tail = tempPrev;
 		delete tempCurrent;

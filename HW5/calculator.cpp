@@ -36,7 +36,7 @@ bool checkOperator(char input){
 
 bool stopOperator(char input){
 	char array[7] = {'+','-','*','(',')','[',']'};
-	for (int i=0; i<3; i++){
+	for (int i=0; i<7; i++){
 		if (array[i] == input){
 			return true;
 		}
@@ -45,35 +45,57 @@ bool stopOperator(char input){
 }
 
 mathVector calculate(Stack<Item> input){
+	cout << "calculate : " << endl;
+/*
+	cout << input.top().getVector().toString() << endl;
+	input.pop();
+	cout << input.top().getCharacter() << endl;
+	input.pop();
+	cout << input.top().getVector().toString() << endl;
+	input.pop();
+*/
 
+	mathVector subitem1;
+	mathVector subitem3;
+	char subitem2;
 
 	Item item1 = input.top();
 	if (item1.checkVector()){
-		mathVector subitem1 = item1.getVector();
-	}
-	else{
-		char subitem1 = item1.getCharacter();
-	}
-	input.pop();
-	Item item2 = input.top();
-	if (item1.checkVector()){
-		mathVector subitem2 = item2.getVector();
-	}
-	else{
-		char subitem2 = item2.getCharacter();
-	}
-	input.pop();
-	Item item3 = input.top();
-	if (item1.checkVector()){
-		mathVector subitem3 = item3.getVector();
-	}
-	else{
-		char subitem3 = item3.getCharacter();
+		subitem1 = item1.getVector();
 	}
 	input.pop();
 
-	mathVector returnVector = subitem3 + subitem2 + subitem1;
-	return returnVector;
+	Item item2 = input.top();
+	if (!item2.checkVector()){
+		subitem2 = item2.getCharacter();
+	}
+	input.pop();
+
+	Item item3 = input.top();
+	if (item3.checkVector()){
+		subitem3 = item3.getVector();
+	}
+	input.pop();
+
+//	cout << item1.getVector().toString() << endl;
+//	cout << item2.getCharacter() << endl;
+//	cout << item3.getVector().toString() << endl;
+
+	switch (subitem2){
+		case '+': {
+			mathVector *returnVector = new mathVector(subitem3 + subitem1);
+			return *returnVector;
+		}
+		case '-': {
+			mathVector *returnVector = new mathVector(subitem3 - subitem1);
+			return *returnVector;
+		}
+		case '*': {
+			mathVector *returnVector = new mathVector(subitem3 * subitem1);
+			return *returnVector;
+		}
+	}
+	throw std::invalid_argument("calculator.cpp:83 Nothing to return.");
 }
 
 int main(){
@@ -90,35 +112,31 @@ int main(){
 	cin >> userInput;
 
 	int size = userInput.length();
-
+	mathVector result;
 
 	for (int i=0; i < size; i++){
+	/*
 		if (stopOperator(userInput[i]) == false){
 			throw std::invalid_argument("Invalid character.");
 		}
+	*/
 
-		else if(userInput[i] == ')'){
+		cout << i << endl;
+		if(userInput[i] == ')'){
 			Stack<Item> tempStack;
 			Item tempItem;
-			char tempChar;
-			int counter = i;
 
-			while (tempChar != '('){
-				tempItem = itemQ.top();
-				itemQ.pop();
-				tempStack.push(tempItem);
-				counter--;
-				tempChar = userInput[counter];
+
+			while (itemQ.top().getCharacter() != '('){
+					tempItem = itemQ.top();
+					itemQ.pop();
+					tempStack.push(tempItem);
 			}
-
-		mathVector result;
-
-		result = calculator(tempStack);
-		Item *newItem = new Item(result);
-		itemQ.push(*newItem);
-
-
-
+				itemQ.pop();
+			result = calculate(tempStack);
+			Item *newItem = new Item(result);
+			itemQ.push(*newItem);
+			cout << result.toString() << endl;
 		}
 
 		else if (userInput[i] == '['){
@@ -133,28 +151,36 @@ int main(){
 			Item *newItem = new Item;
 			newItem->setVector(*newVector);
 			itemQ.push(*newItem);
-
 		}
 		else if (stopOperator(userInput[i])){
+			cout<<"operator"<<endl;
 			Item *newItem = new Item;
 			newItem->setCharacter(userInput[i]);
 			itemQ.push(*newItem);
+
 		}
 		else if (checkNumber(userInput[i])){
 			int counter = i;
 			string tempnumber;
 			while(stopOperator(userInput[counter]) == false){
-				tempnumber += userInput[i];
+				tempnumber += userInput[counter];
 				counter++;
 			}
+			double newnumber = atof(tempnumber.c_str());
 			Item *newItem = new Item;
-			mathVector *newVector = new mathVector(tempnumber);
+			mathVector *newVector = new mathVector(newnumber);
 			newItem->setVector(*newVector);
 			itemQ.push(*newItem);
+			i = counter-1;
+
 		}
+
 	}
 
-
+	cout << "poop" << endl;
+	Item finalItem = itemQ.top();
+	mathVector finalVector = finalItem.getVector();
+	cout << "Final calculation is: " << finalVector.toString() << endl;
 
 
 	return 0;

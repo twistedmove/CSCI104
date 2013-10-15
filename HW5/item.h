@@ -14,7 +14,8 @@
 
 class Item{
 	public:
-		Item(char);
+		Item();
+		Item(mathVector);
 		~Item();
 		bool checkVector();
 		void setVector(mathVector vector);
@@ -27,6 +28,18 @@ class Item{
 		char character;
 		mathVector vector;
 };
+
+Item::Item(mathVector input){
+	vector = input;
+	isVector = true;
+	character = ' ';
+}
+
+Item::Item(){
+	character = ' ';
+}
+
+Item::~Item(){}
 
 
 

@@ -44,8 +44,12 @@ void Stack<T>::push(const T& element){
 	this->push_back(element);
 }
 
+
 template <typename T>
 void Stack<T>::pop (){
+	LinkedList<T>::remove(this->_size-1);
+
+	/*
 	if (this->_size > 0){
 		if (this->_size == 1){
 			delete this->_head;
@@ -69,16 +73,21 @@ void Stack<T>::pop (){
 	else{
 		throw std::invalid_argument ("Head is NULL.");
 	}
+	*/
 }
 
 
 template <typename T>
 T& Stack<T>:: top(){
+	return LinkedList<T>::get(this->_size-1);
+
+	/*
 	if (this->_size <= 0){
 		throw std::invalid_argument("Stack size is 0.");
 	}
 
 	else return this->_tail->item;
+	*/
 }
 
 template <typename T>
