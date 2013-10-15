@@ -14,15 +14,42 @@
 
 class Item{
 	public:
-		bool isVector();
+		Item(char);
+		~Item();
+		bool checkVector();
+		void setVector(mathVector vector);
+		void setCharacter(char);
+		char getCharacter();
+		mathVector getVector();
 
 	private:
-		std::string character;
+		bool isVector;
+		char character;
 		mathVector vector;
 };
 
-bool Item::isVector(){
-	if (vector != NULL){
+
+
+mathVector Item::getVector(){
+	return vector;
+}
+
+char Item::getCharacter(){
+	return character;
+}
+
+void Item::setCharacter(char inputChar){
+	character = inputChar;
+	isVector = false;
+}
+
+void Item::setVector(mathVector importVector){
+	vector = importVector;
+	isVector = true;
+}
+
+bool Item::checkVector(){
+	if (isVector == true){
 		return true;
 	}
 	return false;

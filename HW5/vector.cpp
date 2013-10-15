@@ -14,8 +14,8 @@
 #include <string>
 
 mathVector::mathVector(){
-	size = 3;
-	mathList = new double[3];
+	size = 1;
+	mathList = new double[1];
 }
 
 mathVector::mathVector(const mathVector& copy){
@@ -79,7 +79,7 @@ std::string mathVector::toString(){
 
 mathVector& mathVector::operator+(const mathVector& other){
 	if (other.size != this->size){
-		throw std::invalid_argument("Size of two vectors is not equal.");
+		throw std::invalid_argument("vector.cpp:82 Size of two vectors is not equal.");
 	}
 	double *temparray = new double[size];
 	for (int i =0; i<size; i++){
@@ -96,7 +96,7 @@ mathVector& mathVector::operator+(const mathVector& other){
 
 mathVector& mathVector::operator-(const mathVector& other){
 	if (other.size != this->size){
-		throw std::invalid_argument("Size of two vectors is not equal.");
+		throw std::invalid_argument("vector.cpp:99 Size of two vectors is not equal.");
 	}
 	double *temparray = new double[size];
 	for (int i =0; i<size; i++){
@@ -168,7 +168,7 @@ double mathVector::operator[](const int loc){
 
 bool mathVector::operator!=(const mathVector& other){
 	if (other.size != this->size){
-		throw std::invalid_argument("Size of two vectors is not equal.");
+		throw std::invalid_argument("vector.cpp:171 Size of two vectors is not equal.");
 	}
 	for (int i =0; i<size; i++){
 		if (other.mathList[i] != this->mathList[i]){
@@ -181,7 +181,7 @@ bool mathVector::operator!=(const mathVector& other){
 
 bool mathVector::operator==(const mathVector& other){
 	if (other.size != this->size){
-		throw std::invalid_argument("Size of two vectors is not equal.");
+		throw std::invalid_argument("vector.cpp:184 Size of two vectors is not equal.");
 	}
 	for (int i =0; i<size; i++){
 		if (other.mathList[i] != this->mathList[i]){
@@ -193,7 +193,7 @@ bool mathVector::operator==(const mathVector& other){
 
 void mathVector::operator=(const mathVector& other){
 	if (other.size != this->size){
-		throw std::invalid_argument("Size of two vectors is not equal.");
+		throw std::invalid_argument("vector.cpp:196 Size of two vectors is not equal.");
 	}
 	for (int i =0; i<size; i++){
 		this->mathList[i] = other.mathList[i];
