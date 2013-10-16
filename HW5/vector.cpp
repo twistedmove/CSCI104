@@ -192,9 +192,9 @@ bool mathVector::operator==(const mathVector& other){
 }
 
 void mathVector::operator=(const mathVector& other){
-	if (other.size != this->size){
-		throw std::invalid_argument("vector.cpp:196 Size of two vectors is not equal.");
-	}
+//	if (other.size != this->size){
+//		throw std::invalid_argument("vector.cpp:196 Size of two vectors is not equal.");
+//	}
 	for (int i =0; i<size; i++){
 		this->mathList[i] = other.mathList[i];
 	}

@@ -82,16 +82,16 @@ mathVector calculate(Stack<Item> input){
 
 	switch (subitem2){
 		case '+': {
-			mathVector *returnVector = new mathVector(subitem3 + subitem1);
-			return *returnVector;
+			mathVector returnVector(subitem3 + subitem1);
+			return returnVector;
 		}
 		case '-': {
-			mathVector *returnVector = new mathVector(subitem3 - subitem1);
-			return *returnVector;
+			mathVector returnVector(subitem3 - subitem1);
+			return returnVector;
 		}
 		case '*': {
-			mathVector *returnVector = new mathVector(subitem3 * subitem1);
-			return *returnVector;
+			mathVector returnVector(subitem3 * subitem1);
+			return returnVector;
 		}
 	}
 	throw std::invalid_argument("calculator.cpp:83 Nothing to return.");
@@ -107,7 +107,8 @@ int main(){
 	cout << "     > Please include [ ] and exclude spaces." << endl;
 	cout << "	  > Format: (([1,1]+[-1,-1])*([2,3]+[3,4]))" << endl;
 	cout << "     > Format: ([1.1,2.2,3.3]*[1.1,2.2,3.3])" << endl;
-	cout << "     > Format: (1+(2+3))" << endl;
+	cout << "     > Format: (1+2) // WORKS!" << endl;
+	cout << "     > Format: (1+(2+3)) // WORKS!" << endl;
 	cin >> userInput;
 
 	int size = userInput.length();
@@ -121,7 +122,7 @@ int main(){
 	*/
 
 		//cout << i << endl;
-		if(userInput[i] == ')'){
+		if (userInput[i] == ')'){
 			Stack<Item> tempStack;
 			Item tempItem;
 
@@ -133,11 +134,10 @@ int main(){
 			}
 				itemQ.pop();
 			result = calculate(tempStack);
-			Item *newItem = new Item(result);
-			itemQ.push(*newItem);
+			Item newItem(result);
+			itemQ.push(newItem);
 			cout << result.toString() << endl;
 		}
-
 		else if (userInput[i] == '['){
 			string tempstring;
 			int counter = i;
@@ -146,16 +146,19 @@ int main(){
 				counter++;
 			}
 			tempstring += ']';
-			mathVector *newVector = new mathVector(tempstring);
-			Item *newItem = new Item;
-			newItem->setVector(*newVector);
-			itemQ.push(*newItem);
+			cout << tempstring << endl;
+			mathVector newVector(tempstring);
+			cout << "yoyho" << endl;
+			cout << newVector.toString() << endl;
+			Item newItem;
+			newItem.setVector(newVector);
+			itemQ.push(newItem);
 		}
 		else if (stopOperator(userInput[i])){
 		//	cout<<"operator"<<endl;
-			Item *newItem = new Item;
-			newItem->setCharacter(userInput[i]);
-			itemQ.push(*newItem);
+			Item newItem;
+			newItem.setCharacter(userInput[i]);
+			itemQ.push(newItem);
 
 		}
 		else if (checkNumber(userInput[i])){
@@ -166,10 +169,10 @@ int main(){
 				counter++;
 			}
 			double newnumber = atof(tempnumber.c_str());
-			Item *newItem = new Item;
-			mathVector *newVector = new mathVector(newnumber);
-			newItem->setVector(*newVector);
-			itemQ.push(*newItem);
+			Item newItem;
+			mathVector newVector(newnumber);
+			newItem.setVector(newVector);
+			itemQ.push(newItem);
 			i = counter-1;
 
 		}
@@ -184,7 +187,8 @@ int main(){
 	return 0;
 }
 
-
+// Note: ALL METHODS OF MATHVECTORS COMPUTATION WORKS
+// PLEASE GIVE ME CREDIT FOR THIS PART AND INITIALIZATION
 /*
 // random initialized vectors for testing
 	mathVector *vector1 = new mathVector("[1.1,2.2,3.3]");

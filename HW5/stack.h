@@ -31,7 +31,7 @@ Stack<T>::Stack() : LinkedList<T>(){}
 
 template <typename T>
 Stack<T>::~Stack(){
-	this->clear();
+	//this->clear();
 }
 
 template <typename T>

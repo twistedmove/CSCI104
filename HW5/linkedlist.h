@@ -71,7 +71,7 @@ LinkedList<T>::LinkedList(){
 
 template <typename T>
 LinkedList<T>::~LinkedList(){
-	clear();
+	//clear();
 }
 
 template <typename T>
@@ -166,10 +166,21 @@ void LinkedList<T>::remove(int pos){
 
 template <typename T>
 void LinkedList<T>::clear(){
-	while (_head != NULL){
-		element<T> *temp = _head->next;
+	// first element is last element
+	if (_head == NULL){
+		// don't do anything
+	}
+	else if (_head == _tail){
 		delete _head;
-		_head = temp;
+		_head == NULL;
+		_tail == NULL;
+	}
+	else if (_head != _tail && _tail != NULL){
+		while (_head != NULL){
+			element<T> *temp = _head->next;
+			delete _head;
+			_head = temp;
+		}
 	}
 }
 
