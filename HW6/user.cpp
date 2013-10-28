@@ -103,12 +103,23 @@ std::string User::exportprintUser(){
 }
 
 
-std::string User::exportFriendList(){
-	std::string tempholder;
+void User::exportFriendList(std::ofstream * exportFile){
+		*(exportFile) << '>';
 	for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
-		tempholder = '>' + (*i)->exportprintUser();
+			std::string tempvalue;
+			tempvalue = (*i)->exportprintUser();
+			*(exportFile) << tempvalue;
+			*(exportFile) << "|";
 	}
-	return tempholder;
+		*(exportFile) << '\n';
+
+		*(exportFile) << '<';
+	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
+			std::string tempvalue;
+			tempvalue = (*i)->exportprintUser();
+			*(exportFile) << tempvalue;
+			*(exportFile) << "|";
+	}
 }
 
 

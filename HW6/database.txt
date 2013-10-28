@@ -1,12 +1,20 @@
 ```
 
-matt`password`address`matt@
-0`matt`hi im matt|1`matt`this is my second wallpost|0`matt`this is my third|
-omar`password1`address1`omar@
+>
+<
+matt`fdsa`fa`fa
 
-bryan`password2`address2`bryan@
-0`bryan`hi im bryan|
-```
+>
+<brya`fds`f`a|
+brian`fds`fs`f
 
-```
+>
+<brya`fds`f`a|
+omar`f`s`fsa
 
+>
+<brya`fds`f`a|
+brya`fds`f`a
+
+>omar`f`s`fsa|matt`fdsa`fa`fa|brian`fds`fs`f|
+<

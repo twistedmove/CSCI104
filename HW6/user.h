@@ -26,7 +26,7 @@ class User{
 		void importWall(std::string[]);
 		void setUsername(std::string usern);
 		std::string exportprintUser();
-		std::string exportFriendList();
+		void exportFriendList(std::ofstream *);
 		std::string returnUsername();
 		void setusername(std::string);
 		void setpassword(std::string);
