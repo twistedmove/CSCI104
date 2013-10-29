@@ -23,40 +23,48 @@ class User{
 		void editInformation();
 		Wall* getWall();
 
-		void exportWall(std::ofstream *);
 		void importWall(std::string[]);
-		void importFriends(std::string[]);
-		void importPendingFriends(std::string[]);
-
-		void setusername(std::string);
-
-
-		std::string exportprintUser();
+		void importFriends(User*);
+		void importPendingFriends(User*);
+		void exportWall(std::ofstream *);
 		void exportFriendList(std::ofstream *);
 		void exportPendingList(std::ofstream *);
-		std::string returnUsername();
+		std::string exportprintUser();
+
+		void setusername(std::string);
 		void setpassword(std::string);
 		void setaddress(std::string);
 		void setemail(std::string);
+		void setfriendlist(std::string);
+		void setpendinglist(std::string);
+		std::string getusername();
+		std::string getfriendlist();
+		std::string getpendinglist();
+
+		void displayPendingFriends();
+		void displayFriends();
+		void searchUser(std::string);
 
 		void addFriend(User*);
 		void addPendingFriend(User*);
-		void displayPendingFriends();
-		void searchUser(std::string);
-		void displayFriends();
 		void acceptFriendRequest();
 		void removePendingRequest();
 		void removeFriend();
-		std::string getUser();
 		bool pendingEmpty();
+
+
 	private:
 		std::string username;
 		std::string password;
 		std::string address;
 		std::string email;
+
 		Wall *UserWall;
 		LinkedList<User*> *Friends;
 		LinkedList<User*> *PendingFriends;
+
+		std::string friendlist;
+		std::string pendinglist;
 
 
 };

@@ -32,19 +32,19 @@ class LinkedList{
 		void push_back(T& newElement);	// add element to back of LinkedList
 		void deleteList();				// delete linked list
 
-		void SetIteratorBegin();
-		void IncrementIterator();
-		T& IteratorValue();
+		void SetIteratorBegin();		// hack iterator: sets iterator to 0
+		void IncrementIterator();		// hack iterator: increments iterator value
+		T& IteratorValue();				// hack iterator: returns value
 
 		void removeObject(T& todelete);	// remove() function
 		int size();						// returns _size
 		T& returnHead();				// return value of head
-		bool isEmpty();
-		T& find(int pos);
-		void decSize();
+		bool isEmpty();					// checks if list is empty
+		T& find(int pos);				// finds the item at given position
+		void decSize();					// decrements _size
 
-		Iterator<T> begin();
-		Iterator<T> end();
+		Iterator<T> begin();			// iterator starts at _head
+		Iterator<T> end();				// iterator ends at _tail == NULL
 
 	 // void pop_back();				// remove element from back of  LinkedList
 	 // void find(T lookforitem);		// NOT IMPLEMENTED
@@ -119,6 +119,18 @@ T& LinkedList<T>::find(int pos){
 		}
 		return current->item;
 	}
+}
+
+template <typename T>
+Iterator<T> LinkedList<T>::begin()
+{
+	return Iterator<T> (this, _head);
+}
+
+template <typename T>
+Iterator<T> LinkedList<T>::end()
+{
+	return Iterator<T> (this, NULL);
 }
 
 
@@ -251,21 +263,6 @@ bool LinkedList<T>::isEmpty(){
 		return true;
 	else
 		return false;
-}
-
-
-
-
-template <typename T>
-Iterator<T> LinkedList<T>::begin()
-{
-	return Iterator<T> (this, _head);
-}
-
-template <typename T>
-Iterator<T> LinkedList<T>::end()
-{
-	return Iterator<T> (this, NULL);
 }
 
 

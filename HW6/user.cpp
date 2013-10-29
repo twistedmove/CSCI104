@@ -53,52 +53,12 @@ void User::importWall(std::string array[]){
 	UserWall->importfromString(aid,bauthor,cmessage);
 }
 
-void User::importFriends(std::string array[]){
-	std::string aid;
-	std::string bpassword;
-	std::string caddress;
-	std::string demail;
-
-	aid = array[0];
-	bpassword = array[1];
-	caddress = array[2];
-	demail = array[3];
-
-	User *newUser = new User;
-	newUser->setusername(aid);
-	newUser->setpassword(bpassword);
-	newUser->setaddress(caddress);
-	newUser->setemail(demail);
-	Friends->push_back(newUser);
-
-	delete newUser;
+void User::importFriends(User* ifriend){
+	Friends->push_back(ifriend);
 }
 
-void User::importPendingFriends(std::string array[]){
-	std::string aid;
-	std::string bpassword;
-	std::string caddress;
-	std::string demail;
-
-	aid = array[0];
-	bpassword = array[1];
-	caddress = array[2];
-	demail = array[3];
-
-	User *newUser = new User;
-	newUser->setusername(aid);
-	newUser->setpassword(bpassword);
-	newUser->setaddress(caddress);
-	newUser->setemail(demail);
-	PendingFriends->push_back(newUser);
-
-	delete newUser;
-
-}
-
-
-std::string User::returnUsername(){
-	return username;
+void User::importPendingFriends(User* pfriend){
+	PendingFriends->push_back(pfriend);
 }
 
 Wall* User::getWall(){
@@ -147,7 +107,7 @@ void User::exportFriendList(std::ofstream * exportFile){
 //		*(exportFile) << '>';
 	for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
 			std::string tempvalue;
-			tempvalue = (*i)->exportprintUser();
+			tempvalue = (*i)->getusername();
 			*(exportFile) << tempvalue;
 			*(exportFile) << "|";
 	}
@@ -157,7 +117,7 @@ void User::exportPendingList(std::ofstream * exportFile){
 	//		*(exportFile) << '<';
 		for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
 				std::string tempvalue;
-				tempvalue = (*i)->exportprintUser();
+				tempvalue = (*i)->getusername();
 				*(exportFile) << tempvalue;
 				*(exportFile) << "|";
 		}
@@ -184,7 +144,7 @@ void User::addFriend(User* newFriend){
 	Friends->push_back(newFriend);
 }
 
-std::string User::getUser(){
+std::string User::getusername(){
 	return username;
 }
 
@@ -193,7 +153,7 @@ void User::displayFriends(){
 	if (Friends->isEmpty() == false){
 //		std::cout << "inside" << std::endl;
 		for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
-			std::cout << (*i)->getUser() << std::endl;
+			std::cout << (*i)->getusername() << std::endl;
 		}
 	}
 //	std::cout << "outside" << std::endl;
@@ -207,7 +167,7 @@ void User::displayPendingFriends(){
 	if (Friends->isEmpty() == false){
 		{
 			for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-				std::cout << (*i)->getUser() << std::endl;
+				std::cout << (*i)->getusername() << std::endl;
 			}
 		}
 	}
@@ -217,17 +177,17 @@ void User::acceptFriendRequest(){
 	std::string userinput;
 
 	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-		std::cout << "Here are your pending friend requests:" << (*i)->getUser() << std::endl;
+		std::cout << "Here are your pending friend requests:" << (*i)->getusername() << std::endl;
 	}
 
 		std::cout << "Please enter the name you would like to accept." << std::endl;
 		std::cin >> userinput;
 
 		for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-				if (userinput != (*i)->getUser()){
+				if (userinput != (*i)->getusername()){
 					std::cout << "No user exists in pending friends list. Please try again." << std::endl;
 				}
-				else if (userinput == (*i)->getUser()){
+				else if (userinput == (*i)->getusername()){
 					Friends->push_back(*i);
 					PendingFriends->removeObject((*i));
 				}
@@ -238,17 +198,17 @@ void User::removePendingRequest(){
 	std::string userinput;
 
 	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-			std::cout << "Here are your pending friend requests:" << (*i)->getUser() << std::endl;
+			std::cout << "Here are your pending friend requests:" << (*i)->getusername() << std::endl;
 	}
 
 	std::cout << "Please enter the name you would like to remove." << std::endl;
 	std::cin >> userinput;
 
 	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-				if (userinput != (*i)->getUser()){
+				if (userinput != (*i)->getusername()){
 					std::cout << "No user exists in pending friends list. Please try again." << std::endl;
 			}
-				else if (userinput == (*i)->getUser()){
+				else if (userinput == (*i)->getusername()){
 					PendingFriends->removeObject((*i));
 			}
 	}
@@ -260,21 +220,20 @@ void User::removeFriend(){
 
 //	if (Friends->isEmpty() == false){
 		for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
-			std::cout << (*i)->getUser() << std::endl;
+			std::cout << (*i)->getusername() << std::endl;
 		}
 
 		std::cout << "Please enter the name you would like to remove." << std::endl;
 		std::cin >> userinput;
 
 		for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
-						if (userinput != (*i)->getUser()){
+						if (userinput != (*i)->getusername()){
 							std::cout << "No user exists in friends list. Please try again." << std::endl;
 					}
-						else if (userinput == (*i)->getUser()){
+						else if (userinput == (*i)->getusername()){
 							Friends->removeObject((*i));
 					}
 		}
-
 //	}
 }
 
@@ -284,6 +243,28 @@ bool User::pendingEmpty(){
 	}
 	else
 		return false;
+}
+
+void User::setfriendlist(std::string flist){
+	std::cout << "2friendtemporaryis:" << flist << std::endl;
+	friendlist = flist;
+	std::cout << "3friendtemporaryis:" << friendlist << std::endl;
+}
+
+void User::setpendinglist(std::string plist){
+//	std::cout << "2pendingtemporaryis:" << plist << std::endl;
+	pendinglist = plist;
+//	std::cout << "3pendingtemporaryis:" << pendinglist << std::endl;
+}
+
+std::string User::getfriendlist(){
+	std::cout << "4friendtemporaryis:" << friendlist << std::endl;
+	return friendlist;
+}
+
+std::string User::getpendinglist(){
+//	std::cout << "4pendingtemporaryis:" << pendinglist << std::endl;
+	return pendinglist;
 }
 
 #endif /* USER_CPP_ */

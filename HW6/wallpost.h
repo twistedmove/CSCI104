@@ -16,14 +16,18 @@ class WallPost{
 		~WallPost();
 		void setMessage(std::string message);
 		void setAuthor(std::string author);
-		void readWallPost();
 		void setID(int wallCounter);
-		int getID();
 		std::string getAuthor();
 		std::string getMessage();
+		int getID();
+
+		void readWallPost();
 		void editWallPost(std::string editedMessage);
 		void printWallPost();
+
 		std::string exportprintWallPost();
+
+
 	private:
 		std::string wallmessage;
 		std::string author;

@@ -1,8 +1,7 @@
-bryan`password`address`bryan@
-0`bryan`hi im bryan|1`bryan`hello|
-tina`password1`my address`tina@|
+tina`password`address`tina@
 
-tina`password1`my address`tina@
-0`tina`hi i'm tina|1`tina`hi this is my second post|2`tina`this is my third|
 
-bryan`password`address`bryan@|
+bryan|
+bryan`pass`sserdda`bryan@
+0`bryan`hi this is my wall post|
+tina|

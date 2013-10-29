@@ -24,7 +24,7 @@ string fixString(std::string newusername){
 }
 
 void menu(){
-			cout << "             ConnectMe v1.0           " << endl;
+			cout << "             ConnectMe v2.0           " << endl;
 			cout << "*------------------------------------*" << endl;
 			cout << "| 1. Login as a user.                |" << endl;
 			cout << "| 2. Create a new user.              |" << endl;
@@ -33,7 +33,7 @@ void menu(){
 }
 
 void usermenu(){
-			cout << "             User Menu v1.0           " << endl;
+			cout << "             User Menu v2.0           " << endl;
 			cout << "*------------------------------------*" << endl;
 			cout << "| 1. Display all wall posts.         |" << endl;
 			cout << "| 2. Create a new wall post.         |" << endl;
@@ -58,8 +58,9 @@ int main(){
 
 
 		UserListDatabase->importUserDatabase();
+		UserListDatabase->completeList();
 
-		cout << "         ConnectMe v1.0          " << endl;
+		cout << "         ConnectMe v2.0          " << endl;
 		cout << "*-------------------------------*" << endl;
 		cout << "| 1. Login as a user.           |" << endl;
 		cout << "| 2. Create a new user.         |" << endl;
@@ -178,7 +179,7 @@ int main(){
 												User* friendUser = UserListDatabase->checkUser(friendname);
 												bool checkUser = UserListDatabase->validUser(friendname);
 												if (checkUser == true){
-													if (friendUser->getUser() == currentUser->getUser()){
+													if (friendUser->getusername() == currentUser->getusername()){
 														cout << "You cannot add yourself as a friend! Loner." << endl;
 													}
 													else{
@@ -224,9 +225,9 @@ int main(){
 											case 11:
 											{
 												UserListDatabase->exportUserDatabase();
-												cout << "Database exported." << endl;
-												cout << "You have successfully been logged out." << endl;
-												cout << "Program has exited." << endl;
+												cout << "> Database exported." << endl << endl;
+												cout << ">> You have successfully been logged out." << endl;
+												cout << ">> Program has exited." << endl << endl;
 												break;
 											}
 											default:

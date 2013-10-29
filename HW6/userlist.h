@@ -18,16 +18,23 @@ class UserList{
 	public:
 		UserList();
 		~UserList();
+
 		void addUser(User&);
 		void deleteUser(User&);
+		void removeUser(User* todelete);
+		void completeList();
+
 		void exportUserDatabase();
 		void importUserDatabase();
-		void removeUser(User* todelete);
+
 		User* checkUser(std::string username);
 		bool findUser(std::string, User*);
 		bool validUser(std::string);
 		bool is_Empty(std::ifstream&);
+
 		std::string fixString(std::string);
+
+
 	private:
 		 LinkedList<User> *UserLinkList;
 };
