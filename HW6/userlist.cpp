@@ -25,6 +25,12 @@ UserList::~UserList(){
 	delete UserLinkList;
 }
 
+
+bool UserList::is_Empty(std::ifstream& file)
+{
+    return file.peek() == std::ifstream::traits_type::eof();
+}
+
 void UserList::exportUserDatabase(){
 //	UserLinkList->SetIteratorBegin();
 	std::ofstream *exportFile = new std::ofstream;
@@ -42,20 +48,26 @@ void UserList::exportUserDatabase(){
 	}
 */
 
-
-
-	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
-		std::string tempholder;
-		tempholder = (*i).exportprintUser();
-		*(exportFile) << tempholder;
-		*(exportFile) << "\n";
-		(*i).exportWall(exportFile);
-		*(exportFile) << "\n";
-		(*i).exportFriendList(exportFile);
-		*(exportFile) << "\n";
+	if (UserLinkList->size() != 0){
+		for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+			if((*i).getUser() != ""){
+				std::string tempholder;
+				tempholder = (*i).exportprintUser();
+				*(exportFile) << tempholder;
+				*(exportFile) << "\n";
+				(*i).exportWall(exportFile);
+				*(exportFile) << "\n";
+				(*i).exportFriendList(exportFile);
+				*(exportFile) << "\n";
+				(*i).exportPendingList(exportFile);
+				*(exportFile) << "\n";
+			}
+			if ((*i).getUser() == ""){
+				UserLinkList->decSize();
+			}
+		}
+		std::cout << UserLinkList->size() << std::endl;
 	}
-
-
 	exportFile->close();
 	delete exportFile;
 }
@@ -67,6 +79,7 @@ void UserList::importUserDatabase(){
 		std::cout << "| database.txt does not exist |" << std::endl;
 		std::cout << "*-----------------------------*" << std::endl;
 	}
+	if (!is_Empty(importFile)){
 	if (importFile.good()){
 		while (!importFile.eof()){
 			std::string temporary;
@@ -74,6 +87,8 @@ void UserList::importUserDatabase(){
 			std::string delimiter = "`";
 			std::string postdelimiter = "|";
 			std::string temppost;
+			std::string tempfriend;
+			std::string temppending;
 			std::string userinformationarray[4];
 			int counter = 0;
 			unsigned long int position = 0;
@@ -107,22 +122,18 @@ void UserList::importUserDatabase(){
 			std::getline(importFile, temporary, '\n');
 
 
-		// gets the string till '|' - which is the first wallpost
-			while ((position = temporary.find(postdelimiter)) !=  std::string::npos){
-				std::string wallinformationarray[3];
-				int newcounter = 0;
-				temppost = temporary.substr(0, position);
-				// std::cout << temppost << std::endl;
-				unsigned long int newpos = 0;
-		// this parses everything inside the temppost (e.g id, author, message)
-				while ((newpos = temppost.find(delimiter)) !=  std::string::npos){
+
+			while ((position = temporary.find(postdelimiter)) !=  std::string::npos){		// gets the string till '|' - which is the first wallpost
+					std::string wallinformationarray[3];
+					int newcounter = 0;
+					temppost = temporary.substr(0, position);
+					unsigned long int newpos = 0;
+				while ((newpos = temppost.find(delimiter)) !=  std::string::npos){			// this parses everything inside the temppost (e.g id, author, message)
 					tempitem = temppost.substr(0, newpos);
-				//	std::cout << tempitem << std::endl;
 					wallinformationarray[newcounter] = tempitem;
 					newcounter++;
 					temppost.erase(0, newpos + delimiter.length());
 				}
-				// std::cout << temppost << std::endl;
 				wallinformationarray[2] = temppost;
 				temporary.erase(0, position + postdelimiter.length());
 				newUser->importWall(wallinformationarray);
@@ -130,64 +141,61 @@ void UserList::importUserDatabase(){
 
 
 
-
 /*
 // Third line - parses through all the friends list
+			position = 0;
+			std::getline(importFile, temporary, '\n');
 
-		counter = 0;
-		position = 0;
-
-
-		std::getline(importFile, temporary, '\n');
-
-		while ((position = temporary.find(delimiter)) !=  std::string::npos){
-			tempit = temporary.substr(0, position);
-			 std::cout << tempit << std::endl;
-			infoarray[counter] = tempit;
-			counter++;
-			temporary.erase(0, position + delimit.length());
-		}
-
-			// std::cout << temporary << std::endl;
-			userinformationarray[counter] = temporary;
-			User* newUser = new User;
-			newUser->setusername(userinformationarray[0]);
-			newUser->setpassword(userinformationarray[1]);
-			newUser->setaddress(userinformationarray[2]);
-			newUser->setemail(userinformationarray[3]);
-			UserLinkList->push_back(*newUser);
-
-
-		temporary = "";
-		position = 0;
+			while ((position = temporary.find(postdelimiter)) !=  std::string::npos){
+					std::string friendinformationarray[4];
+					int friendcounter = 0;
+					tempfriend = temporary.substr(0, position);
+			// std::cout << tempfriend << std::endl;
+					unsigned long int newpos = 0;
+				while ((newpos = tempfriend.find(delimiter)) !=  std::string::npos){
+					tempitem = tempfriend.substr(0, newpos);
+					std::cout << tempitem << std::endl;
+					friendinformationarray[friendcounter] = tempitem;
+					friendcounter++;
+					temporary.erase(0, position + postdelimiter.length());
+					newUser->importFriends(friendinformationarray);
+				}
+			}
 
 
 // Fourth line - parses through all the pending friends list
+			position = 0;
+			std::getline(importFile, temporary, '\n');
 
-		std::getline(importFile, temporary, '\n');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			while ((position = temporary.find(postdelimiter)) !=  std::string::npos){
+					std::cout << position << std::endl;
+					std::string pendinginformationarray[4];
+					int pendingcounter = 0;
+					temppending = temporary.substr(0, position);
+					std::cout << temppending << std::endl;
+					unsigned long int newpos = 0;
+				while ((newpos = temppending.find(delimiter)) !=  std::string::npos){
+					std::cout << temppending[newpos] << std::endl;
+					std::cout << temppending[newpos+1] << std::endl;
+			//		std::cout << "1" << std::endl;
+					tempitem = temppending.substr(0, newpos);
+					std::cout << tempitem << std::endl;
+					pendinginformationarray[pendingcounter] = tempitem;		//problem here
+					pendingcounter++;
+					temporary.erase(0, position + postdelimiter.length());
+					newUser->importPendingFriends(pendinginformationarray);
+			//		std::cout << "before end" << std::endl;
+				}
+				std::cout << "outside inner while" << std::endl;
+			}	// end of "fourth line code" while loop
+			std::cout << "outside while" << std::endl;
 
 */
-
-		}
+		} 		// while !importfile.eof
+	} 			// end of if importfile.good();
 	}
 	importFile.close();
-}
+}				// end of importUserDatabase function
 
 void UserList::addUser(User& u){
 	std::cout << "Please create your new credentials." << std::endl;

@@ -41,6 +41,7 @@ class LinkedList{
 		T& returnHead();				// return value of head
 		bool isEmpty();
 		T& find(int pos);
+		void decSize();
 
 		Iterator<T> begin();
 		Iterator<T> end();
@@ -201,6 +202,11 @@ void LinkedList<T>::pop_back(){
 template <typename T>
 T& LinkedList<T>::returnHead(){
 	return _head->item;
+}
+
+template <typename T>
+void LinkedList<T>::decSize(){
+	_size--;
 }
 
 template <typename T>

@@ -184,6 +184,7 @@ int main(){
 													else{
 														currentUser->addFriend(friendUser);
 														friendUser->addPendingFriend(currentUser);
+														cout << "Success: Friend request added." << endl;
 													}
 												}
 												else {
@@ -256,7 +257,7 @@ int main(){
 									User* existingUser = UserListDatabase->checkUser(name);
 									if (existingUser == NULL){
 										User *tempUser = new User();
-										tempUser->setUsername(name);
+										tempUser->setusername(name);
 										UserListDatabase->addUser(*tempUser);
 									}
 									else{

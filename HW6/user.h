@@ -22,16 +22,23 @@ class User{
 		void printInformation();
 		void editInformation();
 		Wall* getWall();
+
 		void exportWall(std::ofstream *);
 		void importWall(std::string[]);
-		void setUsername(std::string usern);
+		void importFriends(std::string[]);
+		void importPendingFriends(std::string[]);
+
+		void setusername(std::string);
+
+
 		std::string exportprintUser();
 		void exportFriendList(std::ofstream *);
+		void exportPendingList(std::ofstream *);
 		std::string returnUsername();
-		void setusername(std::string);
 		void setpassword(std::string);
 		void setaddress(std::string);
 		void setemail(std::string);
+
 		void addFriend(User*);
 		void addPendingFriend(User*);
 		void displayPendingFriends();

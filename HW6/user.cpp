@@ -53,6 +53,50 @@ void User::importWall(std::string array[]){
 	UserWall->importfromString(aid,bauthor,cmessage);
 }
 
+void User::importFriends(std::string array[]){
+	std::string aid;
+	std::string bpassword;
+	std::string caddress;
+	std::string demail;
+
+	aid = array[0];
+	bpassword = array[1];
+	caddress = array[2];
+	demail = array[3];
+
+	User *newUser = new User;
+	newUser->setusername(aid);
+	newUser->setpassword(bpassword);
+	newUser->setaddress(caddress);
+	newUser->setemail(demail);
+	Friends->push_back(newUser);
+
+	delete newUser;
+}
+
+void User::importPendingFriends(std::string array[]){
+	std::string aid;
+	std::string bpassword;
+	std::string caddress;
+	std::string demail;
+
+	aid = array[0];
+	bpassword = array[1];
+	caddress = array[2];
+	demail = array[3];
+
+	User *newUser = new User;
+	newUser->setusername(aid);
+	newUser->setpassword(bpassword);
+	newUser->setaddress(caddress);
+	newUser->setemail(demail);
+	PendingFriends->push_back(newUser);
+
+	delete newUser;
+
+}
+
+
 std::string User::returnUsername(){
 	return username;
 }
@@ -70,10 +114,6 @@ void User::printInformation(){
 	std::cout << "Email: " << email << std::endl;
 	std::cout << "------------------------------------------------" << std:: endl;
 
-}
-
-void User::setUsername(std::string usern){
-	username = usern;
 }
 
 void User::editInformation(){
@@ -104,22 +144,23 @@ std::string User::exportprintUser(){
 
 
 void User::exportFriendList(std::ofstream * exportFile){
-		*(exportFile) << '>';
+//		*(exportFile) << '>';
 	for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
 			std::string tempvalue;
 			tempvalue = (*i)->exportprintUser();
 			*(exportFile) << tempvalue;
 			*(exportFile) << "|";
 	}
-		*(exportFile) << '\n';
+}
 
-		*(exportFile) << '<';
-	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-			std::string tempvalue;
-			tempvalue = (*i)->exportprintUser();
-			*(exportFile) << tempvalue;
-			*(exportFile) << "|";
-	}
+void User::exportPendingList(std::ofstream * exportFile){
+	//		*(exportFile) << '<';
+		for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
+				std::string tempvalue;
+				tempvalue = (*i)->exportprintUser();
+				*(exportFile) << tempvalue;
+				*(exportFile) << "|";
+		}
 }
 
 

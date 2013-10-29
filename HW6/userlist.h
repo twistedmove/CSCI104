@@ -26,6 +26,7 @@ class UserList{
 		User* checkUser(std::string username);
 		bool findUser(std::string, User*);
 		bool validUser(std::string);
+		bool is_Empty(std::ifstream&);
 		std::string fixString(std::string);
 	private:
 		 LinkedList<User> *UserLinkList;
