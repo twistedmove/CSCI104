@@ -137,6 +137,7 @@ void UserList::importUserDatabase(){
 			}
 
 
+
 // Third line - saves friends list
 			std::getline(importFile, temporary, '\n');
 			std::cout << newUser->getusername() << std::endl;
@@ -146,8 +147,8 @@ void UserList::importUserDatabase(){
 			std::getline(importFile, temporary, '\n');
 			newUser->setpendinglist(temporary);
 
-	//		std::cout << newUser->getusername() << " ::: " << newUser->getfriendlist() << " :::: " << std::endl;
 
+	//		std::cout << newUser->getusername() << " ::: " << newUser->getfriendlist() << " :::: " << std::endl;
 
 /* Non-working code
 			while ((position = temporary.find(postdelimiter)) !=  std::string::npos){
@@ -167,7 +168,6 @@ void UserList::importUserDatabase(){
 			}
 */
 
-
 		} 		// while !importfile.eof
 	} 			// end of if importfile.good();
 	}
@@ -179,17 +179,15 @@ void UserList::completeList(){
 		std::string friendlist;
 		std::string pendinglist;
 
-		std::cout << "user: " << (*i).getusername() << std::endl;
-		std::cout << "getfriendlist" << (*i).getfriendlist() << "????" << std::endl;
+		std::cout << "username: " << (*i).getusername() << std::endl;
+		std::cout << "getfriendlist:" << (*i).getfriendlist() << "?" << std::endl;
 		friendlist = (*i).getfriendlist();
 
 		pendinglist = (*i).getpendinglist();
 
-		std::cout << "username: " << (*i).getusername() << std::endl;
-
 		std::string tempstring;
 		std::string postdelimiter = "|";
-		int position = 0;
+		unsigned long int position = 0;
 
 		while ((position = friendlist.find(postdelimiter)) !=  std::string::npos){
 			tempstring = friendlist.substr(0,position);
@@ -200,7 +198,7 @@ void UserList::completeList(){
 					(*i).importFriends(&(*j));
 				}
 			}
-
+			// removes the one just iterated
 			tempstring.erase(0, position + postdelimiter.length());
 		}
 

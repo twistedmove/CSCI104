@@ -21,6 +21,8 @@ User::User(){
 	PendingFriends = new LinkedList<User*>;
 }
 
+
+
 User::~User(){
 	delete UserWall;
 	delete Friends;
@@ -246,24 +248,24 @@ bool User::pendingEmpty(){
 }
 
 void User::setfriendlist(std::string flist){
-	std::cout << "2friendtemporaryis:" << flist << std::endl;
+	std::cout << "2. friend: " << flist << std::endl;
 	friendlist = flist;
-	std::cout << "3friendtemporaryis:" << friendlist << std::endl;
+	std::cout << "3. friend: " << friendlist << std::endl << std::endl;
 }
 
 void User::setpendinglist(std::string plist){
-//	std::cout << "2pendingtemporaryis:" << plist << std::endl;
+//	std::cout << "2. pending: " << plist << std::endl;
 	pendinglist = plist;
-//	std::cout << "3pendingtemporaryis:" << pendinglist << std::endl;
+//	std::cout << "3. pending: " << pendinglist << std::endl;
 }
 
 std::string User::getfriendlist(){
-	std::cout << "4friendtemporaryis:" << friendlist << std::endl;
+	std::cout << "4. friend: " << friendlist << std::endl;
 	return friendlist;
 }
 
 std::string User::getpendinglist(){
-//	std::cout << "4pendingtemporaryis:" << pendinglist << std::endl;
+//	std::cout << "4. pending: " << pendinglist << std::endl;
 	return pendinglist;
 }
 

@@ -22,6 +22,7 @@ Wall::Wall(){
 }
 
 
+
 Wall::~Wall(){
 	delete UserWallPosts;
 }
@@ -84,6 +85,7 @@ void Wall::importfromString(std::string id, std::string author, std::string mess
 	newWallPost->setID(intid);
 	newWallPost->setAuthor(author);
 	newWallPost->setMessage(message);
+	wallCounter++;
 }
 
 
