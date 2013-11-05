@@ -1,3 +1,5 @@
+Didn't finish part (e). Worked on it partially to save you time why some things might not work!
+
 HOMEWORK 7 QUESTIONS:
 
 (a) Precisely state the Heap Property for complete d-ary trees.
