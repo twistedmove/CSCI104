@@ -2,6 +2,8 @@
 #define PRIORITYQ_H_
 
 #include "arraydouble.h"
+#include <string>
+
 
 template <typename T>
 class Heap{
