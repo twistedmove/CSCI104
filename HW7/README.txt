@@ -20,3 +20,52 @@ Your running time will be a function of two variables, d and n. There is nothing
 
 (e) Based on your running time calculations, which operations get faster, and which get slower, as you increase d?
 (i) Adding and removing gets faster as you increase d, however, peek doesn't change considering that it takes the root node. A larger base in a log function decreases the value of the run time speed, making it considerably faster as you increase d (or the number of trees).
+
+
+
+Macintosh:HW7 bryanchong$ ./tree
+Insertion took: 0.002082
+Insertion took: 0.002065
+Insertion took: 0.002081
+Insertion took: 0.002096
+Insertion took: 0.002132
+Insertion took: 0.002053
+Insertion took: 0.002054
+Insertion took: 0.002066
+Insertion took: 0.002079
+Insertion took: 0.002069
+Removal took: 0.149526
+Removal took: 0.152266
+Removal took: 0.151599
+Removal took: 0.149956
+Removal took: 0.150689
+Removal took: 0.15282
+Removal took: 0.156964
+Removal took: 0.158092
+Removal took: 0.155125
+Removal took: 0.155416
+
+Macintosh:HW7 bryanchong$ ./tree
+Insertion took: 0.002131
+Insertion took: 0.002116
+Insertion took: 0.002119
+Insertion took: 0.00211
+Insertion took: 0.002159
+Insertion took: 0.002235
+Insertion took: 0.002123
+Insertion took: 0.002166
+Insertion took: 0.00222
+Insertion took: 0.002167
+Removal took: 0.15043
+Removal took: 0.148127
+Removal took: 0.149817
+Removal took: 0.149968
+Removal took: 0.154487
+Removal took: 0.155426
+Removal took: 0.15445
+Removal took: 0.153973
+Removal took: 0.155036
+Removal took: 0.159602
+
+
+I ran my program twice and it was ALMOST as how I described it above. The insertion didn't take as long, nor did the removal. Considering the increase in d, there were times where it got slightly faster as d increased. The runtime approximately took around the same amount of time which could be influenced by my machine and also the programs running in the background. It somewhat follows the trend of the theoretical analysis above.
