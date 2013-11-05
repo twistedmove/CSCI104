@@ -34,4 +34,6 @@ class Heap{
 		ArrayList<T> *_item;
 };
 
+#include "priorityQ.hpp"
+
 #endif

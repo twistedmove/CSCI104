@@ -15,6 +15,7 @@ template <typename T>
 class ArrayList {
 	public:
 		ArrayList(int size);
+		ArrayList();
 		~ArrayList();
 		void insert (int pos, const T & item);
 		/*  Inserts the item right before position pos, growing the list by 1.
@@ -36,7 +37,7 @@ class ArrayList {
 		 */
 		void clear ();
 		void expandArray();
-		void push_back(T & item);
+		void push_back(const T & item);
 		int size();
 
 	protected:
@@ -50,6 +51,13 @@ class ArrayList {
 template <typename T>
 ArrayList<T>::ArrayList(int _capacity){
 	this->_capacity = _capacity;	// size of the array
+	this->_size = 0;			//elements in the array
+	array = new T[_capacity];
+}
+
+template <typename T>
+ArrayList<T>::ArrayList(){
+	this->_capacity = 10;	// size of the array
 	this->_size = 0;			//elements in the array
 	array = new T[_capacity];
 }
@@ -68,7 +76,7 @@ int ArrayList<T>::size(){
 
 
 template <typename T>
-void ArrayList<T>::push_back(T & item){
+void ArrayList<T>::push_back(const T & item){
 	if (_size == _capacity){
 			expandArray();
 	}
@@ -122,17 +130,22 @@ void ArrayList<T>::remove(int pos){
 		return;
 	}
 
-	for (int i = pos; i < _size-1; i++){
-		array[i] = array[i+1];
+	T *newArray = new T[_size];
+	for (int i = 0; i < pos; i++){
+		newArray[i] = array[i];
 	}
-	array[_size-1] = NULL;
+	for (int i = pos; i < _size-1; i++){
+		newArray[i] = array[i+1];
+	}
+	delete array;
+	array = newArray;
 	_size--;
 }
 
 
 template <typename T>
 void ArrayList<T>::clear(){
-	for (int i = 0; i<_size; i++){
+	for (int i = 0; i<_size-1; i++){
 		array[i] = NULL;
 	}
 	delete array;
@@ -140,12 +153,12 @@ void ArrayList<T>::clear(){
 
 template <typename T>
 void ArrayList<T>::expandArray(){
-		T *newarray = new T[ArrayList<T>::_capacity *= 2];
-	for (int i = 0; i < ArrayList<T>::_size; i++){
-		newarray[i] = ArrayList<T>::array[i];
+		T *newarray = new T[_capacity *= 2];
+	for (int i = 0; i < _size; i++){
+		newarray[i] = array[i];
 	}
-		ArrayList<T>::array = newarray;
-		delete newarray;
+		array = newarray;
+//		delete newarray;
 }
 
 

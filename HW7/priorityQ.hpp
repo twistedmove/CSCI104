@@ -1,5 +1,5 @@
-#ifndef PRIORITYQ_CPP_
-#define PRIORITYQ_CPP_
+#ifndef PRIORITYQ_HPP_
+#define PRIORITYQ_HPP_
 
 #include "priorityQ.h"
 #include "arraydouble.h"
@@ -66,7 +66,7 @@ void Heap<T>::trickleUp(int node){
 	}
 	int parent = ((node-1)/_d);
 	if (_isMax == true){
-		if (_item[node] > _item[parent]){
+		if (_item->get(node) > _item->get(parent)){
 			swap(node, parent);
 		}
 		else{
@@ -74,7 +74,7 @@ void Heap<T>::trickleUp(int node){
 		}
 	}
 	else{
-		if (_item[node] < _item[parent]){
+		if (_item->get(node) < _item->get(parent)){
 			swap(node, parent);
 		}
 		else{
@@ -88,8 +88,10 @@ void Heap<T>::trickleUp(int node){
 // used when removing
 template <typename T>
 void Heap<T>::trickleDown(int node){
+
+
 	if (checkifLeaf(node) == true){
-		throw std::out_of_range ("Current node is a leaf. Nowhere to go!");
+		return;
 	}
 
 	T *childArray = new T[_d];				// temporary array of childArray
@@ -99,7 +101,7 @@ void Heap<T>::trickleDown(int node){
 	int ChildIndex;
 
 	// finds current node's children and add them to the childArray
-	for (int i=0; i<_d; i++){
+	for (int i=0; i<_d-1; i++){
 		if (childIncrementer > _size){
 			break;
 		}
@@ -108,7 +110,6 @@ void Heap<T>::trickleDown(int node){
 			sizeChildArray++;
 		}
 	}
-
 
 	if (_isMax == true){
 			ChildIndex = findLargestChildIndex(childArray, sizeChildArray, firstChildIndex);
@@ -129,9 +130,9 @@ void Heap<T>::trickleDown(int node){
 		}
 	}
 
-	delete childArray;
+	delete [] childArray;
 	childArray = NULL;
-	trickleDown(ChildIndex);
+	trickleDown(firstChildIndex);
 }
 
 template <typename T>
@@ -144,7 +145,11 @@ int Heap<T>::findLargestChildIndex(T childArray[], int sizeChildArray, int first
 			biggestChild = childArray[i];
 			biggestChildIndex = firstChildIndex+i;
 		}
+		else{
+			biggestChildIndex = firstChildIndex;
+		}
 	}
+
 	return biggestChildIndex;
 }
 
@@ -166,8 +171,8 @@ int Heap<T>::findSmallestChildIndex(T childArray[], int sizeChildArray, int firs
 template <typename T>
 void Heap<T>::printHeap() const{
 	std::cout << "Heap contents are: " << std::endl;
-	for(unsigned int i=0; i < _size-1; i++){
-		std::cout << i << ": " << _item[i];
+	for(unsigned int i=0; i < _size; i++){
+		std::cout << i << ": " << _item->get(i);
 		std::cout << std::endl;
 	}
 }
@@ -175,10 +180,11 @@ void Heap<T>::printHeap() const{
 
 template <typename T>
 bool Heap<T>::checkifLeaf(int node){
-	if (_item->get((node*_d)+1) == NULL){
+	if (((node*_d)+1) > _size){
 		return true;
 	}
 	return false;
 }
 
-#endif
+
+#endif /* PRIORITYQ_HPP_ */
