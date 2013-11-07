@@ -178,15 +178,22 @@ void User::displayPendingFriends(){
 void User::acceptFriendRequest(){
 	std::string userinput;
 
+
 	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-		std::cout << "Here are your pending friend requests:" << (*i)->getusername() << std::endl;
+		std::cout << "Here are your pending friend requests: " << (*i)->getusername() << std::endl;
+		std::cout << "Press c to cancel." << std::endl;
 	}
 
-		std::cout << "Please enter the name you would like to accept." << std::endl;
+		std::cout << "Please enter the name you would like to ACCEPT from your pending friend requests." << std::endl;
+		std::cout << "Entry: ";
 		std::cin >> userinput;
+		std::cout << std::endl;
 
 		for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-				if (userinput != (*i)->getusername()){
+				if (userinput == "c"){
+					std::cout << "Action canceled." << std::endl;
+				}
+				else if (userinput != (*i)->getusername()){
 					std::cout << "No user exists in pending friends list. Please try again." << std::endl;
 				}
 				else if (userinput == (*i)->getusername()){
@@ -200,18 +207,24 @@ void User::removePendingRequest(){
 	std::string userinput;
 
 	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-			std::cout << "Here are your pending friend requests:" << (*i)->getusername() << std::endl;
+			std::cout << "Here are your pending friend requests: " << (*i)->getusername() << std::endl;
 	}
 
-	std::cout << "Please enter the name you would like to remove." << std::endl;
+	std::cout << "Please enter the name you would like to REMOVE from your pending friend requests." << std::endl;
+	std::cout << "Press c to cancel." << std::endl;
+	std::cout << "Entry: ";
 	std::cin >> userinput;
+	std::cout << std::endl;
 
 	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-				if (userinput != (*i)->getusername()){
-					std::cout << "No user exists in pending friends list. Please try again." << std::endl;
+			if (userinput == "c"){
+				std::cout << "Action canceled." << std::endl;
 			}
-				else if (userinput == (*i)->getusername()){
-					PendingFriends->removeObject((*i));
+			else if (userinput != (*i)->getusername()){
+				std::cout << "No user exists in pending friends list. Please try again." << std::endl;
+			}
+			else if (userinput == (*i)->getusername()){
+				PendingFriends->removeObject((*i));
 			}
 	}
 
@@ -248,24 +261,18 @@ bool User::pendingEmpty(){
 }
 
 void User::setfriendlist(std::string flist){
-	std::cout << "2. friend: " << flist << std::endl;
 	friendlist = flist;
-	std::cout << "3. friend: " << friendlist << std::endl << std::endl;
 }
 
 void User::setpendinglist(std::string plist){
-//	std::cout << "2. pending: " << plist << std::endl;
 	pendinglist = plist;
-//	std::cout << "3. pending: " << pendinglist << std::endl;
 }
 
 std::string User::getfriendlist(){
-	std::cout << "4. friend: " << friendlist << std::endl;
 	return friendlist;
 }
 
 std::string User::getpendinglist(){
-//	std::cout << "4. pending: " << pendinglist << std::endl;
 	return pendinglist;
 }
 

@@ -32,21 +32,8 @@ bool UserList::is_Empty(std::ifstream& file)
 }
 
 void UserList::exportUserDatabase(){
-//	UserLinkList->SetIteratorBegin();
 	std::ofstream *exportFile = new std::ofstream;
 	exportFile->open("database.txt");
-
-/*
-	for (int i = 0; i < UserLinkList->size(); i++) {
-		std::string tempholder;
-		tempholder = UserLinkList->IteratorValue().exportprintUser();
-		*(exportFile) << tempholder;
-		*(exportFile) << "\n";
-		UserLinkList->IteratorValue().exportWall(exportFile);
-		*(exportFile) << "\n";
-		UserLinkList->IncrementIterator();
-	}
-*/
 
 	if (UserLinkList->size() != 0){
 		for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
@@ -111,7 +98,6 @@ void UserList::importUserDatabase(){
 				newUser->setpassword(userinformationarray[1]);
 				newUser->setaddress(userinformationarray[2]);
 				newUser->setemail(userinformationarray[3]);
-				UserLinkList->push_back(*newUser);
 
 
 			temporary = "";
@@ -148,25 +134,12 @@ void UserList::importUserDatabase(){
 			newUser->setpendinglist(temporary);
 
 
+
+
+			UserLinkList->push_back(*newUser);
+
 	//		std::cout << newUser->getusername() << " ::: " << newUser->getfriendlist() << " :::: " << std::endl;
 
-/* Non-working code
-			while ((position = temporary.find(postdelimiter)) !=  std::string::npos){
-					std::string friendinformationarray[4];
-					int friendcounter = 0;
-					tempfriend = temporary.substr(0, position);
-			// std::cout << tempfriend << std::endl;
-					unsigned long int newpos = 0;
-				while ((newpos = tempfriend.find(delimiter)) !=  std::string::npos){
-					tempitem = tempfriend.substr(0, newpos);
-					std::cout << tempitem << std::endl;
-					friendinformationarray[friendcounter] = tempitem;
-					friendcounter++;
-					temporary.erase(0, position + postdelimiter.length());
-					newUser->importFriends(friendinformationarray);
-				}
-			}
-*/
 
 		} 		// while !importfile.eof
 	} 			// end of if importfile.good();
@@ -179,38 +152,48 @@ void UserList::completeList(){
 		std::string friendlist;
 		std::string pendinglist;
 
-		std::cout << "username: " << (*i).getusername() << std::endl;
-		std::cout << "getfriendlist:" << (*i).getfriendlist() << "?" << std::endl;
 		friendlist = (*i).getfriendlist();
-
 		pendinglist = (*i).getpendinglist();
 
-		std::string tempstring;
+		std::string tempstring = "default";
 		std::string postdelimiter = "|";
 		unsigned long int position = 0;
 
-		while ((position = friendlist.find(postdelimiter)) !=  std::string::npos){
-			tempstring = friendlist.substr(0,position);
-			std::cout << tempstring << std::endl;
-			for (Iterator<User> j = UserLinkList->begin(); j != UserLinkList->end(); ++j){
-				std::cout << tempstring << std::endl;
-				if ((*j).getusername() == tempstring){
-					(*i).importFriends(&(*j));
+		if (friendlist != ""){
+			while ((position = friendlist.find(postdelimiter)) !=  std::string::npos && tempstring != ""){
+					tempstring = friendlist.substr(0,position);
+				if (tempstring != ""){
+					for (Iterator<User> j = UserLinkList->begin(); j != UserLinkList->end(); ++j){
+						std::string usernameholder = (*j).getusername();
+						// find the user in the user data list and save the pointer to that user and push back to the Friends <*User>
+						if (usernameholder == tempstring){
+							(*i).importFriends(&(*j));
+							tempstring.erase(0, position + postdelimiter.length());
+						}
+						else{
+						}
+					}
 				}
 			}
-			// removes the one just iterated
-			tempstring.erase(0, position + postdelimiter.length());
 		}
 
-		std::cout << pendinglist << std::endl;
-		while ((position = pendinglist.find(postdelimiter)) !=  std::string::npos){
-			tempstring = pendinglist.substr(0,position);
-			for (Iterator<User> j = UserLinkList->begin(); j != UserLinkList->end(); ++j){
-				if ((*j).getusername() == tempstring){
-					(*i).importPendingFriends(&(*j));
+		tempstring = "default";
+
+		if (pendinglist != ""){
+			while ((position = pendinglist.find(postdelimiter)) !=  std::string::npos && tempstring != ""){
+					tempstring = pendinglist.substr(0,position);
+				if (tempstring != ""){
+					for (Iterator<User> j = UserLinkList->begin(); j != UserLinkList->end(); ++j){
+						std::string usernameholder = (*j).getusername();
+						if (usernameholder == tempstring){
+							(*i).importPendingFriends(&(*j));
+							tempstring.erase(0, position + postdelimiter.length());
+						}
+						else{
+						}
+					}
 				}
 			}
-			tempstring.erase(0, position + postdelimiter.length());
 		}
 
 
@@ -228,16 +211,6 @@ void UserList::deleteUser(User& u){
 }
 
 User* UserList::checkUser(std::string username){
-/*
-	UserLinkList->SetIteratorBegin();
-		for (int i = 0; i < UserLinkList->size(); i++) {
-			if (username == UserLinkList->IteratorValue().returnUsername()) {
-				return &(UserLinkList->IteratorValue());
-			}
-			UserLinkList->IncrementIterator();
-		}
-*/
-
 
 	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
 		if (username == (*i).getusername()){
@@ -254,7 +227,6 @@ void UserList::removeUser(User* todelete){
 bool UserList::findUser(std::string findusername, User* currentUser){
 	std::string tempuser;
 	int counter = 0;
-//	int inputfriend;
 	LinkedList<User> searchResults;
 
 	bool found = false;
@@ -270,7 +242,8 @@ bool UserList::findUser(std::string findusername, User* currentUser){
 	}
 
 
-/* error in destructor
+/*
+error in destructor
 	std::cout << "Please select the number would you like to be friends with?" << std::endl;
 	std::cout << "Please press -1 to cancel." << std::endl;
 	std::cin >> inputfriend;
@@ -305,8 +278,7 @@ bool UserList::validUser(std::string usercheck){
 
 std::string UserList::fixString(std::string u){
 	std::string s = u;
-	// remove whitespace
-		for (int unsigned i=0; i<s.length(); i++){
+		for (int unsigned i=0; i<s.length(); i++){	// remove whitespace
 	//		cout << s[i] << endl;
 			if (s[i] == ' '){
 				s.erase(i,1);

@@ -38,17 +38,6 @@ void Wall::addPost(std::string message, std::string author){
 }
 
 void Wall::removePost(int id){
-	/*
-	UserWallPosts->SetIteratorBegin();
-			for (int i = 0; i < UserWallPosts->size(); i++) {
-				if (id == UserWallPosts->IteratorValue()->getID()) {
-				//	std::cout << id << " " << UserWallPosts->IteratorValue()->getID() << std::endl;
-					UserWallPosts->removeObject(UserWallPosts->IteratorValue());
-					return;
-				}
-					UserWallPosts->IncrementIterator();
-			}
-	*/
 
 	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
 		if (id == (*i)->getID()){
@@ -60,13 +49,6 @@ void Wall::removePost(int id){
 }
 
 void Wall::printWallPosts(){
-	/*
-	UserWallPosts->SetIteratorBegin();
-			for (int i = 0; i < UserWallPosts->size(); i++) {
-					UserWallPosts->IteratorValue()->printWallPost();
-				UserWallPosts->IncrementIterator();
-			}
-	*/
 
 	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
 		(*i)->printWallPost();
@@ -90,18 +72,6 @@ void Wall::importfromString(std::string id, std::string author, std::string mess
 
 
 void Wall::exporttoString(std::ofstream * exportFile){
-/*
-	UserWallPosts->SetIteratorBegin();
-			for (int i = 0; i < UserWallPosts->size(); i++) {
-					std::string tempvalue;
-					tempvalue = UserWallPosts->IteratorValue()->exportprintWallPost();
-			//		std::cout << tempvalue << std::endl;
-					*(exportFile) << tempvalue;
-					*(exportFile) << "|";
-					UserWallPosts->IncrementIterator();
-			}
-
-*/
 	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
 		std::string tempvalue;
 		tempvalue = (*i)->exportprintWallPost();

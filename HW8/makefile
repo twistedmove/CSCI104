@@ -3,7 +3,7 @@ CC = g++
 CFLAGS = -g -Wall
 
 all : $(OBJS)
-	$(CC) $(LFLAGS) $(OBJS) -o social
+	$(CC) $(CFLAGS) $(OBJS) -o social
 
 wallpost.o : wallpost.h wallpost.cpp
 	$(CC) $(CFLAGS) -c wallpost.cpp

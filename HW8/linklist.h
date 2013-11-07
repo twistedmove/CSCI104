@@ -62,8 +62,8 @@ class Iterator{
 		Iterator(const LinkedList<T> *bag, UserElement<T> *p);
 		T & operator*() const;
 		Iterator<T> operator++();
-		bool operator==(const Iterator &bagIterator);
-		bool operator!=(const Iterator &bagIterator);
+		bool operator==(const Iterator<T> &bagIterator);
+		bool operator!=(const Iterator<T> &bagIterator);
 
 	private:
 		UserElement<T> *current;
@@ -94,13 +94,13 @@ Iterator<T> Iterator<T>::operator++ (){
 }
 
 template <typename T>
-bool Iterator<T>::operator== (const Iterator &listIterator)
+bool Iterator<T>::operator== (const Iterator<T> &listIterator)
 {
 	return (current == listIterator.current && traversingItem == listIterator.traversingItem);
 }
 
 template <typename T>
-bool Iterator<T>::operator!= (const Iterator &listIterator)
+bool Iterator<T>::operator!= (const Iterator<T> &listIterator)
 {
 	return (!this->operator== (listIterator));
 }
@@ -272,6 +272,7 @@ bool LinkedList<T>::isEmpty(){
 /*  PREVIOUS ITERATOR CODE BEGINS  */
 /***********************************/
 
+/*
 //iterator begins at head, the beginning
 template <typename T>
 void LinkedList<T>::SetIteratorBegin(){
@@ -291,7 +292,7 @@ template <typename T>
 T& LinkedList<T>::IteratorValue(){
 	return iterator->item;
 }
-
+*/
 
 
 
