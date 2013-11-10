@@ -12,9 +12,11 @@
 #include "wallpost.h"
 #include <cstdlib>
 #include <sstream>
+#include <iterator>
 
 
 WallPost::WallPost(){
+	UserComments = new LinkedList<WallPost*>;
 	id = -1;
 }
 

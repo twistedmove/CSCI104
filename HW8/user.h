@@ -49,8 +49,10 @@ class User{
 		void addPendingFriend(User*);
 		void acceptFriendRequest();
 		void removePendingRequest();
-		void removeFriend();
+		bool removeFriend(std::string);
+		void removeUserFromFriendList(std::string);
 		bool pendingEmpty();
+		bool isFriend(std::string);
 
 
 	private:

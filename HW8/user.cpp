@@ -14,6 +14,7 @@
 #include <string>
 #include <cstdlib>
 #include <fstream>
+#include <iterator>
 
 User::User(){
 	UserWall = new Wall;
@@ -151,6 +152,9 @@ std::string User::getusername(){
 }
 
 void User::displayFriends(){
+	if (Friends->isEmpty() == true){
+		std::cout << "You have no friends. Go make friends!" << std::endl;
+	}
 //	std::cout << "entered" << std::endl;
 	if (Friends->isEmpty() == false){
 //		std::cout << "inside" << std::endl;
@@ -166,25 +170,50 @@ void User::addPendingFriend(User* pendingFriend){
 }
 
 void User::displayPendingFriends(){
-	if (Friends->isEmpty() == false){
-		{
+	if (PendingFriends->isEmpty() == false){
+			std::cout << "Here are potential friends in your pending list." << std::endl;
 			for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
 				std::cout << (*i)->getusername() << std::endl;
 			}
-		}
+			std::cout << std::endl;
 	}
 }
 
 void User::acceptFriendRequest(){
 	std::string userinput;
 
-
-	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-		std::cout << "Here are your pending friend requests: " << (*i)->getusername() << std::endl;
-		std::cout << "Press c to cancel." << std::endl;
-	}
-
+	if (PendingFriends->isEmpty() == false){
 		std::cout << "Please enter the name you would like to ACCEPT from your pending friend requests." << std::endl;
+		std::cout << "Press c to cancel." << std::endl;
+		std::cout << "Entry: ";
+		std::cin >> userinput;
+
+		for (Iterator<User*> j = PendingFriends->begin(); j != PendingFriends->end(); ++j){
+			if ((*j)->getusername() != ""){
+				if (userinput == "c"){
+					std::cout << "Action canceled." << std::endl;
+					std::cout << std::endl;
+				}
+				else if (userinput != (*j)->getusername()){
+					std::cout << "No user exists in pending friends list. Please try again." << std::endl;
+				}
+				else if (userinput == (*j)->getusername()){
+					Friends->push_back(*j);
+					PendingFriends->removeObject((*j));
+					std::cout << userinput << " is now your friend!" << std::endl;
+					std::cout << std::endl;
+				}
+			}
+		}
+	}
+}
+
+void User::removePendingRequest(){
+	std::string userinput;
+
+	if (pendingEmpty() == false){
+		std::cout << "Please enter the name you would like to REMOVE from your pending friend requests." << std::endl;
+		std::cout << "Press c to cancel." << std::endl;
 		std::cout << "Entry: ";
 		std::cin >> userinput;
 		std::cout << std::endl;
@@ -192,65 +221,73 @@ void User::acceptFriendRequest(){
 		for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
 				if (userinput == "c"){
 					std::cout << "Action canceled." << std::endl;
+					std::cout << std::endl;
 				}
 				else if (userinput != (*i)->getusername()){
 					std::cout << "No user exists in pending friends list. Please try again." << std::endl;
 				}
 				else if (userinput == (*i)->getusername()){
-					Friends->push_back(*i);
 					PendingFriends->removeObject((*i));
+					for (Iterator<User*> j = PendingFriends->begin(); j != PendingFriends->end(); ++j){
+						if ((*j)->getusername() == userinput){
+							std::string thisUser;
+							thisUser = (*i)->getusername();
+							(*j)->removeUserFromFriendList(thisUser);
+						}
+					}
+					std::cout << userinput << "has been successfully removed from your pending friends list." << std::endl;
 				}
 		}
+	}
 }
 
-void User::removePendingRequest(){
-	std::string userinput;
-
+void User::removeUserFromFriendList(std::string deletethisUser){
 	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-			std::cout << "Here are your pending friend requests: " << (*i)->getusername() << std::endl;
+		if (deletethisUser == (*i)->getusername()){
+			Friends->removeObject((*i));
+		}
 	}
-
-	std::cout << "Please enter the name you would like to REMOVE from your pending friend requests." << std::endl;
-	std::cout << "Press c to cancel." << std::endl;
-	std::cout << "Entry: ";
-	std::cin >> userinput;
-	std::cout << std::endl;
-
-	for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
-			if (userinput == "c"){
-				std::cout << "Action canceled." << std::endl;
-			}
-			else if (userinput != (*i)->getusername()){
-				std::cout << "No user exists in pending friends list. Please try again." << std::endl;
-			}
-			else if (userinput == (*i)->getusername()){
-				PendingFriends->removeObject((*i));
-			}
-	}
-
 }
 
-void User::removeFriend(){
-	std::string userinput;
 
-//	if (Friends->isEmpty() == false){
+bool User::removeFriend(std::string userinput){
+		if (userinput == "c"){
+			std::cout << "Action canceled." << std::endl;
+			return false;
+		}
+		if (userinput == ""){
+			std::cout << "No input. Returning to menu." << std::endl;
+			return false;
+		}
+
 		for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
 			std::cout << (*i)->getusername() << std::endl;
 		}
 
-		std::cout << "Please enter the name you would like to remove." << std::endl;
-		std::cin >> userinput;
-
 		for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
-						if (userinput != (*i)->getusername()){
-							std::cout << "No user exists in friends list. Please try again." << std::endl;
-					}
-						else if (userinput == (*i)->getusername()){
-							Friends->removeObject((*i));
-					}
+			if (userinput != (*i)->getusername()){
+				std::cout << "No user exists in friends list. Please try again." << std::endl;
+				return false;
+			}
+			else if (userinput == (*i)->getusername()){
+				Friends->removeObject((*i));
+				return true;
+			}
 		}
-//	}
+
+		return false;
 }
+
+bool User::isFriend(std::string f){
+	for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
+		if ((*i)->getusername() == f){
+			return true;
+		}
+	}
+	return false;
+
+}
+
 
 bool User::pendingEmpty(){
 	if (PendingFriends->isEmpty()){

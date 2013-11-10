@@ -23,6 +23,7 @@ class UserList{
 		void deleteUser(User&);
 		void removeUser(User* todelete);
 		void completeList();
+		void removeFromFriend(std::string,std::string);
 
 		void exportUserDatabase();
 		void importUserDatabase();
@@ -31,6 +32,8 @@ class UserList{
 		bool findUser(std::string, User*);
 		bool validUser(std::string);
 		bool is_Empty(std::ifstream&);
+		bool checkifFriend(std::string, std::string);
+
 
 		std::string fixString(std::string);
 

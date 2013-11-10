@@ -15,6 +15,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <iterator>
 
 Wall::Wall(){
 	UserWallPosts = new LinkedList<WallPost*>;

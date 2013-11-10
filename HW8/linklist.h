@@ -151,7 +151,8 @@ LinkedList<T>::LinkedList(){
 // destructor
 template <typename T>
 LinkedList<T>::~LinkedList(){
-  deleteList();
+	// SOMETHING WRONG WITH MY DESTRUCTOR
+	//deleteList();
 }
 
 

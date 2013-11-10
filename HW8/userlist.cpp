@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <algorithm>
+#include <iterator>
 
 
 UserList::UserList(){
@@ -40,6 +41,7 @@ void UserList::exportUserDatabase(){
 			if((*i).getusername() != ""){
 				std::string tempholder;
 				tempholder = (*i).exportprintUser();
+				*(exportFile) << "\n";
 				*(exportFile) << tempholder;
 				*(exportFile) << "\n";
 				(*i).exportWall(exportFile);
@@ -47,7 +49,6 @@ void UserList::exportUserDatabase(){
 				(*i).exportFriendList(exportFile);
 				*(exportFile) << "\n";
 				(*i).exportPendingList(exportFile);
-				*(exportFile) << "\n";
 			}
 			if ((*i).getusername() == ""){
 				UserLinkList->decSize();
@@ -61,6 +62,7 @@ void UserList::exportUserDatabase(){
 
 void UserList::importUserDatabase(){
 	std::ifstream importFile("database.txt");
+	std::string junk;
 	if (importFile.fail()){
 		std::cout << "*-----------------------------*" << std::endl;
 		std::cout << "| database.txt does not exist |" << std::endl;
@@ -68,6 +70,7 @@ void UserList::importUserDatabase(){
 	}
 	if (!is_Empty(importFile)){
 	if (importFile.good()){
+		std::getline(importFile, junk);
 		while (!importFile.eof()){
 			std::string temporary;
 			std::string tempitem;
@@ -79,7 +82,6 @@ void UserList::importUserDatabase(){
 			std::string userinformationarray[4];
 			int counter = 0;
 			unsigned long int position = 0;
-
 
 // Parses through the User and gets information
 			std::getline(importFile, temporary, '\n');
@@ -126,7 +128,7 @@ void UserList::importUserDatabase(){
 
 // Third line - saves friends list
 			std::getline(importFile, temporary, '\n');
-			std::cout << newUser->getusername() << std::endl;
+			//std::cout << newUser->getusername() << std::endl;
 			newUser->setfriendlist(temporary);
 
 // Fourth line - saves pending friends list
@@ -228,39 +230,17 @@ bool UserList::findUser(std::string findusername, User* currentUser){
 	std::string tempuser;
 	int counter = 0;
 	LinkedList<User> searchResults;
-
 	bool found = false;
+
 	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
 		tempuser = (*i).getusername();
 		if (tempuser.find(findusername) != std::string::npos){
-
 			searchResults.push_back(*i);
 			std::cout << counter << ": " << tempuser << std::endl;
-			counter++;
 			found = true;
 		}
+		counter++;
 	}
-
-
-/*
-error in destructor
-	std::cout << "Please select the number would you like to be friends with?" << std::endl;
-	std::cout << "Please press -1 to cancel." << std::endl;
-	std::cin >> inputfriend;
-
-	if(inputfriend < searchResults.size()){
-		if (inputfriend == -1){
-			std::cout << "Action canceled." << std::endl;
-		}
-		else{
-			try{
-				currentUser->addFriend(&(searchResults.find(inputfriend)));
-			}catch(std::invalid_argument & e){
-				e.what();
-			}
-		}
-	}
-*/
 
 	return found;
 }
@@ -287,5 +267,39 @@ std::string UserList::fixString(std::string u){
 		std::transform(s.begin(), s.end(), s.begin(), ::tolower);
 		return s;
 }
+
+void UserList::removeFromFriend(std::string f, std::string r){
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if (f == (*i).getusername()){
+			(*i).removeFriend(r);
+		}
+	}
+}
+
+
+
+bool UserList::checkifFriend(std::string f, std::string cur){
+	bool one = false;
+	bool two = false;
+
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if ((*i).getusername() == f){
+			(*i).isFriend(cur);
+			one = true;
+		}
+		if ((*i).getusername() == cur){
+			(*i).isFriend(f);
+			two = true;
+		}
+	}
+
+	if (one == true && two == true){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
 
 #endif /* USERLIST_CPP_ */

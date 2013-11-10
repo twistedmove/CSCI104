@@ -9,6 +9,8 @@
 #define WALLPOST_H_
 
 #include <string>
+#include "linklist.h"
+#include "wallpost.h"
 
 class WallPost{
 	public:
@@ -32,6 +34,7 @@ class WallPost{
 		std::string wallmessage;
 		std::string author;
 		int id;
+		LinkedList<WallPost*> *UserComments;
 };
 
 
