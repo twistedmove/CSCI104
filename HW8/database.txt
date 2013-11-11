@@ -4,7 +4,7 @@ tina`password`address`tina@
 
 
 bryan`pass`sserdda`bryan@
-0`bryan`hi this is my wall post|1`bryan`hi 2nd post|2`bryan`this is my 3rd post|
+0`bryan`hi this is my wall post|1`bryan`hi 2nd post|2`bryan`this is my 3rd post|3`stephen`hi im stephen|
 stephen|
 
 bob`pass`add`bob@

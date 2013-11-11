@@ -302,12 +302,12 @@ void UserList::postFriendWall(std::string post, std::string newuser, std::string
 }
 
 void UserList::deleteFriendPost(std::string postid, std::string newuser, std::string author){
+	int result;
+	result = atoi(postid.c_str());
+
 	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
 		if ((*i).getusername() == newuser){
-
-
-
-
+			(*i).getWall()->removeFriendPost(result, author);
 		}
 	}
 }

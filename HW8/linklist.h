@@ -243,7 +243,7 @@ void LinkedList<T>::removeObject(T& todelete){
 		tempCurrent = tempCurrent->next;
 	}
 	if (&todelete == &(_tail->item)){
-		delete _tail;
+		//delete _tail;
 		_tail = tempPrev;
 		tempPrev->next = NULL;
 	}

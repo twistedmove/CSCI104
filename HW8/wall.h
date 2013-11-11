@@ -18,6 +18,7 @@ class Wall{
 		~Wall();
 		void addPost(std::string wallmessage, std::string author);	//insert();
 		void removePost(int id);	//remove();
+		void removeFriendPost(int, std::string);
 
 		void printWallPosts();	//get();
 

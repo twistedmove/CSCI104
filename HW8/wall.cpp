@@ -39,15 +39,34 @@ void Wall::addPost(std::string message, std::string author){
 }
 
 void Wall::removePost(int id){
-
 	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
 		if (id == (*i)->getID()){
 			UserWallPosts->removeObject(*i);
 			return;
 		}
 	}
-
 }
+
+void Wall::removeFriendPost(int id, std::string author){
+	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
+		if (id == (*i)->getID()){
+			if (author != (*i)->getAuthor()){
+				std::cout << std::endl;
+				std::cout << std::endl;
+				std::cout << "You are not the author of this post." << std::endl;
+				std::cout << "ACCESS DENIED." << std::endl;
+				return;
+			}
+			else if (author == (*i)->getAuthor()){
+				std::cout << "wut wut" << std::endl;
+				UserWallPosts->removeObject(*i);
+				return;
+			}
+		}
+	}
+}
+
+
 
 void Wall::printWallPosts(){
 

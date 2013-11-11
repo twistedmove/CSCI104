@@ -251,8 +251,6 @@ int main(){
 																	UserListDatabase->deleteFriendPost(delid ,newusername, username);
 																}
 
-
-
 																cout << endl;
 																friendMenu(newusername, username);
 																break;
