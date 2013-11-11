@@ -24,6 +24,8 @@ class Wall{
 		void exporttoString(std::ofstream *);
 		void importfromString(std::string, std::string, std::string);
 
+		void commentOnWallPost(std::string, std::string, std::string);
+
 
 	private:
 		LinkedList<WallPost*> *UserWallPosts;

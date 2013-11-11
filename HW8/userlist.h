@@ -35,6 +35,11 @@ class UserList{
 		bool checkifFriend(std::string, std::string);
 
 
+		void displayUserWallPost(std::string);
+		void commentFriendWallPost(std::string, std::string, std::string);
+		void postFriendWall(std::string, std::string, std::string);
+		void deleteFriendPost(std::string, std::string, std::string);
+
 		std::string fixString(std::string);
 
 

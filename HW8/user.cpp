@@ -278,6 +278,9 @@ bool User::removeFriend(std::string userinput){
 		return false;
 }
 
+
+
+
 bool User::isFriend(std::string f){
 	for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
 		if ((*i)->getusername() == f){

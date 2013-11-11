@@ -1,9 +1,12 @@
-OBJS = wallpost.o wall.o user.o userlist.o social.o
+OBJS = wallpostcomments.o wallpost.o wall.o user.o userlist.o social.o
 CC = g++
 CFLAGS = -g -Wall
 
 all : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o social
+
+wallpostcomments.o : wallpostcomments.h wallpostcomments.cpp
+	$(CC) $(CFLAGS) -c wallpostcomments.cpp
 
 wallpost.o : wallpost.h wallpost.cpp
 	$(CC) $(CFLAGS) -c wallpost.cpp

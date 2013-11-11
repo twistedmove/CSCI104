@@ -79,8 +79,27 @@ void Wall::exporttoString(std::ofstream * exportFile){
 		*(exportFile) << tempvalue;
 		*(exportFile) << "|";
 	}
+}
 
 
+void Wall::commentOnWallPost(std::string id, std::string usern ,std::string author){
+	char tempcomment[1024];
+	std::string comment;
+	int result;
+
+	result = atoi(id.c_str()); // convert string to int
+
+
+	std::cout << "Please enter your comment. (Max of 1024 characters)" << std::endl;
+	//std::cin.ignore();		//skips the enter
+	std::cin.getline(tempcomment,1024);
+	comment = tempcomment;
+
+	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
+		if ((*i)->getID() == result){
+			(*i)->addComment(comment, author);
+		}
+	}
 }
 
 

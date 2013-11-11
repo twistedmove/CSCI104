@@ -277,6 +277,40 @@ void UserList::removeFromFriend(std::string f, std::string r){
 }
 
 
+void UserList::displayUserWallPost(std::string f){
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if ((*i).getusername() == f){
+			(*i).getWall()->printWallPosts();
+		}
+	}
+}
+
+void UserList::commentFriendWallPost(std::string wpostid, std::string newuser, std::string author){
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if ((*i).getusername() == newuser){
+			(*i).getWall()->commentOnWallPost(wpostid, newuser, author);
+		}
+	}
+}
+
+void UserList::postFriendWall(std::string post, std::string newuser, std::string author){
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if ((*i).getusername() == newuser){
+			(*i).getWall()->addPost(post, author);
+		}
+	}
+}
+
+void UserList::deleteFriendPost(std::string postid, std::string newuser, std::string author){
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if ((*i).getusername() == newuser){
+
+
+
+
+		}
+	}
+}
 
 bool UserList::checkifFriend(std::string f, std::string cur){
 	bool one = false;

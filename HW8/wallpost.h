@@ -10,7 +10,7 @@
 
 #include <string>
 #include "linklist.h"
-#include "wallpost.h"
+#include "wallpostcomments.h"
 
 class WallPost{
 	public:
@@ -29,12 +29,15 @@ class WallPost{
 
 		std::string exportprintWallPost();
 
+		void addComment(std::string, std::string);
+
 
 	private:
 		std::string wallmessage;
 		std::string author;
 		int id;
-		LinkedList<WallPost*> *UserComments;
+		LinkedList<WallPostComments*> *UserComments;
+		int commentidCounter;
 };
 
 

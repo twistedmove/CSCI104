@@ -28,11 +28,18 @@ void friendMenu(string newusername, string username){
 	cout << "You are " << username << endl;
 	cout << "You are on " << newusername << "'s page." << endl;
 	cout << endl;
-	cout << "*------------------------------------*" << endl;
-	cout << "| 1. asdf                            |" << endl;
-	cout << "| 2. adsff                           |" << endl;
-	cout << "| 3. adsf                            |" << endl;
-	cout << "*------------------------------------*" << endl;
+	cout << "*---------------------------------------*" << endl;
+	cout << "|              WALL COMMENT             |" << endl;
+	cout << "| 1. Write on friend's wall.            |" << endl;
+	cout << "| 2. Delete your post on friend's wall. |" << endl;
+	cout << "|                                       |" << endl;
+	cout << "|            WALL POST COMMENT          |" << endl;
+	cout << "| 3. Comment on friend's wallpost.      |" << endl;
+	cout << "| 4. Delete your comment.               |" << endl;
+	cout << "|                                       |" << endl;
+	cout << "| 5. Do not click.                      |" << endl;
+	cout << "| 6. Exit.                              |" << endl;
+	cout << "*---------------------------------------*" << endl;
 }
 
 
@@ -72,6 +79,7 @@ void usermenu(){
 int main(){
 	int selection = 0;
 	int userselection = 0;
+	int select = 0;
 	std::string username;
 	UserList *UserListDatabase = new UserList;
 
@@ -186,8 +194,131 @@ int main(){
 												// if the user is true and is your friend then prompt friend menu
 												if (isUserFriend == true){
 													friendMenu(newusername, username);
+													while(select != 6){
+														cout << "Selection: ";
+														cin >> select;
+														if (cin.fail()){
+															cin.clear();
+															cin.ignore(1024, '\n');
+															cout << "Invalid Selection." << endl;
+															continue;
+														}
+														cin.clear();
+														cin.ignore(1024,'\n');
+														cout << endl;
+
+														switch(select){
+															case 1:	// write on friends wall
+															{
+																char friendpost[1024];
+																std::string post;
+
+																UserListDatabase->displayUserWallPost(newusername);
+																cout << endl;
+
+																cout << "Please enter an message for " << newusername << "'s wall." << endl;
+																cout << "<!-- MAX OF 1024 CHARACTERS --!>" << endl;
+																//std::cin.ignore();
+																std::cin.getline(friendpost,1024);
+																post = friendpost;
+
+																if (post != ""){
+																	UserListDatabase->postFriendWall(post, newusername, username);
+																}
+																else if (post == "" || post == " "){
+																	cout << "You haven't written anything!" << endl;
+																	friendMenu(newusername, username);
+																	break;
+																}
+																cout << endl;
+																friendMenu(newusername, username);
+																break;
+															}
+															case 2: // delete your post on friend's wall
+															{
+																std::string delid;
+																UserListDatabase->displayUserWallPost(newusername);
+																cout << endl;
+																cout << "Which post would you like to delete?" << endl;
+																cout << "Please note that you can only delete posts you are author of." << endl;
+																cout << "Enter 'c' to cancel." << endl;
+																cin >> delid;
+
+																if (delid == "c"){
+																	cout << "<!------ Action canceled. ------!>" << endl;
+																}
+																else if (delid != "c"){
+																	UserListDatabase->deleteFriendPost(delid ,newusername, username);
+																}
+
+
+
+																cout << endl;
+																friendMenu(newusername, username);
+																break;
+															}
+															case 3: // comment on friend's wallpost
+															{
+																std::string comid;
+
+																UserListDatabase->displayUserWallPost(newusername);
+																cout << endl;
+																cout << "Which post would you like to comment on?" << endl;
+																cout << "Enter 'c' to cancel." << endl;
+																cin >> comid;
+																if (comid == "c"){
+																	cout << "<!------ Action canceled. ------!>" << endl;
+																}
+																else if (comid != "c"){
+																	UserListDatabase->commentFriendWallPost(comid, newusername, username);
+																}
+																cout << endl;
+																friendMenu(newusername, username);
+																break;
+															}
+															case 4: // delete comment on friend's wallpost
+															{
+																UserListDatabase->displayUserWallPost(newusername);
+
+																cout << endl;
+																friendMenu(newusername, username);
+																break;
+															}
+															case 5:
+															{
+																cout << "I told you not to click this...." << endl;
+																cout << "This is reserved for some other function." << endl;
+
+																for (int i=0; i <10; i++){
+																	cout << "I will not click this button in the future." << endl;
+																}
+
+																cout << endl;
+																friendMenu(newusername, username);
+																break;
+															}
+															case 6:
+															{
+
+																cout << endl;
+																friendMenu(newusername, username);
+																break;
+															}
+															default:
+															{
+																cout << " *--------------------------------*" << endl;
+																cout << " |        Invalid choice.         |" << endl;
+																cout << " *--------------------------------*" << endl;
+																cout << endl;
+																break;
+															}
+														}
+													}
 												}
-												if (searchUser == true){
+												if (searchUser == true && isUserFriend == true){
+													cout << "User "<< newusername <<" is already your friend." << endl;
+												}
+												else if (searchUser == true){
 													cout << "User(s) exists." << endl;
 												}
 												else{
