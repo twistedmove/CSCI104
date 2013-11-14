@@ -170,7 +170,13 @@ void WallPost::deleteCommentPost(int id, std::string auth){
 	}
 }
 
-int WallPost::timeComparison(){
+int WallPost::returnTime(){
+	int time;
+	time = wprawtime;
+	return time;
+}
+
+int WallPost::returnCreation(){
 	int time;
 	time = wprawtime;
 	return time;

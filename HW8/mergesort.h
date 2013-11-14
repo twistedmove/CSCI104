@@ -15,10 +15,10 @@ class mSort{
 	public:
 		mSort();
 		~mSort();
-		void swap(int [], int, int, bool(*POINTER)(T*, T*));
-		void merge(int [], int, int, int, bool(*POINTER)(T*, T*));
-		void mergeSort(int [], int, int, bool(*POINTER)(T*, T*));
-		int partition (int [], int, int, bool(*POINTER)(T*, T*));
+		void swap(int [], int, int, bool(*POINTER)(T, T));
+		void merge(int [], int, int, int, bool(*POINTER)(T, T));
+		void mergeSort(int [], int, int, bool(*POINTER)(T, T));
+		int partition (int [], int, int, bool(*POINTER)(T, T));
 	private:
 
 };

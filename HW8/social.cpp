@@ -10,6 +10,25 @@
 #include <algorithm>
 using namespace std;
 
+
+bool TimeComparitor(WallPost* A, WallPost* B){
+	if (A->returnTime() >= B->returnTime()){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool CreationComparitor(WallPost* A, WallPost* B){
+	if (A->returnCreation() >= B->returnCreation()){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
 string fixString(std::string newusername){
 	string s = newusername;
 	// remove whitespace
@@ -140,6 +159,7 @@ int main(){
 										switch (userselection){
 											case 1: // display all wall post
 											{
+												currentUser->POINTER = CreationComparitor;
 												int userin = 0;
 												cout << "Sort WallPosts by: " << endl;
 												cout <<	"      [1] Original Made" << endl;
@@ -149,8 +169,14 @@ int main(){
 													cout << "Invalid entry." << endl;
 													break;
 												}
+												if (userin == 1){
+													currentUser->POINTER = CreationComparitor;
+												}
+												else if (userin == 2){
+													currentUser->POINTER = TimeComparitor;
+												}
 
-												currentUser->getWall()->printWallPosts();
+												//currentUser->getWall()->printWallPosts();
 												cout << endl;
 												usermenu();
 												break;

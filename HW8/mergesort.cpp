@@ -15,7 +15,7 @@ template <typename T>
 mSort<T>::~mSort(){}
 
 template <typename T>
-void mSort<T>::swap(int a[], int b, int c, bool(*POINTER)(T* x, T* y))
+void mSort<T>::swap(int a[], int b, int c, bool(*POINTER)(T, T))
 {
 	int temp = a[b];
 	a[b] = a[c];
@@ -23,7 +23,7 @@ void mSort<T>::swap(int a[], int b, int c, bool(*POINTER)(T* x, T* y))
 }
 
 template <typename T>
-void mSort<T>::merge(int a[], int l, int r, int m, bool(*POINTER)(T* x, T* y))
+void mSort<T>::merge(int a[], int l, int r, int m, bool(*POINTER)(T, T))
 {
 	int temp[r+1-l];
 	int i = l;
@@ -44,17 +44,21 @@ void mSort<T>::merge(int a[], int l, int r, int m, bool(*POINTER)(T* x, T* y))
 }
 
 template <typename T>
-void mSort<T>::mergeSort(int a[], int l, int r, bool(*POINTER)(T* x, T* y)){
+void mSort<T>::mergeSort(int a[], int l, int r, bool(*POINTER)(T, T)){
+	if (POINTER == true){
+		return;
+	}
+
 	if (l < r){
 		int m = (l+r)/2;
-		mergeSort(a,l,m,bool(*POINTER)(x, y));
-		mergeSort(a,m+1,r,bool((*POINTER)(T* x, T* y)));
-		merge(a,l,r,m,bool((*POINTER)(T* x, T* y)));
+		mergeSort(a,l,m,POINTER);
+		mergeSort(a,m+1,r,POINTER);
+		merge(a,l,r,m,POINTER);
 	}
 }
 
 template <typename T>
-int mSort<T>::partition(int a[], int l, int r, bool(*POINTER)(T* x, T* y))
+int mSort<T>::partition(int a[], int l, int r, bool(*POINTER)(T, T))
 {
 	int i = l;
 	int p = a[r];
@@ -62,10 +66,12 @@ int mSort<T>::partition(int a[], int l, int r, bool(*POINTER)(T* x, T* y))
 
 	for (int j = l; j < r; j ++)
 	{
-		if (a[j] <= p)
-		{ swap (a, i, j, bool((*POINTER)(T* x, T* y))); i ++; }
+		if (a[j] <= p){
+			swap (a, i, j, POINTER);
+			i ++;
+		}
 	}
-	swap (a, i, r, bool(*POINTER)(T* x, T* y));
+	swap (a, i, r, POINTER);
 	return i;
 }
 

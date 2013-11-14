@@ -10,6 +10,7 @@
 
 #include "user.h"
 #include "wall.h"
+#include "mergesort.h"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -17,10 +18,14 @@
 #include <iterator>
 #include <iostream>
 
+
+
+
 User::User(){
 	UserWall = new Wall;
 	Friends = new LinkedList<User*>;
 	PendingFriends = new LinkedList<User*>;
+	POINTER = CreationComparitor;
 }
 
 
@@ -283,8 +288,6 @@ bool User::removeFriend(std::string userinput){
 
 		return false;
 }
-
-
 
 
 bool User::isFriend(std::string f){

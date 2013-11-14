@@ -55,6 +55,8 @@ class User{
 		bool pendingEmpty();
 		bool isFriend(std::string);
 
+		bool (*POINTER)(WallPost*, WallPost*);
+
 		void exportComments(std::ofstream *);
 
 	private:

@@ -11,6 +11,11 @@
 #include <string>
 #include "linklist.h"
 #include "wallpost.h"
+#include "mergesort.h"
+#include <functional>
+#include <vector>
+#include <iostream>
+#include <cstdlib>
 
 class Wall{
 	public:
@@ -30,6 +35,7 @@ class Wall{
 
 		void exportWallComments(std::ofstream*);
 		void removeCommentonFriendPost(int, int, std::string);
+
 
 	private:
 		LinkedList<WallPost*> *UserWallPosts;
