@@ -1,4 +1,4 @@
-OBJS = wallpostcomments.o wallpost.o wall.o mergesort.o user.o userlist.o social.o
+OBJS = wallpostcomments.o wallpost.o wall.o user.o userlist.o social.o
 CC = g++
 CFLAGS = -g -Wall
 
