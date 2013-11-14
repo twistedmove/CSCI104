@@ -2,8 +2,7 @@
  * sorting.h
  *
  *  Created on: Nov 13, 2013
- *      Author: Kempe
- *  	Modified: Bryan
+ *  	Author: Bryan
  */
 
 #ifndef SORTING_H_
@@ -11,13 +10,18 @@
 
 #include "wallpost.h"
 #include "mergesort.h"
+#include <functional>
 #include <vector>
 #include <iostream>
 #include <cstdlib>
 
 
-// asking for a lot.. especially using comparitors.
-// partial credit for something?
+//this is the right syntax for the function pointer.
+//so if you want mSort to be a pointer that points to the function comapritor, you do:
+
+// mSort = Comparator;
+//and now that mSort points to a function, you can pass it into other functions
+
 bool (*mSort)(WallPost*, WallPost*);
 
 bool Comparitor(WallPost* A, WallPost* B){
@@ -28,9 +32,6 @@ bool Comparitor(WallPost* A, WallPost* B){
 		return false;
 	}
 }
-
-std::vector<WallPost*, std::vector<WallPost*>, mSort> p(Comparitor);
-
 
 
 
