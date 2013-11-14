@@ -59,6 +59,7 @@ class LinkedList{
 template <typename T>
 class Iterator{
 	public:
+		Iterator();
 		Iterator(const LinkedList<T> *bag, UserElement<T> *p);
 		T & operator*() const;
 		Iterator<T> operator++();

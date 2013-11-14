@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <iterator>
+#include <iostream>
 
 User::User(){
 	UserWall = new Wall;
@@ -41,20 +42,31 @@ void User::exportWall(std::ofstream * exportFile){
 	UserWall->exporttoString(exportFile);
 }
 
+void User::exportComments(std::ofstream * exportFile){
+	UserWall->exportWallComments(exportFile);
+}
+
 void User::importWall(std::string array[]){
 	std::string aid;
 	std::string bauthor;
 	std::string cmessage;
+	std::string dtime;
 	aid = array[0];
 	bauthor = array[1];
 	cmessage = array[2];
+	dtime = array[3];
 
 //	std::cout << cmessage << " in user.cpp" << std::endl;
 
 //	std::cout << "user.cpp" <<std::endl;
 
-	UserWall->importfromString(aid,bauthor,cmessage);
+	UserWall->importfromString(aid,bauthor,cmessage, dtime);
 }
+
+void User::importWallComments(std::string array[], int num){
+	UserWall->importComment(array, num);
+}
+
 
 void User::importFriends(User* ifriend){
 	Friends->push_back(ifriend);
@@ -107,9 +119,10 @@ std::string User::exportprintUser(){
 
 
 void User::exportFriendList(std::ofstream * exportFile){
-//		*(exportFile) << '>';
+//	std::cout << "ENTERED" << std::endl;
 	for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
 			std::string tempvalue;
+			std::cout << tempvalue << std::endl;
 			tempvalue = (*i)->getusername();
 			*(exportFile) << tempvalue;
 			*(exportFile) << "|";
@@ -117,7 +130,6 @@ void User::exportFriendList(std::ofstream * exportFile){
 }
 
 void User::exportPendingList(std::ofstream * exportFile){
-	//		*(exportFile) << '<';
 		for (Iterator<User*> i = PendingFriends->begin(); i != PendingFriends->end(); ++i){
 				std::string tempvalue;
 				tempvalue = (*i)->getusername();
@@ -155,9 +167,7 @@ void User::displayFriends(){
 	if (Friends->isEmpty() == true){
 		std::cout << "You have no friends. Go make friends!" << std::endl;
 	}
-//	std::cout << "entered" << std::endl;
 	if (Friends->isEmpty() == false){
-//		std::cout << "inside" << std::endl;
 		for (Iterator<User*> i = Friends->begin(); i != Friends->end(); ++i){
 			std::cout << (*i)->getusername() << std::endl;
 		}
@@ -179,14 +189,10 @@ void User::displayPendingFriends(){
 	}
 }
 
-void User::acceptFriendRequest(){
-	std::string userinput;
+
+void User::acceptFriendRequest(std::string userinput){
 
 	if (PendingFriends->isEmpty() == false){
-		std::cout << "Please enter the name you would like to ACCEPT from your pending friend requests." << std::endl;
-		std::cout << "Press c to cancel." << std::endl;
-		std::cout << "Entry: ";
-		std::cin >> userinput;
 
 		for (Iterator<User*> j = PendingFriends->begin(); j != PendingFriends->end(); ++j){
 			if ((*j)->getusername() != ""){

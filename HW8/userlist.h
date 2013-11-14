@@ -39,8 +39,9 @@ class UserList{
 		void commentFriendWallPost(std::string, std::string, std::string);
 		void postFriendWall(std::string, std::string, std::string);
 		void deleteFriendPost(std::string, std::string, std::string);
-
+		void displayFriendsFriend(std::string);
 		std::string fixString(std::string);
+		void deleteCommentonFriendWall(std::string, std::string, std::string, std::string);
 
 
 	private:

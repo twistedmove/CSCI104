@@ -16,6 +16,7 @@
 #include <iostream>
 #include <sstream>
 #include <iterator>
+#include <time.h>
 
 Wall::Wall(){
 	UserWallPosts = new LinkedList<WallPost*>;
@@ -31,6 +32,13 @@ Wall::~Wall(){
 
 void Wall::addPost(std::string message, std::string author){
 	WallPost *tempwallpost = new WallPost;
+
+	time_t rawtime = time(&rawtime);
+	std::string rtime = ctime(&rawtime);
+
+
+	tempwallpost->setRawTime(rawtime);
+	tempwallpost->setTime(rtime);
 	tempwallpost->setMessage(message);
 	tempwallpost->setAuthor(author);
 	tempwallpost->setID(wallCounter++);
@@ -58,10 +66,17 @@ void Wall::removeFriendPost(int id, std::string author){
 				return;
 			}
 			else if (author == (*i)->getAuthor()){
-				std::cout << "wut wut" << std::endl;
 				UserWallPosts->removeObject(*i);
 				return;
 			}
+		}
+	}
+}
+
+void Wall::removeCommentonFriendPost(int id, int id2, std::string author){
+	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
+		if (id == (*i)->getID()){
+			(*i)->deleteCommentPost(id2, author);
 		}
 	}
 }
@@ -75,7 +90,7 @@ void Wall::printWallPosts(){
 	}
 }
 
-void Wall::importfromString(std::string id, std::string author, std::string message){
+void Wall::importfromString(std::string id, std::string author, std::string message, std::string time){
 	WallPost *newWallPost = new WallPost;
 	UserWallPosts->push_back(newWallPost);
 
@@ -87,7 +102,32 @@ void Wall::importfromString(std::string id, std::string author, std::string mess
 	newWallPost->setID(intid);
 	newWallPost->setAuthor(author);
 	newWallPost->setMessage(message);
+	newWallPost->setTime(time);
+	newWallPost->setRawTime(time);
 	wallCounter++;
+}
+
+void Wall::importComment(std::string array[], int n){
+	std::string id;
+	std::string author;
+	std::string comment;
+	std::string time;
+
+	id = array[0];
+	author = array[1];
+	comment = array[2];
+	time = array[3];
+
+	Iterator<WallPost*> i = UserWallPosts->begin();
+
+	for (int j = 0; j < n; j++){
+		++i;
+	}
+
+	if (i != UserWallPosts->end()){
+		(*i)->importCommentsfromString(id, author, comment, time);
+	}
+
 }
 
 
@@ -97,6 +137,13 @@ void Wall::exporttoString(std::ofstream * exportFile){
 		tempvalue = (*i)->exportprintWallPost();
 		*(exportFile) << tempvalue;
 		*(exportFile) << "|";
+	}
+}
+
+void Wall::exportWallComments(std::ofstream * exportFile){
+	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
+		*(exportFile) << (*i)->exporttoString();
+		*(exportFile) << "~";
 	}
 }
 
@@ -110,7 +157,7 @@ void Wall::commentOnWallPost(std::string id, std::string usern ,std::string auth
 
 
 	std::cout << "Please enter your comment. (Max of 1024 characters)" << std::endl;
-	//std::cin.ignore();		//skips the enter
+	std::cin.ignore();		//skips the enter
 	std::cin.getline(tempcomment,1024);
 	comment = tempcomment;
 

@@ -23,7 +23,8 @@ class User{
 		void editInformation();
 		Wall* getWall();
 
-		void importWall(std::string[]);
+		void importWall(std::string array[]);
+		void importWallComments(std::string array[], int);
 		void importFriends(User*);
 		void importPendingFriends(User*);
 		void exportWall(std::ofstream *);
@@ -47,13 +48,14 @@ class User{
 
 		void addFriend(User*);
 		void addPendingFriend(User*);
-		void acceptFriendRequest();
+		void acceptFriendRequest(std::string);
 		void removePendingRequest();
 		bool removeFriend(std::string);
 		void removeUserFromFriendList(std::string);
 		bool pendingEmpty();
 		bool isFriend(std::string);
 
+		void exportComments(std::ofstream *);
 
 	private:
 		std::string username;

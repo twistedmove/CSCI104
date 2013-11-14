@@ -49,6 +49,8 @@ void UserList::exportUserDatabase(){
 				(*i).exportFriendList(exportFile);
 				*(exportFile) << "\n";
 				(*i).exportPendingList(exportFile);
+				*(exportFile) << "\n";
+				(*i).exportComments(exportFile);
 			}
 			if ((*i).getusername() == ""){
 				UserLinkList->decSize();
@@ -76,7 +78,9 @@ void UserList::importUserDatabase(){
 			std::string tempitem;
 			std::string delimiter = "`";
 			std::string postdelimiter = "|";
+			std::string postpostdelimiter = "~";
 			std::string temppost;
+			std::string tempsubpost;
 			std::string tempfriend;
 			std::string temppending;
 			std::string userinformationarray[4];
@@ -109,7 +113,7 @@ void UserList::importUserDatabase(){
 // Second line - parses through all the wallposts
 			std::getline(importFile, temporary, '\n');
 			while ((position = temporary.find(postdelimiter)) !=  std::string::npos){		// gets the string till '|' - which is the first wallpost
-					std::string wallinformationarray[3];
+					std::string wallinformationarray[4];
 					int newcounter = 0;
 					temppost = temporary.substr(0, position);
 					unsigned long int newpos = 0;
@@ -119,7 +123,7 @@ void UserList::importUserDatabase(){
 					newcounter++;
 					temppost.erase(0, newpos + delimiter.length());
 				}
-				wallinformationarray[2] = temppost;
+				wallinformationarray[3] = temppost;
 				temporary.erase(0, position + postdelimiter.length());
 				newUser->importWall(wallinformationarray);
 			}
@@ -137,6 +141,35 @@ void UserList::importUserDatabase(){
 
 
 
+			temppost = "default";
+			tempsubpost = "default";
+			tempitem = "default";
+
+// Fifth line - parses through all the wallpost comments
+			std::getline(importFile, temporary, '\n');
+			int num = 0;
+				while ((position = temporary.find(postpostdelimiter)) !=  std::string::npos && temppost != ""){		// gets the string till '~' - which is the first wallpost's comment
+						temppost = temporary.substr(0, position);									// temppost holds the first wallpost comment till ~
+						unsigned long int newpos = 0;
+					while ((newpos = temppost.find(postdelimiter)) !=  std::string::npos && tempsubpost != ""){			// gets the string till '|' - which is the first comment)
+							tempsubpost = temppost.substr(0,newpos);								// tempsubpost holds the first comment
+							unsigned long int newerpos = 0;
+							std::string wallinformationarray[4];
+							int newcounter = 0;
+						while ((newerpos = tempsubpost.find(delimiter)) !=  std::string::npos && tempitem != ""){		// gets the string till '`' - which is the comment's data entry
+							tempitem = tempsubpost.substr(0, newerpos);
+							wallinformationarray[newcounter] = tempitem;
+							newcounter++;
+							tempsubpost.erase(0, newerpos + delimiter.length());
+						}
+						//std::cout << wallinformationarray[1] << std::endl;
+						wallinformationarray[3] = tempsubpost;
+						temppost.erase(0, newpos + postdelimiter.length());
+						newUser->importWallComments(wallinformationarray, num);
+					}
+					num++;
+					temppost.erase(0,position + postpostdelimiter.length());
+				}
 
 			UserLinkList->push_back(*newUser);
 
@@ -161,16 +194,19 @@ void UserList::completeList(){
 		std::string postdelimiter = "|";
 		unsigned long int position = 0;
 
-		if (friendlist != ""){
+	if (friendlist != ""){
 			while ((position = friendlist.find(postdelimiter)) !=  std::string::npos && tempstring != ""){
 					tempstring = friendlist.substr(0,position);
+					//std::cout << tempstring << std::endl;
 				if (tempstring != ""){
 					for (Iterator<User> j = UserLinkList->begin(); j != UserLinkList->end(); ++j){
 						std::string usernameholder = (*j).getusername();
 						// find the user in the user data list and save the pointer to that user and push back to the Friends <*User>
 						if (usernameholder == tempstring){
 							(*i).importFriends(&(*j));
-							tempstring.erase(0, position + postdelimiter.length());
+							//std::cout << "before erase:" << tempstring << std::endl;
+							friendlist.erase(0, position + postdelimiter.length());
+							//std::cout << "after erase:" << tempstring << std::endl;
 						}
 						else{
 						}
@@ -276,6 +312,14 @@ void UserList::removeFromFriend(std::string f, std::string r){
 	}
 }
 
+void UserList::displayFriendsFriend(std::string f){
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if (f == (*i).getusername()){
+			(*i).displayFriends();
+		}
+	}
+}
+
 
 void UserList::displayUserWallPost(std::string f){
 	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
@@ -284,6 +328,7 @@ void UserList::displayUserWallPost(std::string f){
 		}
 	}
 }
+
 
 void UserList::commentFriendWallPost(std::string wpostid, std::string newuser, std::string author){
 	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
@@ -312,18 +357,33 @@ void UserList::deleteFriendPost(std::string postid, std::string newuser, std::st
 	}
 }
 
+void UserList::deleteCommentonFriendWall(std::string postid, std::string postidtwo ,std::string newuser , std::string author){
+	int result;
+	result = atoi(postid.c_str());
+
+	int resulttwo;
+	resulttwo = atoi(postidtwo.c_str());
+
+
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if ((*i).getusername() == newuser){
+			(*i).getWall()->removeCommentonFriendPost(result, resulttwo, author);
+		}
+	}
+
+}
+
+
 bool UserList::checkifFriend(std::string f, std::string cur){
 	bool one = false;
 	bool two = false;
 
 	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
 		if ((*i).getusername() == f){
-			(*i).isFriend(cur);
-			one = true;
+			one = (*i).isFriend(cur);
 		}
 		if ((*i).getusername() == cur){
-			(*i).isFriend(f);
-			two = true;
+			two = (*i).isFriend(f);
 		}
 	}
 

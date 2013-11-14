@@ -54,25 +54,25 @@ void menu(){
 
 void usermenu(){
 			cout << "             User Menu v2.0           " << endl;
-			cout << "*------------------------------------*" << endl;
-			cout << "|             WALLPOSTS              |" << endl;
-			cout << "| 1. Display your wall posts.        |" << endl;
-			cout << "| 2. Create a status update.         |" << endl;
-			cout << "| 3. Delete a wall post.             |" << endl;
-			cout << "|                                    |" << endl;
-			cout << "|         PERSONAL SETTINGS          |" << endl;
-			cout << "| 4. Edit personal information.      |" << endl;
-			cout << "| 5. Display personal information.   |" << endl;
-			cout << "|                                    |" << endl;
-			cout << "|              FRIENDS               |" << endl;
-			cout << "| 6. Search for user.                |" << endl;
-			cout << "| 7. Friend a user.                  |" << endl;
-			cout << "| 8. Display all friends.            |" << endl;
-			cout << "| 9. Defriend a user.                |" << endl;
-			cout << "| 10. See pending friend requests.   |" << endl;
-			cout << "|                                    |" << endl;
-			cout << "| 11. Log out.                       |" << endl;
-			cout << "*------------------------------------*" << endl;
+			cout << "*-------------------------------------*" << endl;
+			cout << "|             WALLPOSTS               |" << endl;
+			cout << "| 1. Display your wall posts.         |" << endl;
+			cout << "| 2. Create a status update.          |" << endl;
+			cout << "| 3. Delete a wall post.              |" << endl;
+			cout << "|                                     |" << endl;
+			cout << "|         PERSONAL SETTINGS           |" << endl;
+			cout << "| 4. Edit personal information.       |" << endl;
+			cout << "| 5. Display personal information.    |" << endl;
+			cout << "|                                     |" << endl;
+			cout << "|              FRIENDS                |" << endl;
+			cout << "| 6. Search for user. (Access Friend) |" << endl;
+			cout << "| 7. Friend a user.                   |" << endl;
+			cout << "| 8. Display all friends.             |" << endl;
+			cout << "| 9. Defriend a user.                 |" << endl;
+			cout << "| 10. See pending friend requests.    |" << endl;
+			cout << "|                                     |" << endl;
+			cout << "| 11. Log out.                        |" << endl;
+			cout << "*-------------------------------------*" << endl;
 }
 
 
@@ -184,16 +184,17 @@ int main(){
 												char usernamesearch[256];
 												cout << "Please enter a user to search." << endl;
 												cin.getline (usernamesearch, 256);
+												string searchusername = usernamesearch;
 												string newusername;
 												newusername = fixString(usernamesearch);
 
 												// destructor doesn't work here properly in findUser()
 												bool searchUser = UserListDatabase->findUser(usernamesearch, currentUser);
-												bool isUserFriend = UserListDatabase->checkifFriend(newusername, username);
+												bool isUserFriend = UserListDatabase->checkifFriend(searchusername, username);
 
 												// if the user is true and is your friend then prompt friend menu
 												if (isUserFriend == true){
-													friendMenu(newusername, username);
+													friendMenu(searchusername, username);
 													while(select != 6){
 														cout << "Selection: ";
 														cin >> select;
@@ -213,31 +214,32 @@ int main(){
 																char friendpost[1024];
 																std::string post;
 
-																UserListDatabase->displayUserWallPost(newusername);
+																UserListDatabase->displayUserWallPost(searchusername);
 																cout << endl;
 
-																cout << "Please enter an message for " << newusername << "'s wall." << endl;
+																cout << "Please enter an message for " << searchusername << "'s wall." << endl;
 																cout << "<!-- MAX OF 1024 CHARACTERS --!>" << endl;
 																//std::cin.ignore();
 																std::cin.getline(friendpost,1024);
 																post = friendpost;
 
 																if (post != ""){
-																	UserListDatabase->postFriendWall(post, newusername, username);
+																	UserListDatabase->postFriendWall(post, searchusername, username);
+																	cout << "Success" << endl;
 																}
 																else if (post == "" || post == " "){
 																	cout << "You haven't written anything!" << endl;
-																	friendMenu(newusername, username);
+																	friendMenu(searchusername, username);
 																	break;
 																}
 																cout << endl;
-																friendMenu(newusername, username);
+																friendMenu(searchusername, username);
 																break;
 															}
 															case 2: // delete your post on friend's wall
 															{
 																std::string delid;
-																UserListDatabase->displayUserWallPost(newusername);
+																UserListDatabase->displayUserWallPost(searchusername);
 																cout << endl;
 																cout << "Which post would you like to delete?" << endl;
 																cout << "Please note that you can only delete posts you are author of." << endl;
@@ -252,14 +254,14 @@ int main(){
 																}
 
 																cout << endl;
-																friendMenu(newusername, username);
+																friendMenu(searchusername, username);
 																break;
 															}
 															case 3: // comment on friend's wallpost
 															{
 																std::string comid;
 
-																UserListDatabase->displayUserWallPost(newusername);
+																UserListDatabase->displayUserWallPost(searchusername);
 																cout << endl;
 																cout << "Which post would you like to comment on?" << endl;
 																cout << "Enter 'c' to cancel." << endl;
@@ -268,18 +270,42 @@ int main(){
 																	cout << "<!------ Action canceled. ------!>" << endl;
 																}
 																else if (comid != "c"){
-																	UserListDatabase->commentFriendWallPost(comid, newusername, username);
+																	UserListDatabase->commentFriendWallPost(comid, searchusername, username);
 																}
 																cout << endl;
-																friendMenu(newusername, username);
+																friendMenu(searchusername, username);
 																break;
 															}
 															case 4: // delete comment on friend's wallpost
 															{
-																UserListDatabase->displayUserWallPost(newusername);
+																std::string delid;
+																std::string delidtwo;
+
+																UserListDatabase->displayUserWallPost(searchusername);
+																cout << endl;
+																cout << "Please select the post with the comment you want to delete." << endl;
+																cout << "Please note that you can only delete posts you are author of." << endl;
+																cout << "Enter 'c' to cancel." << endl;
+																cin >> delid;
+																if (delid == "c"){
+																	cout << "<!------ Action canceled. ------!>" << endl;
+																	cout << endl;
+																	friendMenu(searchusername, username);
+																	break;
+																}
+																cout << "Please enter the comment id which you'd like to delete." << endl;
+																cin >> delidtwo;
+
+																if (delid == "c" || delidtwo == "c"){
+																	cout << "<!------ Action canceled. ------!>" << endl;
+																}
+																else if (delid != "c" && delidtwo != "c"){
+																	UserListDatabase->deleteCommentonFriendWall(delid, delidtwo, searchusername, username);
+																}
+
 
 																cout << endl;
-																friendMenu(newusername, username);
+																friendMenu(searchusername, username);
 																break;
 															}
 															case 5:
@@ -287,19 +313,19 @@ int main(){
 																cout << "I told you not to click this...." << endl;
 																cout << "This is reserved for some other function." << endl;
 
-																for (int i=0; i <10; i++){
+																for (int i=0; i <100; i++){
 																	cout << "I will not click this button in the future." << endl;
 																}
 
 																cout << endl;
-																friendMenu(newusername, username);
+																friendMenu(searchusername, username);
 																break;
 															}
 															case 6:
 															{
 
 																cout << endl;
-																friendMenu(newusername, username);
+																friendMenu(searchusername, username);
 																break;
 															}
 															default:
@@ -314,7 +340,7 @@ int main(){
 													}
 												}
 												if (searchUser == true && isUserFriend == true){
-													cout << "User "<< newusername <<" is already your friend." << endl;
+													cout << "User "<< searchusername <<" is already your friend." << endl;
 												}
 												else if (searchUser == true){
 													cout << "User(s) exists." << endl;
@@ -333,9 +359,13 @@ int main(){
 												cin >> friendname;
 												User* friendUser = UserListDatabase->checkUser(friendname);
 												bool checkUser = UserListDatabase->validUser(friendname);
+												bool isUserFriend = UserListDatabase->checkifFriend(friendname, username);
 												if (checkUser == true){
 													if (friendUser->getusername() == currentUser->getusername()){
 														cout << "You cannot add yourself as a friend! Don't be a loner. Go out and make friends!" << endl;
+													}
+													else if (isUserFriend == true){
+														cout << "You are already friends with this person!" << endl;
 													}
 													else{
 														currentUser->addFriend(friendUser);
@@ -382,8 +412,16 @@ int main(){
 													cout << endl;
 												}
 												else{
-													currentUser->acceptFriendRequest();
+													std::string userinput;
+													std::cout << "Please enter the name you would like to ACCEPT from your pending friend requests." << std::endl;
+													std::cout << "Press c to cancel." << std::endl;
+													std::cout << "Entry: ";
+													std::cin >> userinput;
+
+
+													currentUser->acceptFriendRequest(userinput);
 													currentUser->removePendingRequest();
+													UserListDatabase->displayFriendsFriend(userinput);
 												}
 												usermenu();
 

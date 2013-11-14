@@ -10,6 +10,7 @@
 
 #include <string>
 #include <time.h>
+#include <string>
 #include "linklist.h"
 
 class WallPostComments{
@@ -20,34 +21,30 @@ class WallPostComments{
 		void setAuthor(std::string);
 		void setID(int wallCounter);
 		void setTime(std::string);
-		void setHour(std::string);
-		void setMinute(std::string);
-		void setSecond(std::string);
+		void setRawTime(time_t);
 
 		std::string getAuthor();
 		std::string getMessage();
 		std::string getTime();
-		std::string getHour();
-		std::string getMinute();
-		std::string getSecond();
+		time_t getRawTime();
 		int getID();
-
 
 		void readWallPostComments();
 		void editWallPostComments(std::string editedMessage);
 		void printWallPostComments();
 
 		std::string exportprintWallPostComments();
+		std::string intToString(int);
 
+		void importTime(std::string);
 
 	private:
+		int id;
 		std::string comment;
 		std::string author;
 		std::string time;
-		std::string hour;
-		std::string minute;
-		std::string second;
-		int id;
+		time_t rawtime;
+
 };
 
 

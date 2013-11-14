@@ -9,11 +9,19 @@
 #include "wallpost.h"
 #include <cstdlib>
 #include <sstream>
+#include <string>
 #include <time.h>
+#include <stdio.h>
 
 
 WallPostComments::WallPostComments(){
 	id = -1;
+	rawtime = 0;
+//	totalseconds = 0;
+//	dayofyear = 0;
+//	year = 13;
+//	month = 0;
+//	day = 0;
 }
 
 WallPostComments::~WallPostComments(){}
@@ -22,13 +30,15 @@ WallPostComments::~WallPostComments(){}
 void WallPostComments::readWallPostComments(){
 	std::cout << "   >>>> " << "ID: " << id << std::endl;
 	std::cout << "   >>>> " << "User: " << author << std::endl;
-	std::cout << "   >>>> " << "Time: " << time << std::endl;
+	std::cout << "   >>>> " << "Time: " << time;
 	std::cout << "   >>>> " << comment << std::endl;
+	std::cout << "*---------------------------------------------------------*" << std::endl;
 }
 
 void WallPostComments::editWallPostComments(std::string editedMessage){
 	comment = editedMessage;
 }
+
 
 void WallPostComments::setComment(std::string message){
 	comment = message;
@@ -46,28 +56,14 @@ void WallPostComments::setTime(std::string curtime){
 	time = curtime;
 }
 
-void WallPostComments::setHour(std::string t){
-	hour = t;
+void WallPostComments::setRawTime(time_t h){
+	rawtime = h;
 }
 
-void WallPostComments::setMinute(std::string t){
-	minute = t;
-}
 
-void WallPostComments::setSecond(std::string t){
-	second = t;
-}
 
-std::string WallPostComments::getHour(){
-	return hour;
-}
-
-std::string WallPostComments::getMinute(){
-	return minute;
-}
-
-std::string WallPostComments::getSecond(){
-	return second;
+time_t WallPostComments::getRawTime(){
+	return rawtime;
 }
 
 std::string WallPostComments::getTime(){
@@ -78,7 +74,6 @@ int WallPostComments::getID(){
 	return id;
 }
 
-
 std::string WallPostComments::getAuthor(){
 	return author;
 }
@@ -87,11 +82,29 @@ std::string WallPostComments::getMessage(){
 	return comment;
 }
 
+std::string WallPostComments::intToString(int number){
+	std::stringstream ss;
+	ss << number;
+	return ss.str();
+}
+
+void WallPostComments::importTime(std::string curtime){
+	long int tt;
+	tt = atoi(curtime.c_str());
+
+	time_t rwtime = tt;
+	std::string rtime = ctime(&rwtime);
+
+	rawtime = rwtime;
+	time = rtime;
+}
 
 void WallPostComments::printWallPostComments(){
-	std::cout << "ID: " << id << std::endl;
-	std::cout << "Author: " << author << std::endl;
-	std::cout << "Message: " << comment << std::endl;
+	std::cout << "*---------------------------------------------------------*" << std::endl;
+	std::cout << "* ID: " << id << std::endl;
+	std::cout << "* Author: " << author << std::endl;
+	std::cout << "* Message: " << comment << std::endl;
+	std::cout << "*---------------------------------------------------------*" << std::endl;
 	std::cout << std::endl;
 }
 
@@ -100,8 +113,14 @@ void WallPostComments::printWallPostComments(){
 std::string WallPostComments::exportprintWallPostComments(){
 	std::string tempholder;
 	std::stringstream ss;
+	std::string tiempo;
+
+	tiempo = intToString(rawtime);
+
 	ss << id;
 	ss >> tempholder;
-	tempholder += "`" + author + "`" + comment + "`" + hour  + "`" + minute  + "`" + second;
+	tempholder += "`" + author + "`" + comment + "`" + tiempo;
+
+
 	return tempholder;
 }

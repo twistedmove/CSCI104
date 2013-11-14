@@ -23,10 +23,13 @@ class Wall{
 		void printWallPosts();	//get();
 
 		void exporttoString(std::ofstream *);
-		void importfromString(std::string, std::string, std::string);
+		void importfromString(std::string, std::string, std::string, std::string);
+		void importComment(std::string [], int);
 
 		void commentOnWallPost(std::string, std::string, std::string);
 
+		void exportWallComments(std::ofstream*);
+		void removeCommentonFriendPost(int, int, std::string);
 
 	private:
 		LinkedList<WallPost*> *UserWallPosts;
