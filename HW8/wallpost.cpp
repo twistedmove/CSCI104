@@ -170,6 +170,11 @@ void WallPost::deleteCommentPost(int id, std::string auth){
 	}
 }
 
+int WallPost::timeComparison(){
+	int time;
+	time = wprawtime;
+	return time;
+}
 
 void WallPost::addComment(std::string comment, std::string author){
 	WallPostComments *tempcomment = new WallPostComments;

@@ -34,6 +34,7 @@ class WallPost{
 		void editWallPost(std::string editedMessage);
 		void printWallPost();
 
+		int timeComparison();
 		std::string exportprintWallPost();
 		void importCommentsfromString(std::string,std::string,std::string,std::string);
 		void deleteCommentPost(int, std::string);

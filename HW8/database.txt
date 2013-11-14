@@ -10,10 +10,10 @@ Stephen|
 
 ~
 Tina1`PASSWORD`1234 Example Rd.`tina@usc.edu
-0`Tina`This is Tina's first wallpost.`1383793628|
+0`Tina`This is Tina's first wallpost.`1383793628|1`Stephen`Hi this is Stephen.`1384411910|2`Stephen`This is Stephen's second post on Tina's wall.`1384411923|
 Stephen|
 
-~
+~~~
 Tina2`PASSWORD`1234 Example Rd.`tina@usc.edu
 0`Tina`This is Tina's first wallpost.`1383793628|
 Stephen|
