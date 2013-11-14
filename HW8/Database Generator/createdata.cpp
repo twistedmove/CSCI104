@@ -38,7 +38,7 @@ int main(){
 	outputFile << '\n';
 	outputFile << '~';
 
-	for (int i =0; i<9999; i++){
+	for (int i =0; i<90; i++){
 		string t;
 		string tt;
 		string r;
@@ -62,6 +62,30 @@ int main(){
 		tt = intToString(i+1);
 		outp += tt;
 		outp += "|";
+		outp += '\n';
+		outp += '\n';
+		outp += "~";
+	}
+	for (int i =91; i<9999; i++){
+		string t;
+		string tt;
+		string r;
+		int ra;
+
+
+		outp += '\n';
+		outp += "Tina";
+		t = intToString(i);
+		outp += t;
+		outp += "`PASSWORD`1234 Example Rd.`tina@usc.edu";
+		outp += '\n';
+		outp += "0`Tina`This is Tina's first wallpost.`1383";
+		ra = randomgen();
+		r = intToString(ra);
+		outp += r;
+		outp += "|";
+		outp += '\n';
+		outp += "Stephen|";
 		outp += '\n';
 		outp += '\n';
 		outp += "~";

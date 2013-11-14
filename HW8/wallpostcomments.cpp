@@ -17,11 +17,6 @@
 WallPostComments::WallPostComments(){
 	id = -1;
 	rawtime = 0;
-//	totalseconds = 0;
-//	dayofyear = 0;
-//	year = 13;
-//	month = 0;
-//	day = 0;
 }
 
 WallPostComments::~WallPostComments(){}
