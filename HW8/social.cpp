@@ -140,6 +140,16 @@ int main(){
 										switch (userselection){
 											case 1: // display all wall post
 											{
+												int userin = 0;
+												cout << "Sort WallPosts by: " << endl;
+												cout <<	"      [1] Original Made" << endl;
+												cout << "      [2] Recent Activity" << endl;
+												cin >> userin;
+												if (userin > 2 || userin < 1){
+													cout << "Invalid entry." << endl;
+													break;
+												}
+
 												currentUser->getWall()->printWallPosts();
 												cout << endl;
 												usermenu();

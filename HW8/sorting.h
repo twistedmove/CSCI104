@@ -10,10 +10,15 @@
 #define SORTING_H_
 
 #include "wallpost.h"
+#include "mergesort.h"
 #include <vector>
 #include <iostream>
 #include <cstdlib>
 
+
+// asking for a lot.. especially using comparitors.
+// partial credit for something?
+bool (*mSort)(WallPost*, WallPost*);
 
 bool Comparitor(WallPost* A, WallPost* B){
 	if (A->timeComparison() >= A->timeComparison()){
@@ -24,6 +29,7 @@ bool Comparitor(WallPost* A, WallPost* B){
 	}
 }
 
+std::vector<WallPost*, std::vector<WallPost*>, mSort> p(Comparitor);
 
 
 

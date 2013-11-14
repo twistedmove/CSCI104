@@ -17,6 +17,7 @@
 #include <sstream>
 #include <iterator>
 #include <time.h>
+//#include <sorting.h>
 
 Wall::Wall(){
 	UserWallPosts = new LinkedList<WallPost*>;
@@ -84,6 +85,8 @@ void Wall::removeCommentonFriendPost(int id, int id2, std::string author){
 
 
 void Wall::printWallPosts(){
+
+
 
 	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
 		(*i)->printWallPost();

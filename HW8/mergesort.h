@@ -8,14 +8,25 @@
 #ifndef MERGESORT_H_
 #define MERGESORT_H_
 
-void swap (int a[], int b, int c)
+class mSort{
+	public:
+		void swap(int [], int, int);
+		void merge(int [], int, int, int);
+		void mergeSort(int [], int, int);
+		int partition (int [], int, int);
+	private:
+
+};
+
+
+void mSort::swap (int a[], int b, int c)
 {
 	int temp = a[b];
 	a[b] = a[c];
 	a[c] = temp;
 }
 
-void Merge (int a[], int l, int r, int m)
+void mSort::merge (int a[], int l, int r, int m)
 {
 	int temp[r+1-l];
 	int i = l;
@@ -37,16 +48,16 @@ void Merge (int a[], int l, int r, int m)
 	}
 }
 
-void MergeSort (int a[], int l, int r){
+void mSort::mergeSort (int a[], int l, int r){
 	if (l < r){
 		int m = (l+r)/2;
-		MergeSort(a,l,m);
-		MergeSort(a,m+1,r);
-		Merge(a,l,r,m);
+		mergeSort(a,l,m);
+		mergeSort(a,m+1,r);
+		merge(a,l,r,m);
 	}
 }
 
-int partition (int a[], int l, int r)
+int mSort::partition (int a[], int l, int r)
 {
 	int i = l;
 	int p = a[r];
