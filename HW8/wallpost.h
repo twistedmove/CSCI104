@@ -44,6 +44,9 @@ class WallPost{
 
 		std::string exporttoString();
 
+	//	bool (*POINTER)(WallPost*, WallPost*);
+
+
 
 	private:
 		std::string wallmessage;

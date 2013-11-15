@@ -36,6 +36,11 @@ class Wall{
 		void exportWallComments(std::ofstream*);
 		void removeCommentonFriendPost(int, int, std::string);
 
+		int getWallPostSize();
+
+
+		void sort(bool(*POINTER)(WallPost*, WallPost*));
+
 
 	private:
 		LinkedList<WallPost*> *UserWallPosts;

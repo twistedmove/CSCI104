@@ -1,4 +1,4 @@
-OBJS = wallpostcomments.o wallpost.o mergesort.o wall.o user.o userlist.o social.o
+OBJS = wallpostcomments.o wallpost.o wall.o user.o userlist.o social.o
 CC = g++
 CFLAGS = -g -Wall
 
@@ -14,11 +14,11 @@ wallpost.o : wallpost.h wallpost.cpp
 wall.o : wall.h wallpost.h wall.cpp linklist.h
 	$(CC) $(CFLAGS) -c wall.cpp
 
-mergesort.o : mergesort.h mergesort.cpp
-	$(CC) $(CFLAGS) -c mergesort.cpp
-
 user.o : user.h wall.h wallpost.h user.cpp
 	$(CC) $(CFLAGS) -c user.cpp
+
+mergesort.o : mergesort.h mergesort.hpp social.cpp
+	$(CC) $(CFLAGS) -c social.cpp
 
 userlist.o : userlist.h user.h linklist.h userlist.cpp
 	$(CC) $(CFLAGS) -c userlist.cpp

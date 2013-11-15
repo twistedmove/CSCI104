@@ -13,11 +13,12 @@
 #include <string>
 #include <cstdlib>
 #include <fstream>
+#include "mergesort.h"
 #include <iostream>
 #include <sstream>
 #include <iterator>
+#include "priorityQ.h"
 #include <time.h>
-//#include <sorting.h>
 
 Wall::Wall(){
 	UserWallPosts = new LinkedList<WallPost*>;
@@ -30,6 +31,36 @@ Wall::~Wall(){
 	delete UserWallPosts;
 }
 
+int Wall::getWallPostSize(){
+	int count = 0;
+	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
+		count++;
+	}
+	return count;
+}
+
+
+void Wall::sort(bool(*POINTER)(WallPost* A, WallPost* B)){
+
+	Heap<WallPost*> *h = new Heap<WallPost*>(2,true);
+
+	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
+		h->add((*i),POINTER);
+	}
+
+	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
+		//std::cout << "Hello" << std::endl;
+		h->peek()->printWallPost();
+		//std::cout << "Boo" << std::endl;
+		h->remove(POINTER);
+	}
+
+	std::cout << "Uhuh" << std::endl;
+
+	delete h;
+
+
+}
 
 void Wall::addPost(std::string message, std::string author){
 	WallPost *tempwallpost = new WallPost;

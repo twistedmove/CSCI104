@@ -5,6 +5,7 @@
 #include "arraydouble.h"
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 
 
@@ -19,34 +20,43 @@ Heap<T>::Heap(int d, bool maxHeap){
 
 template <typename T>
 Heap<T>::~Heap(){
-	delete _item;
+	delete [] _item;
 }
 
 
 template <typename T>
-void Heap<T>::add(const T& item){
+void Heap<T>::add(const T& item, bool(*POINTER)(WallPost*, WallPost*)){
+
 	_item->push_back(item);
+	std::cout << "Get item in insertion" << _item->get(_size) << std::endl;
 	_size++;
-	trickleUp(_size-1);
+	if(_size != 1){
+		trickleUp(_size-1, POINTER);
+	}
 }
 
 
 template <typename T>
-T& Heap<T>::peek(){
-	return _item[0];
+T Heap<T>::peek(){
+	return _item->get(0);
 }
 
 
 template <typename T>
-void Heap<T>::remove(){
+void Heap<T>::remove(bool(*POINTER)(WallPost*, WallPost*)){
 	if (_size > 1){
+		std::cout << "1" << std::endl;
 		swap(0,_size-1);
+		std::cout << "2" << std::endl;
 		_item->remove(_size-1);
-		trickleDown(0);
+		std::cout << "3" << std::endl;
+		trickleDown(0, POINTER);
+		std::cout << "4" << std::endl;
 		_size--;
 	}
 	else if (_size == 1){
 		_item->remove(0);
+		std::cout << "5" << std::endl;
 		_size--;
 	}
 }
@@ -60,13 +70,13 @@ void Heap<T>::swap(int Aindex, int Bindex){
 
 
 template <typename T>
-void Heap<T>::trickleUp(int node){
+void Heap<T>::trickleUp(int node, bool(*POINTER)(WallPost*, WallPost*)){
 	if (node == 0){
 		return;
 	}
 	int parent = ((node-1)/_d);
 	if (_isMax == true){
-		if (_item->get(node) > _item->get(parent)){
+		if (POINTER(_item->get(node), _item->get(parent)) == true){
 			swap(node, parent);
 		}
 		else{
@@ -74,7 +84,7 @@ void Heap<T>::trickleUp(int node){
 		}
 	}
 	else{
-		if (_item->get(node) < _item->get(parent)){
+		if (POINTER(_item->get(node),_item->get(parent))==false){
 			swap(node, parent);
 		}
 		else{
@@ -82,12 +92,12 @@ void Heap<T>::trickleUp(int node){
 		}
 	}
 
-	trickleUp(parent);
+	trickleUp(parent, POINTER);
 }
 
 // used when removing
 template <typename T>
-void Heap<T>::trickleDown(int node){
+void Heap<T>::trickleDown(int node, bool(*POINTER)(WallPost*, WallPost*)){
 
 
 	if (checkifLeaf(node) == true){
@@ -103,41 +113,51 @@ void Heap<T>::trickleDown(int node){
 	// finds current node's children and add them to the childArray
 	for (int i=0; i<_d-1; i++){
 		if (childIncrementer > _size){
+			std::cout << "A" << std::endl;
 			break;
 		}
 		else{
+			std::cout << "B" << std::endl;
 			childArray[i] = _item->get(childIncrementer++);
 			sizeChildArray++;
 		}
 	}
 
 	if (_isMax == true){
-			ChildIndex = findLargestChildIndex(childArray, sizeChildArray, firstChildIndex);
-		if (_item->get(node) < _item->get(ChildIndex)){
+			std::cout << "C" << std::endl;
+			ChildIndex = findLargestChildIndex(childArray, sizeChildArray, firstChildIndex, POINTER);
+			std::cout << "CC" << std::endl;
+			std::cout << "CHILDINDEX" << _item->get(ChildIndex) << std::endl;
+
+		if (POINTER(_item->get(node), _item->get(ChildIndex)) == false){
+			std::cout << "D" << std::endl;
 			swap(node, ChildIndex);
 		}
 		else{
+			std::cout << "E" << std::endl;
 			return;
 		}
 	}
 	else{
-		ChildIndex = findSmallestChildIndex(childArray, sizeChildArray, firstChildIndex);
-		if (_item->get(node) > _item->get(ChildIndex)){
+		ChildIndex = findSmallestChildIndex(childArray, sizeChildArray, firstChildIndex, POINTER);
+		if (POINTER(_item->get(node), _item->get(ChildIndex)) == true){
+			std::cout << "F" << std::endl;
 			swap(node, ChildIndex);
 		}
 		else{
+			std::cout << "G" << std::endl;
 			return;
 		}
 	}
 
 	delete [] childArray;
 	childArray = NULL;
-	trickleDown(firstChildIndex);
+	trickleDown(firstChildIndex, POINTER);
 }
 
 template <typename T>
-int Heap<T>::findLargestChildIndex(T childArray[], int sizeChildArray, int firstChildIndex){
-	int biggestChild = childArray[0];
+int Heap<T>::findLargestChildIndex(T childArray[], int sizeChildArray, int firstChildIndex, bool(*POINTER)(WallPost*, WallPost*)){
+	T biggestChild = childArray[0];
 	int biggestChildIndex = 0;
 
 	for (int i = 0; i<sizeChildArray; i++){
@@ -154,8 +174,8 @@ int Heap<T>::findLargestChildIndex(T childArray[], int sizeChildArray, int first
 }
 
 template <typename T>
-int Heap<T>::findSmallestChildIndex(T childArray[], int sizeChildArray, int firstChildIndex){
-	int smallestChild = childArray[0];
+int Heap<T>::findSmallestChildIndex(T childArray[], int sizeChildArray, int firstChildIndex, bool(*POINTER)(WallPost*, WallPost*)){
+	T smallestChild = childArray[0];
 	int smallestChildIndex = 0;
 
 	for (int i = 0; i<sizeChildArray; i++){

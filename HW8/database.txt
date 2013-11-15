@@ -1,9 +1,9 @@
 
 Tina`PASSWORD`1234 Example Rd.`tina@usc.edu
-0`Tina`This is Tina's first wallpost.`1384284609|1`Tina`This is Tina's second wallpost.`1384284606|
+0`Tina`This is Tina's first wallpost.`1384284606|1`Tina`This is Tina's second wallpost.`1384284609|2`Tina`This is my third wall post.`1384497805|3`Tina`This is Tina's fourth wall post.`1384497811|
 Stephen|
 
-0`Stephen`1st comment`1384287251|1`Stephen`2nd comment`1384287256|~~
+0`Stephen`1st comment`1384287251|1`Stephen`2nd comment`1384287256|~~~~
 Bryan`PASSWORDONE`1234 Palm Dr.`bryan@usc.edu
 0`Bryan`This is Bryan's first wallpost.`1384283629|
 Stephen|

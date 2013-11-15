@@ -9,19 +9,22 @@
 #define MERGESORT_H_
 
 #include <functional>
+#include <vector>
+
 
 template <typename T>
 class mSort{
 	public:
 		mSort();
 		~mSort();
-		void swap(int [], int, int, bool(*POINTER)(T, T));
-		void merge(int [], int, int, int, bool(*POINTER)(T, T));
-		void mergeSort(int [], int, int, bool(*POINTER)(T, T));
-		int partition (int [], int, int, bool(*POINTER)(T, T));
+		void swap(std::vector<T>, int, int, bool(*POINTER)(T, T));
+		void merge(std::vector<T>, int, int, int, bool(*POINTER)(T, T));
+		void mergeSort(std::vector<T>, int, int, bool(*POINTER)(T, T));
 	private:
 
 };
+
+#include "mergesort.hpp"
 
 
 

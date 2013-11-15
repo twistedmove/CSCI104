@@ -8,11 +8,12 @@
 #include "userlist.h"
 #include <fstream>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
 
 bool TimeComparitor(WallPost* A, WallPost* B){
-	if (A->returnTime() >= B->returnTime()){
+	if (A->returnTime() > B->returnTime()){
 		return true;
 	}
 	else{
@@ -20,6 +21,7 @@ bool TimeComparitor(WallPost* A, WallPost* B){
 	}
 }
 
+/*
 bool CreationComparitor(WallPost* A, WallPost* B){
 	if (A->returnCreation() >= B->returnCreation()){
 		return true;
@@ -28,6 +30,7 @@ bool CreationComparitor(WallPost* A, WallPost* B){
 		return false;
 	}
 }
+*/
 
 string fixString(std::string newusername){
 	string s = newusername;
@@ -159,7 +162,6 @@ int main(){
 										switch (userselection){
 											case 1: // display all wall post
 											{
-												currentUser->POINTER = CreationComparitor;
 												int userin = 0;
 												cout << "Sort WallPosts by: " << endl;
 												cout <<	"      [1] Original Made" << endl;
@@ -170,13 +172,14 @@ int main(){
 													break;
 												}
 												if (userin == 1){
-													currentUser->POINTER = CreationComparitor;
+													currentUser->getWall()->printWallPosts();
 												}
 												else if (userin == 2){
-													currentUser->POINTER = TimeComparitor;
+													//currentUser->getWall()->sort(TimeComparitor);
+													cout << "?" << endl;
+													currentUser->getWall()->printWallPosts();
 												}
-
-												//currentUser->getWall()->printWallPosts();
+												cout << "?" << endl;
 												cout << endl;
 												usermenu();
 												break;

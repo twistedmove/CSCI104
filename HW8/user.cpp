@@ -25,7 +25,6 @@ User::User(){
 	UserWall = new Wall;
 	Friends = new LinkedList<User*>;
 	PendingFriends = new LinkedList<User*>;
-	POINTER = CreationComparitor;
 }
 
 
