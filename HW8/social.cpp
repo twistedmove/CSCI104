@@ -175,11 +175,10 @@ int main(){
 													currentUser->getWall()->printWallPosts();
 												}
 												else if (userin == 2){
-													//currentUser->getWall()->sort(TimeComparitor);
-													cout << "?" << endl;
-													currentUser->getWall()->printWallPosts();
+													currentUser->getWall()->sort(TimeComparitor);
+													//cout << "?" << endl;
 												}
-												cout << "?" << endl;
+												//cout << "?" << endl;
 												cout << endl;
 												usermenu();
 												break;
