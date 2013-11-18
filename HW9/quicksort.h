@@ -8,7 +8,8 @@
 #ifndef QUICKSORT_H_
 #define QUICKSORT_H_
 
-#include <vector>
+#include <iostream>
+#include <cstdlib>
 
 template <typename T>
 class qSort{
@@ -16,7 +17,7 @@ class qSort{
 		void swap(T [] , int, int);
 		int partition(T [], int, int);
 		void quickSort(T [], int, int);
-		void printArray(T [], int, int, int);
+		void printArray(T *, int, int, int);
 
 
 	private:

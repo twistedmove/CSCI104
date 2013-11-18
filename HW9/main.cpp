@@ -10,6 +10,7 @@
 #include <string>
 #include <cstdlib>
 #include "quicksort.h"
+#include <limits>
 using namespace std;
 
 void menu(){
@@ -26,6 +27,76 @@ bool is_Empty(std::ifstream& file)
 {
     return file.peek() == std::ifstream::traits_type::eof();
 }
+
+string compare(string array[], int size){
+	string previous = array[0];
+	string frequent = array[0];
+	int counter = 1;
+	int freqcounter = 1;
+
+
+	for (int i = 1; i < size; i++){
+		if (array[i] == previous){
+			counter++;
+		}
+		else {
+			if (counter > freqcounter){
+				frequent = array[i-1];
+				freqcounter = counter;
+			}
+			previous = array[i];
+			counter = 1;
+		}
+	}
+
+	return frequent;
+}
+
+int binarySearch(int array[], int first, int last, int value){
+	if (last < first){
+		return std::numeric_limits<int>::max();
+	}
+	int middle = (first+last)/2;
+	if (value < array[middle]){
+		return binarySearch(array, first, middle-1, value);
+	}
+	else if (value > array[middle]){
+		return binarySearch(array, middle+1, last, value);
+	}
+	else if (value == array[middle]){
+		return array[middle];
+	}
+	else{
+		return std::numeric_limits<int>::max();
+	}
+}
+
+void findSum(int array[], int size, int sum){
+	int temp = 0;
+	int value = 0;
+	int cur = 0;
+	int first = 0;
+	int last = size;
+
+
+
+	for (int i = 0; i< size; i++){
+		cur = array[i];
+		temp = sum - array[i];
+		value = binarySearch(array, first, last, temp);
+		if (value != std::numeric_limits<int>::max()){
+			cout << "Found!" << endl;
+			cout << "     Value 1: " << cur << endl;
+			cout << "     Value 2: " << value << endl;
+			cout << "     Sum: " << cur+value << endl;
+			break;
+		}
+	}
+	if (value == std::numeric_limits<int>::max()){
+		cout << "No addition of two sums found." << endl;
+	}
+}
+
 
 int getSizefromFile(string fileName){
 	string strsize;
@@ -117,8 +188,6 @@ void importInt(int it[], int size, int &sum){
 
 
 int main(){
-
-
 	int selection = 0;
 	menu();
 	while (selection != 4){
@@ -139,14 +208,19 @@ int main(){
 		{
 			case 1:
 			{
-
+				string popular;
 				string fileName = "string.txt";
 				int size = getSizefromFile(fileName);
 				string *stringList = new string[size];
 
 				importString(stringList, size);
 
+				qSort<string> sorting;
+				sorting.quickSort(stringList,0,size-1);
 
+				popular = compare(stringList, size);
+
+				cout << "Most frequent string is: " << popular << endl;
 				menu();
 				break;
 			}
@@ -157,15 +231,13 @@ int main(){
 
 				int size = getSizefromFile(fileName);
 				int *intList = new int[size];
-
 				importInt(intList, size, sum);
 
-				qSort<int> *sorting = new qSort<int>;
-				sorting->quickSort(intList, 0, size-1);
+				qSort<int> sorting;
+				sorting.quickSort(intList, 0, size-1);
 
-				for (int i=0; i<size; i++){
-					cout << intList[i] << endl;
-				}
+				findSum(intList, size, sum);
+
 
 				menu();
 				break;

@@ -15,28 +15,21 @@
 #include <ctime>
 #include <vector>
 
-template <typename T>
-void printArray(T a[], int left, int right, int middle){
-	for(int i = 0; i<= right; i++){
-		std::cout << a[i];
-	}
-}
 
 template <typename T>
 int qSort<T>::partition(T array[], int left, int right) {
 
-	T pivot = array[right];	//select a random pivot to start
-    int leftindex = left;
+	T pivot = array[right];
+    int i = left;
 
-    for (int i = left; i<right; i++){
+    for (int j = left; j < right; j++){
         if(array[i] <= pivot) {
-        	swap(array, leftindex, i);
-		    leftindex++;
+        	swap(array, i, j);
+		    i++;
         }
 	}
-
-    swap(array, leftindex, right);
-    return leftindex;
+    swap(array, i, right);
+    return i;
 }
 
 template <typename T>
@@ -45,7 +38,6 @@ void qSort<T>::quickSort(T array[], int left, int right) {
 	    int middle = partition(array, left, right);
 	    quickSort(array, left, middle-1);
 	    quickSort(array, middle+1, right);
-	    printArray(array, left, right, middle);
 	}
 }
 
@@ -57,6 +49,21 @@ void qSort<T>::swap (T a[], int i, int j){
 	a[j] = b;
 }
 
+template <typename T>
+void qSort<T>::printArray(T *a, int left, int right, int middle){
+	for (int i = 0; i < left; i ++)
+		std::cout << "   ";
+		for (int i = left; i <= right; i ++){
+			std::cout << a[i];
+			if (i == middle || i == middle-1){
+				std::cout << "|";
+			}
+			else{
+				std::cout << " ";
+			}
+	}
+	std::cout << std::endl;
+}
 
 
 #endif /* QUICKSORT_HPP_ */
