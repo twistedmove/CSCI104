@@ -13,9 +13,10 @@
 template <typename T>
 class qSort{
 	public:
-		void swap(std::vector<T>, int, int);
-		int partition(std::vector<T>, int, int, int, int);
-		void quickSort(std::vector<T>, int, int, int);
+		void swap(T [] , int, int);
+		int partition(T [], int, int);
+		void quickSort(T [], int, int);
+		void printArray(T [], int, int, int);
 
 
 	private:

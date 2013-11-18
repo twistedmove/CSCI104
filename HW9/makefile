@@ -8,7 +8,7 @@ all : $(OBJS)
 quicksort.o : quicksort.h quicksort.hpp
 	$(CC) $(CFLAGS) -c quicksort.hpp
 
-main.o : main.cpp quicksort.h
+main.o : quicksort.h quicksort.hpp main.cpp
 	$(CC) $(CFLAGS) -c main.cpp
 
 

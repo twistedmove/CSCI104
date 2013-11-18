@@ -5,7 +5,6 @@
  *      Author: BryanChong
  */
 
-#include <vector>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -28,6 +27,24 @@ bool is_Empty(std::ifstream& file)
     return file.peek() == std::ifstream::traits_type::eof();
 }
 
+int getSizefromFile(string fileName){
+	string strsize;
+	int intsize;
+
+	ifstream importFile(fileName);
+	if (importFile.fail()){
+		cout << "<!-- Textfile does not exist. --!>" << endl;
+	}
+	if (!is_Empty(importFile)){
+		if (importFile.good()){
+			importFile >> strsize;
+		}
+	}
+	intsize = atoi(strsize.c_str());
+
+	return intsize;
+}
+
 string fixString(string a){
 	for (unsigned int i = 0; i < a.length(); i++){
 		if (a[i] == ' '){
@@ -39,7 +56,8 @@ string fixString(string a){
 }
 
 
-void importString(vector<string> &stringList, int &size){
+void importString(string st[], int size){
+
 	ifstream importFile("string.txt");
 	if (importFile.fail()){
 		cout << "<!-- string.txt does not exist. --!>" << endl;
@@ -51,20 +69,23 @@ void importString(vector<string> &stringList, int &size){
 	if (!is_Empty(importFile)){
 		if (importFile.good()){
 			getline(importFile, tsize, '\n');
-			while(!importFile.eof()){
-				getline(importFile, temp, '\n');
-				temp = fixString(temp);
-				stringList.push_back(temp);
+			if(!importFile.eof()){
+				for (int i=0; i<size; i++){
+					getline(importFile, temp, '\n');
+					temp = fixString(temp);
+					st[i] = temp;
+				}
 			}
 		}
 	}
 
-	size = atoi(tsize.c_str());
 
 	importFile.close();
 }
 
-void importInt(vector<int> &intList,int &size, int &sum){
+void importInt(int it[], int size, int &sum){
+
+
 	ifstream importFile("number.txt");
 	if (importFile.fail()){
 		cout << "<!-- number.txt does not exist. --!>" << endl;
@@ -78,27 +99,25 @@ void importInt(vector<int> &intList,int &size, int &sum){
 
 	if (!is_Empty(importFile)){
 		if (importFile.good()){
-
 			importFile >> tsize;
 			importFile >> tsum;
-
-			while(!importFile.eof()){
-				importFile >> temp;
-				tempint = atoi(temp.c_str());
-				intList.push_back(tempint);
+			if(!importFile.eof()){
+				for (int i=0; i<size; i++){
+					importFile >> temp;
+					tempint = atoi(temp.c_str());
+					it[i] = tempint;
+				}
 			}
 		}
 	}
 
-	size = atoi(tsize.c_str());
 	sum = atoi(tsum.c_str());
-
-
 	importFile.close();
 }
 
 
 int main(){
+
 
 	int selection = 0;
 	menu();
@@ -120,30 +139,33 @@ int main(){
 		{
 			case 1:
 			{
-				vector<string> stringList;
-				int size;
+
+				string fileName = "string.txt";
+				int size = getSizefromFile(fileName);
+				string *stringList = new string[size];
 
 				importString(stringList, size);
-				qSort<string> sorting;
-				sorting.quickSort(stringList,size, 0, size-1);
+
 
 				menu();
 				break;
 			}
 			case 2:
 			{
-				int size;
 				int sum;
+				string fileName = "number.txt";
 
-				vector<int> intList;
+				int size = getSizefromFile(fileName);
+				int *intList = new int[size];
+
 				importInt(intList, size, sum);
-				qSort<int> sorting;
-				sorting.quickSort(intList,size, 0, size-1);
 
-				for (int i = 0; i<intList.size(); i++){
+				qSort<int> *sorting = new qSort<int>;
+				sorting->quickSort(intList, 0, size-1);
+
+				for (int i=0; i<size; i++){
 					cout << intList[i] << endl;
 				}
-
 
 				menu();
 				break;

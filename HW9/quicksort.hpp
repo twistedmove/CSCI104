@@ -1,12 +1,12 @@
 /*
- * quicksort.cpp
+ * quicksort.hpp
  *
  *  Created on: Nov 15, 2013
  *      Author: BryanChong
  */
 
-#ifndef QUICKSORT_CPP_
-#define QUICKSORT_CPP_
+#ifndef QUICKSORT_HPP_
+#define QUICKSORT_HPP_
 
 #include <iostream>
 #include <cstdlib>
@@ -16,36 +16,42 @@
 #include <vector>
 
 template <typename T>
-int qSort<T>::partition(std::vector<T> array, int size, int left, int right, int random) {
-	T pivot = array[random];	//select a random pivot to start
+void printArray(T a[], int left, int right, int middle){
+	for(int i = 0; i<= right; i++){
+		std::cout << a[i];
+	}
+}
+
+template <typename T>
+int qSort<T>::partition(T array[], int left, int right) {
+
+	T pivot = array[right];	//select a random pivot to start
     int leftindex = left;
 
-    for (int i = left; i<random; i++){
+    for (int i = left; i<right; i++){
         if(array[i] <= pivot) {
-           swap(array, leftindex, i);
-           leftindex++;
+        	swap(array, leftindex, i);
+		    leftindex++;
         }
-    	swap(array, leftindex, random);
 	}
+
+    swap(array, leftindex, right);
     return leftindex;
 }
 
 template <typename T>
-void qSort<T>::quickSort(std::vector<T> array, int size, int left, int right) {
+void qSort<T>::quickSort(T array[], int left, int right) {
 	if (left < right){
-	    srand(time(NULL)); // seeding time
-	    int random;
-	    random = rand() % size;
-
-	    int middle = partition(array, size, left, right, random);
-	    quickSort(array, size, left, middle-1);
-	    quickSort(array, size, middle+1, random);
+	    int middle = partition(array, left, right);
+	    quickSort(array, left, middle-1);
+	    quickSort(array, middle+1, right);
+	    printArray(array, left, right, middle);
 	}
 }
 
 
 template <typename T>
-void qSort<T>::swap (std::vector<T> a, int i, int j){
+void qSort<T>::swap (T a[], int i, int j){
 	T b = a[i];
 	a[i] = a[j];
 	a[j] = b;
@@ -53,4 +59,4 @@ void qSort<T>::swap (std::vector<T> a, int i, int j){
 
 
 
-#endif /* QUICKSORT_CPP_ */
+#endif /* QUICKSORT_HPP_ */
