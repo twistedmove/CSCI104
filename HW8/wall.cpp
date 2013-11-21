@@ -42,6 +42,7 @@ int Wall::getWallPostSize(){
 
 void Wall::sort(bool(*POINTER)(WallPost* A, WallPost* B)){
 
+	int counter = 0;
 	Heap<WallPost*> *h = new Heap<WallPost*>(2,true);
 
 	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
@@ -49,15 +50,13 @@ void Wall::sort(bool(*POINTER)(WallPost* A, WallPost* B)){
 	}
 
 	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
-		//std::cout << "Hello" << std::endl;
-		h->peek()->printWallPost();
-		//std::cout << "Boo" << std::endl;
-		h->remove(POINTER);
+		counter++;
+			h->peek()->printWallPost();
+			h->remove(POINTER);
 	}
 
-	std::cout << "Uhuh" << std::endl;
 
-	delete h;
+	//delete h;
 
 
 }

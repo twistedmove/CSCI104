@@ -18,7 +18,7 @@ Stephen`PASSWORDTHREE`1234 McClintock Dr.`fds@usc.edu
 0`Stephen`This is Stephen's first wallpost.`1384284665|
 Bob|Bryan|Tina|
 
-~
+0`Tina`Hi this is Tina and this is a comment on your wallpost Stephen.`1384900535|~
 Steven`PASSWORDFOUR`1234 Elm Dr.`steven@usc.edu
 0`Steven`This is Steven's first wallpost.`1384284683|
 Tony|

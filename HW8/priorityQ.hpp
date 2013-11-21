@@ -28,7 +28,7 @@ template <typename T>
 void Heap<T>::add(const T& item, bool(*POINTER)(WallPost*, WallPost*)){
 
 	_item->push_back(item);
-	std::cout << "Get item in insertion" << _item->get(_size) << std::endl;
+	//std::cout << "Get item in insertion" << _item->get(_size) << std::endl;
 	_size++;
 	if(_size != 1){
 		trickleUp(_size-1, POINTER);
@@ -45,18 +45,13 @@ T Heap<T>::peek(){
 template <typename T>
 void Heap<T>::remove(bool(*POINTER)(WallPost*, WallPost*)){
 	if (_size > 1){
-		std::cout << "1" << std::endl;
 		swap(0,_size-1);
-		std::cout << "2" << std::endl;
 		_item->remove(_size-1);
-		std::cout << "3" << std::endl;
 		trickleDown(0, POINTER);
-		std::cout << "4" << std::endl;
 		_size--;
 	}
 	else if (_size == 1){
 		_item->remove(0);
-		std::cout << "5" << std::endl;
 		_size--;
 	}
 }
@@ -113,39 +108,31 @@ void Heap<T>::trickleDown(int node, bool(*POINTER)(WallPost*, WallPost*)){
 	// finds current node's children and add them to the childArray
 	for (int i=0; i<_d-1; i++){
 		if (childIncrementer > _size){
-			std::cout << "A" << std::endl;
 			break;
 		}
 		else{
-			std::cout << "B" << std::endl;
 			childArray[i] = _item->get(childIncrementer++);
 			sizeChildArray++;
 		}
 	}
 
 	if (_isMax == true){
-			std::cout << "C" << std::endl;
 			ChildIndex = findLargestChildIndex(childArray, sizeChildArray, firstChildIndex, POINTER);
-			std::cout << "CC" << std::endl;
-			std::cout << "CHILDINDEX" << _item->get(ChildIndex) << std::endl;
-
-		if (POINTER(_item->get(node), _item->get(ChildIndex)) == false){
-			std::cout << "D" << std::endl;
-			swap(node, ChildIndex);
-		}
+			if (_item->get(ChildIndex) != NULL){	//HEREEEEE
+				if (POINTER(_item->get(node), _item->get(ChildIndex)) == false){
+					swap(node, ChildIndex);
+				}
+			}
 		else{
-			std::cout << "E" << std::endl;
 			return;
 		}
 	}
 	else{
 		ChildIndex = findSmallestChildIndex(childArray, sizeChildArray, firstChildIndex, POINTER);
 		if (POINTER(_item->get(node), _item->get(ChildIndex)) == true){
-			std::cout << "F" << std::endl;
 			swap(node, ChildIndex);
 		}
 		else{
-			std::cout << "G" << std::endl;
 			return;
 		}
 	}
