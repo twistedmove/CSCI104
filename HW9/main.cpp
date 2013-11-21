@@ -254,7 +254,8 @@ int main(){
 				cout << "Please enter the student's GPA, out of 4.0." << endl;
 				cin >> gpa;
 				TwoThreeTree<int, float> tree(id, gpa);
-
+			//	tree.print();
+				cout << "Read README.txt and source code." << endl;
 
 				menu();
 				break;

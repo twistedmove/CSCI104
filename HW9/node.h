@@ -18,8 +18,6 @@ class Node {
 		Node (const KeyType & lKey, const ValueType & lValue, const KeyType & rKey, const ValueType & rValue); // two keys
 		~Node (); // nothing dynamically
 
-		bool returnisLeaf();
-
 		void setnumberOfKeys(int);
 		std::string getType();
 
@@ -27,11 +25,11 @@ class Node {
 		int numberOfElements;	// elements in this node
 		KeyType leftKey, rightKey;
 		ValueType leftValue, rightValue;
-		KeyType midKey;
-		ValueType midValue;
+		KeyType midKey;	// then split
+		ValueType midValue; // then split
 
 		Node<KeyType, ValueType> *parent;	// i know you want the index, but i'm going to make it a pointer for simplicity sake
-		Node<KeyType, ValueType> child[4];
+		//Node<KeyType, ValueType> *child;
 
 };
 

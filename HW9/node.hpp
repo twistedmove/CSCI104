@@ -15,6 +15,7 @@ Node<KeyType, ValueType>::Node (const KeyType & key, const ValueType & value): l
 	numberOfElements = 0;
 	parent = NULL;
 	_isLeaf = true;
+	//child = new Node<KeyType, ValueType>[4];
 }
 
 template <class KeyType, class ValueType>
@@ -22,15 +23,11 @@ Node<KeyType, ValueType>::Node (const KeyType & lKey, const ValueType & lValue, 
 	numberOfElements = 0;
 	parent = NULL;
 	_isLeaf = true;
+	//child = new Node<KeyType, ValueType>[4];
 }
 
 template <class KeyType, class ValueType>
 Node<KeyType, ValueType>::~Node (){}
-
-template <class KeyType, class ValueType>
-bool Node<KeyType, ValueType>::returnisLeaf(){
-	return _isLeaf;
-}
 
 template <class KeyType, class ValueType>
 void Node<KeyType, ValueType>::setnumberOfKeys(int val){

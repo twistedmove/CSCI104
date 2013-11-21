@@ -29,7 +29,7 @@ class TwoThreeTree : private std::vector<Node<KeyType, ValueType> > {
 		void borrowLeaf(Node<KeyType, ValueType>);
 		void borrowInternal(Node<KeyType, ValueType>);
 
-
+		void print();
 	private:
 		int _totalNodes;
 		Node<KeyType, ValueType> *_root;

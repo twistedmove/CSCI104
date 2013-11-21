@@ -160,7 +160,7 @@ Node<KeyType, ValueType> TwoThreeTree<KeyType, ValueType>::mergeLeaf(Node<KeyTyp
 	for (int i=0; i<3; i++){
 		par.child[i] = par.child[i+1];
 	}
-
+	par.numberOfElements--;
 	if (par.numberOfElements < 1){
 		borrowInternal(par);
 	}
@@ -173,6 +173,26 @@ Node<KeyType, ValueType> TwoThreeTree<KeyType, ValueType>::mergeInternal(Node<Ke
 	if(A.numberOfElements == 0){
 		A.child[1] = B.child[0];
 		A.child[2] = B.child[1];
+		A.leftKey = par.leftKey;
+		A.leftValue = par.leftValue;
+		A.rightValue = B.leftValue;
+	}
+	else{
+		A.rightKey = par.leftKey;
+		A.rightValue = par.leftValue;
+		A.child[2] = B.child[0];
+	}
+	delete(B);
+	A.numberofElements = 2;
+	par.leftKey = NULL;
+	par.leftValue = NULL;
+
+	for (int i=0; i<3; i++){
+		par.child[i] = par.child[i+1];
+	}
+	par.numberOfElements--;
+	if (par.numberOfElements < 1){
+		borrowInternal(par);
 	}
 
 }
@@ -200,6 +220,31 @@ void TwoThreeTree<KeyType, ValueType>::remove(const KeyType & key){
 			borrowLeaf(removable);
 		}
 		_totalNodes--;
+}
+
+template <class KeyType, class ValueType>
+void TwoThreeTree<KeyType, ValueType>::borrowLeaf(Node<KeyType, ValueType> A){
+	if (A.numberOfElements <= 1 && A.parent != NULL){
+		Node<KeyType, ValueType> par = A.parent;
+		int counter = 0;
+		for (int i=0; i<4; i++){
+			if (par.child[i] == A){
+				counter++;
+			}
+		}
+
+		Node<KeyType, ValueType> parleft = par.child[counter+1];
+		Node<KeyType, ValueType> parright = par.child[counter-1];
+
+		if (parright != NULL && parright.numberOfElements == 3){
+			KeyType tempkey = parright.leftKey;
+			ValueType tempval = parright.leftValue;
+		}
+
+		par.leftKey = NULL;
+		par.leftValue = NULL;
+	}
+
 }
 
 #endif /* TREE_CPP_ */
