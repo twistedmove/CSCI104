@@ -10,6 +10,8 @@
 #include <string>
 #include <cstdlib>
 #include "quicksort.h"
+#include "tree.h"
+#include "node.h"
 #include <limits>
 using namespace std;
 
@@ -244,6 +246,15 @@ int main(){
 			}
 			case 3:
 			{
+				int id;
+				float gpa;
+
+				cout << "Please insert the student id." << endl;
+				cin >> id;
+				cout << "Please enter the student's GPA, out of 4.0." << endl;
+				cin >> gpa;
+				TwoThreeTree<int, float> tree(id, gpa);
+
 
 				menu();
 				break;
