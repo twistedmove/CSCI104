@@ -60,7 +60,6 @@ void Hashtable<KeyType, ValueType>::checkLoad(){
 		hashList = newList;
 		_capacity = newcapacity;
 	}
-
 }
 
 
