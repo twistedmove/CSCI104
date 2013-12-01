@@ -359,7 +359,6 @@ int main(){
 				ttable.destroy();
 				stable.destroy();
 				menu();
-				times++;
 				break;
 			}
 			case 4:

@@ -73,7 +73,7 @@ void Hashtable<KeyType, ValueType>::rehashAdd (const KeyType & key, const ValueT
 
 template <class KeyType, class ValueType>
 void Hashtable<KeyType, ValueType>::add (const KeyType & key, const ValueType & value){
-//	checkLoad();
+	checkLoad();
 
 	int index = createHash(key);
 	Node<KeyType, ValueType> newNode(key, value);
