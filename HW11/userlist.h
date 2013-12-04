@@ -19,7 +19,7 @@ class UserList{
 		UserList();
 		~UserList();
 
-		void addUser(User&);
+		void addUser(User&, std::string, std::string, std::string);
 		void deleteUser(User&);
 		void removeUser(User* todelete);
 		void completeList();
@@ -28,7 +28,8 @@ class UserList{
 		void exportUserDatabase();
 		void importUserDatabase();
 
-		User* checkUser(std::string username);
+		User* checkUser(std::string);
+		bool checkPassword(std::string, std::string);
 		bool findUser(std::string, User*);
 		bool validUser(std::string);
 		bool is_Empty(std::ifstream&);

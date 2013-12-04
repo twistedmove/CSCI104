@@ -95,24 +95,10 @@ void User::printInformation(){
 
 }
 
-void User::editInformation(){
-	char tempaddress[512];
-
-	std::cout << "Enter your new password." << std::endl;
-	std::cin >> password;
-	std::cout << "Enter your new address." << std::endl;
-	std::cin.ignore();		//skips the enter
-	std::cin.getline(tempaddress,512);
-	address = tempaddress;
-	std::cout << "Enter your new email." << std::endl;
-	std::cin >> email;
-
-	std::cout << "Information List: Do not share this information." << std::endl;
-	std::cout << "------------------------------------------------" << std::endl;
-	std::cout << "Username: " << username << std::endl;
-	std::cout << "Password: " << password << std::endl;
-	std::cout << "Your address is: " << address << std::endl;
-	std::cout << "Email: " << email << std::endl;
+void User::editInformation(std::string pword, std::string aress, std::string mail){
+	password = pword;
+	address = aress;
+	email = mail;
 }
 
 std::string User::exportprintUser(){
@@ -165,6 +151,18 @@ void User::addFriend(User* newFriend){
 
 std::string User::getusername(){
 	return username;
+}
+
+std::string User::getaddress(){
+	return address;
+}
+
+std::string User::getemail(){
+	return email;
+}
+
+std::string User::getpassword(){
+	return password;
 }
 
 void User::displayFriends(){

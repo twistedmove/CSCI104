@@ -149,6 +149,7 @@ void ArrayList<T>::clear(){
 		array[i] = NULL;
 	}
 	delete [] array;
+	_size = 0;
 }
 
 template <typename T>
@@ -157,8 +158,8 @@ void ArrayList<T>::expandArray(){
 	for (int i = 0; i < _size; i++){
 		newarray[i] = array[i];
 	}
+		delete [] array;
 		array = newarray;
-		delete [] newarray;
 }
 
 

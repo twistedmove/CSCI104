@@ -11,7 +11,7 @@ wallpostcomments.o : wallpostcomments.h wallpostcomments.cpp
 wallpost.o : wallpost.h wallpost.cpp
 	$(CC) $(CFLAGS) -c wallpost.cpp
 
-wall.o : wall.h wallpost.h wall.cpp linklist.h
+wall.o : wall.h wallpost.h wall.cpp linklist.h priorityQ.h priorityQ.hpp arraydouble.h mergesort.h mergesort.hpp
 	$(CC) $(CFLAGS) -c wall.cpp
 
 user.o : user.h wall.h wallpost.h user.cpp

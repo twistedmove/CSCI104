@@ -1,15 +1,20 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+#include <cstdio>
+#include <sstream>
 #include "linklist.h"
 #include "wall.h"
 #include "wallpost.h"
 #include "user.h"
 #include "userlist.h"
-#include <fstream>
-#include <algorithm>
-#include <vector>
+#define LR(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
 using namespace std;
+
+
 
 
 bool TimeComparitor(WallPost* A, WallPost* B){
@@ -31,6 +36,136 @@ bool CreationComparitor(WallPost* A, WallPost* B){
 	}
 }
 */
+
+// constants for md5 hash
+const int k[64] = {0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee , 0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501 , 0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be , 0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821 , 0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa , 0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8 , 0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed , 0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a , 0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c , 0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70 , 0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05 , 0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665 , 0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039 , 0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1 , 0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1 , 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
+const int r[] = { 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21};
+
+
+bool addZero(string a){
+    string array[26] = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+    bool exists = std::find(std::begin(array), std::end(array), a) != std::end(array);
+    if (exists)
+        return true;
+    else
+        return false;
+}
+
+string convertIntToHex(int x){
+    stringstream ss;
+    ss << std::hex << x;
+    string result(ss.str());
+
+    if (result == "0" || result == "1" ||result == "2" ||result == "3" ||result == "4" ||result == "5" ||result == "6" ||result == "7" ||result == "8" ||result == "9"){
+        return '0'+result;
+    }
+    else if (addZero(result)){
+        return '0'+result;
+    }
+    return result;
+}
+
+
+string convertIntToString(int number){
+    std::stringstream ss;
+    ss << number;
+    return ss.str();
+}
+
+int convertHexToInt(int x){
+    stringstream ss;
+    ss >> std::hex >> x;
+    return x;
+}
+
+void convertToBit(unsigned long int a, unsigned char *c){
+    c[0] = (unsigned char)a;
+    c[1] = (unsigned char)(a = 8);
+    c[2] = (unsigned char)(a = 16);
+    c[3] = (unsigned char)(a = 24);
+}
+
+unsigned long int convertToInt(const unsigned char *a){
+//bitwise operation
+    // return if either char that isn't NULL
+    return (unsigned long int) a[0] | ((unsigned long int) a[1] * 256) | ((unsigned long int) a[2] * 65536) | ((unsigned long int) a[3] * 16777216);
+}
+
+void md5(const unsigned char *initialM, unsigned int initialL, unsigned char *encrypt) {
+    unsigned long int hashOne;
+    unsigned long int hashTwo;
+    unsigned long int hashThree;
+    unsigned long int hashFour;
+    unsigned char *code = NULL;
+    unsigned int newLength;
+    unsigned int j;
+    unsigned long int w[16];
+    unsigned long int a, b, c, d, e, f, temp;
+    int i;
+
+// state variables for md5
+    hashOne = 0x67452301;
+    hashTwo = 0xefcdab89;
+    hashThree = 0x98badcfe;
+    hashFour = 0x10325476;
+
+    for (newLength = initialL + 1; newLength % (64) != 56; newLength++){};
+
+    code = new unsigned char(newLength + 8);
+    memcpy(code, initialM, initialL);
+    code[initialL] = 0x80;
+    for (j = initialL + 1; j < newLength; j++){
+        code[j] = 0;
+    }
+    convertToBit(initialL * 8, code + newLength);
+    convertToBit(initialL >> 29, code + newLength + 4);
+
+    for(j=0; j<newLength; j += (512/8)) {
+        for (i = 0; i < 16; i++){
+            w[i] = convertToInt(code + j + i*4);
+        }
+
+            a = hashOne;
+            b = hashTwo;
+            c = hashThree;
+            d = hashFour;
+
+    //adopted from wiki pseudocode for bits
+        for(i = 0; i<64; i++) {
+            if (i < 16) {
+                e = (b & c) | ((~b) & d);
+                f = i;
+            } else if (i < 32) {
+                e = (d & b) | ((~d) & c);
+                f = (5*i + 1) % 16;
+            } else if (i < 48) {
+                e = b ^ c ^ d;
+                f = (3*i + 5) % 16;
+            } else {
+                e = c ^ (b | (~d));
+                f = (7*i) % 16;
+            }
+
+            temp = d;
+            d = c;
+            c = b;
+            b = b + LR((a + e + k[i] + w[f]), r[i]);
+            a = temp;
+
+        }
+        hashOne += a;
+        hashTwo += b;
+        hashThree += c;
+        hashFour += d;
+
+    }
+    delete code;
+
+    convertToBit(hashOne, encrypt);
+    convertToBit(hashTwo, encrypt + 4);
+    convertToBit(hashThree, encrypt + 8);
+    convertToBit(hashFour, encrypt + 12);
+}
 
 string fixString(std::string newusername){
 	string s = newusername;
@@ -135,363 +270,425 @@ int main(){
 						// Login function
 							case 1:
 								{
-									cout << "Please enter your username." << endl;
-									cout << "Username: ";
-									cin >> username;
-									User* currentUser = UserListDatabase->checkUser(username);
-									//cout << "Please enter your password." << endl;
-									if (currentUser != NULL){
-									cout << "Welcome back " << username << "!" << endl;
-									cout << endl;
+											std::string userpword;
+											cout << "Please enter your username." << endl;
+											cout << "Username: ";
+											cin >> username;
+											User* currentUser = UserListDatabase->checkUser(username);
+											cout << "Please enter your password." << endl;
+											cout << "Password: ";
+											cin >> userpword;
+											int tlength;
+											unsigned char tencrypt[16];
+											string tfinal;
 
-									usermenu();
+											tlength = userpword.size();
+											char *tcode = new char[userpword.size()+1];
+											strcpy(tcode, userpword.c_str());
+											md5((unsigned char*)tcode, tlength, tencrypt);
+											for (int j = 0; j <16; j++){
+												tfinal += convertIntToHex(tencrypt[j]);
+											}
+											bool validPass = UserListDatabase->checkPassword(tfinal, username);
 
-									while (userselection !=11){
-										cout << "Selection: ";
-										cin >> userselection;
-										if (cin.fail()){
-											cin.clear();
-											cin.ignore(1024, '\n');
-											cout << "Invalid Selection." << endl;
-											continue;
-										}
-										cin.clear();
-										cin.ignore(1024,'\n');
+											if (currentUser != NULL && validPass == false){
+												cout << "Invalid Password." << endl;
+												menu();
+												delete [] tcode;
+												break;
+											}
+											else if (currentUser != NULL && validPass == true){
+											cout << "Welcome back " << username << "!" << endl;
+											cout << endl;
 
-										cout << endl;
-										switch (userselection){
-											case 1: // display all wall post
-											{
-												int userin = 0;
-												cout << "Sort WallPosts by: " << endl;
-												cout <<	"      [1] Original Made" << endl;
-												cout << "      [2] Recent Activity" << endl;
-												cin >> userin;
-												if (userin > 2 || userin < 1){
-													cout << "Invalid entry." << endl;
-													break;
+											usermenu();
+
+											while (userselection !=11){
+												cout << "Selection: ";
+												cin >> userselection;
+												if (cin.fail()){
+													cin.clear();
+													cin.ignore(1024, '\n');
+													cout << "Invalid Selection." << endl;
+													continue;
 												}
-												if (userin == 1){
-													currentUser->getWall()->printWallPosts();
-												}
-												else if (userin == 2){
-													currentUser->getWall()->sort(TimeComparitor);
-													//cout << "?" << endl;
-												}
-												//cout << "?" << endl;
-												cout << endl;
-												usermenu();
-												break;
-											}
-											case 2: // create a new wall post
-											{
-												string newmessage;
-												char messagepost[512];
-												cout << "Please enter a status update to your wall." << endl;
-												cin.getline(messagepost,512);
-												newmessage = messagepost;
-												currentUser->addWallPost(newmessage);
-												cout << endl;
-												usermenu();
-												break;
-											}
-											case 3:	// delete a wallpost
-											{
-												int id;
-												cout << "Please enter the post ID number you wish to remove." << endl;
-												cin >> id;
-												currentUser->removeWallPost(id);
-												break;
-											}
-											case 4: // edit personal information
-											{
-												currentUser->editInformation();
-												cout << endl;
-												usermenu();
-												break;
-											}
-											case 5: // display personal information
-											{
-												currentUser->printInformation();
-												cout << endl;
-												usermenu();
-												break;
-											}
-											case 6:
-											{
-												char usernamesearch[256];
-												cout << "Please enter a user to search." << endl;
-												cin.getline (usernamesearch, 256);
-												string searchusername = usernamesearch;
-												string newusername;
-												newusername = fixString(usernamesearch);
+												cin.clear();
+												cin.ignore(1024,'\n');
 
-												// destructor doesn't work here properly in findUser()
-												bool searchUser = UserListDatabase->findUser(usernamesearch, currentUser);
-												bool isUserFriend = UserListDatabase->checkifFriend(searchusername, username);
-
-												// if the user is true and is your friend then prompt friend menu
-												if (isUserFriend == true){
-													friendMenu(searchusername, username);
-													while(select != 6){
-														cout << "Selection: ";
-														cin >> select;
-														if (cin.fail()){
-															cin.clear();
-															cin.ignore(1024, '\n');
-															cout << "Invalid Selection." << endl;
-															continue;
+												cout << endl;
+												switch (userselection){
+													case 1: // display all wall post
+													{
+														int userin = 0;
+														cout << "Sort WallPosts by: " << endl;
+														cout <<	"      [1] Original Made" << endl;
+														cout << "      [2] Recent Activity" << endl;
+														cin >> userin;
+														if (userin > 2 || userin < 1){
+															cout << "Invalid entry." << endl;
+															break;
 														}
-														cin.clear();
-														cin.ignore(1024,'\n');
+														if (userin == 1){
+															currentUser->getWall()->printWallPosts();
+														}
+														else if (userin == 2){
+															currentUser->getWall()->sort(TimeComparitor);
+															//cout << "?" << endl;
+														}
+														//cout << "?" << endl;
 														cout << endl;
+														usermenu();
+														break;
+													}
+													case 2: // create a new wall post
+													{
+														string newmessage;
+														char messagepost[512];
+														cout << "Please enter a status update to your wall." << endl;
+														cin.getline(messagepost,512);
+														newmessage = messagepost;
+														currentUser->addWallPost(newmessage);
+														cout << endl;
+														usermenu();
+														break;
+													}
+													case 3:	// delete a wallpost
+													{
+														int id;
+														cout << "Please enter the post ID number you wish to remove." << endl;
+														cin >> id;
+														currentUser->removeWallPost(id);
+														break;
+													}
+													case 4: // edit personal information
+													{
+														char tempaddress[512];
+														string zpassword;
+														string zaddress;
+														string zemail;
+														int length;
+														unsigned char encrypt[16];
+														string final;
 
-														switch(select){
-															case 1:	// write on friends wall
-															{
-																char friendpost[1024];
-																std::string post;
+														cout << "Enter your new password." << endl;
+														cin >> zpassword;
+														cout << "Enter your new address." << endl;
+														cin.ignore();		//skips the enter
+														cin.getline(tempaddress,512);
+														zaddress = tempaddress;
+														cout << "Enter your new email." << endl;
+														cin >> zemail;
 
-																UserListDatabase->displayUserWallPost(searchusername);
-																cout << endl;
+														length = zpassword.size();
+														char *code = new char[zpassword.size()+1];
+														strcpy(code, zpassword.c_str());
+														md5((unsigned char*)code, length, encrypt);
 
-																cout << "Please enter an message for " << searchusername << "'s wall." << endl;
-																cout << "<!-- MAX OF 1024 CHARACTERS --!>" << endl;
-																//std::cin.ignore();
-																std::cin.getline(friendpost,1024);
-																post = friendpost;
+														for (int j = 0; j <16; j++){
+															final += convertIntToHex(encrypt[j]);
+														}
 
-																if (post != ""){
-																	UserListDatabase->postFriendWall(post, searchusername, username);
-																	cout << "Success" << endl;
+
+														currentUser->editInformation(final,zaddress,zemail);
+
+
+														cout << "Information List: Do not share this information." << endl;
+														cout << "------------------------------------------------" << endl;
+														cout << "Username: " << username << endl;
+														cout << "Password: " << zpassword << endl;
+														cout << "Your address is: " << currentUser->getaddress() << endl;
+														cout << "Email: " << currentUser->getemail() << endl;
+
+														delete [] code;
+
+														cout << endl;
+														usermenu();
+														break;
+													}
+													case 5: // display personal information
+													{
+														currentUser->printInformation();
+														cout << endl;
+														usermenu();
+														break;
+													}
+													case 6:
+													{
+														char usernamesearch[256];
+														cout << "Please enter a user to search." << endl;
+														cin.getline (usernamesearch, 256);
+														string searchusername = usernamesearch;
+														string newusername;
+														newusername = fixString(usernamesearch);
+
+														// destructor doesn't work here properly in findUser()
+														bool searchUser = UserListDatabase->findUser(usernamesearch, currentUser);
+														bool isUserFriend = UserListDatabase->checkifFriend(searchusername, username);
+
+														// if the user is true and is your friend then prompt friend menu
+														if (isUserFriend == true){
+															friendMenu(searchusername, username);
+															while(select != 6){
+																cout << "Selection: ";
+																cin >> select;
+																if (cin.fail()){
+																	cin.clear();
+																	cin.ignore(1024, '\n');
+																	cout << "Invalid Selection." << endl;
+																	continue;
 																}
-																else if (post == "" || post == " "){
-																	cout << "You haven't written anything!" << endl;
-																	friendMenu(searchusername, username);
-																	break;
+																cin.clear();
+																cin.ignore(1024,'\n');
+																cout << endl;
+
+																switch(select){
+																	case 1:	// write on friends wall
+																	{
+																		char friendpost[1024];
+																		std::string post;
+
+																		UserListDatabase->displayUserWallPost(searchusername);
+																		cout << endl;
+
+																		cout << "Please enter an message for " << searchusername << "'s wall." << endl;
+																		cout << "<!-- MAX OF 1024 CHARACTERS --!>" << endl;
+																		//std::cin.ignore();
+																		std::cin.getline(friendpost,1024);
+																		post = friendpost;
+
+																		if (post != ""){
+																			UserListDatabase->postFriendWall(post, searchusername, username);
+																			cout << "Success" << endl;
+																		}
+																		else if (post == "" || post == " "){
+																			cout << "You haven't written anything!" << endl;
+																			friendMenu(searchusername, username);
+																			break;
+																		}
+																		cout << endl;
+																		friendMenu(searchusername, username);
+																		break;
+																	}
+																	case 2: // delete your post on friend's wall
+																	{
+																		std::string delid;
+																		UserListDatabase->displayUserWallPost(searchusername);
+																		cout << endl;
+																		cout << "Which post would you like to delete?" << endl;
+																		cout << "Please note that you can only delete posts you are author of." << endl;
+																		cout << "Enter 'c' to cancel." << endl;
+																		cin >> delid;
+
+																		if (delid == "c"){
+																			cout << "<!------ Action canceled. ------!>" << endl;
+																		}
+																		else if (delid != "c"){
+																			UserListDatabase->deleteFriendPost(delid ,newusername, username);
+																		}
+
+																		cout << endl;
+																		friendMenu(searchusername, username);
+																		break;
+																	}
+																	case 3: // comment on friend's wallpost
+																	{
+																		std::string comid;
+
+																		UserListDatabase->displayUserWallPost(searchusername);
+																		cout << endl;
+																		cout << "Which post would you like to comment on?" << endl;
+																		cout << "Enter 'c' to cancel." << endl;
+																		cin >> comid;
+																		if (comid == "c"){
+																			cout << "<!------ Action canceled. ------!>" << endl;
+																		}
+																		else if (comid != "c"){
+																			UserListDatabase->commentFriendWallPost(comid, searchusername, username);
+																		}
+																		cout << endl;
+																		friendMenu(searchusername, username);
+																		break;
+																	}
+																	case 4: // delete comment on friend's wallpost
+																	{
+																		std::string delid;
+																		std::string delidtwo;
+
+																		UserListDatabase->displayUserWallPost(searchusername);
+																		cout << endl;
+																		cout << "Please select the post with the comment you want to delete." << endl;
+																		cout << "Please note that you can only delete posts you are author of." << endl;
+																		cout << "Enter 'c' to cancel." << endl;
+																		cin >> delid;
+																		if (delid == "c"){
+																			cout << "<!------ Action canceled. ------!>" << endl;
+																			cout << endl;
+																			friendMenu(searchusername, username);
+																			break;
+																		}
+																		cout << "Please enter the comment id which you'd like to delete." << endl;
+																		cin >> delidtwo;
+
+																		if (delid == "c" || delidtwo == "c"){
+																			cout << "<!------ Action canceled. ------!>" << endl;
+																		}
+																		else if (delid != "c" && delidtwo != "c"){
+																			UserListDatabase->deleteCommentonFriendWall(delid, delidtwo, searchusername, username);
+																		}
+
+
+																		cout << endl;
+																		friendMenu(searchusername, username);
+																		break;
+																	}
+																	case 5:
+																	{
+																		cout << "I told you not to click this...." << endl;
+																		cout << "This is reserved for some other function." << endl;
+
+																		for (int i=0; i <100; i++){
+																			cout << "I will not click this button in the future." << endl;
+																		}
+
+																		cout << endl;
+																		friendMenu(searchusername, username);
+																		break;
+																	}
+																	case 6:
+																	{
+
+																		cout << endl;
+																		friendMenu(searchusername, username);
+																		break;
+																	}
+																	default:
+																	{
+																		cout << " *--------------------------------*" << endl;
+																		cout << " |        Invalid choice.         |" << endl;
+																		cout << " *--------------------------------*" << endl;
+																		cout << endl;
+																		break;
+																	}
 																}
-																cout << endl;
-																friendMenu(searchusername, username);
-																break;
-															}
-															case 2: // delete your post on friend's wall
-															{
-																std::string delid;
-																UserListDatabase->displayUserWallPost(searchusername);
-																cout << endl;
-																cout << "Which post would you like to delete?" << endl;
-																cout << "Please note that you can only delete posts you are author of." << endl;
-																cout << "Enter 'c' to cancel." << endl;
-																cin >> delid;
-
-																if (delid == "c"){
-																	cout << "<!------ Action canceled. ------!>" << endl;
-																}
-																else if (delid != "c"){
-																	UserListDatabase->deleteFriendPost(delid ,newusername, username);
-																}
-
-																cout << endl;
-																friendMenu(searchusername, username);
-																break;
-															}
-															case 3: // comment on friend's wallpost
-															{
-																std::string comid;
-
-																UserListDatabase->displayUserWallPost(searchusername);
-																cout << endl;
-																cout << "Which post would you like to comment on?" << endl;
-																cout << "Enter 'c' to cancel." << endl;
-																cin >> comid;
-																if (comid == "c"){
-																	cout << "<!------ Action canceled. ------!>" << endl;
-																}
-																else if (comid != "c"){
-																	UserListDatabase->commentFriendWallPost(comid, searchusername, username);
-																}
-																cout << endl;
-																friendMenu(searchusername, username);
-																break;
-															}
-															case 4: // delete comment on friend's wallpost
-															{
-																std::string delid;
-																std::string delidtwo;
-
-																UserListDatabase->displayUserWallPost(searchusername);
-																cout << endl;
-																cout << "Please select the post with the comment you want to delete." << endl;
-																cout << "Please note that you can only delete posts you are author of." << endl;
-																cout << "Enter 'c' to cancel." << endl;
-																cin >> delid;
-																if (delid == "c"){
-																	cout << "<!------ Action canceled. ------!>" << endl;
-																	cout << endl;
-																	friendMenu(searchusername, username);
-																	break;
-																}
-																cout << "Please enter the comment id which you'd like to delete." << endl;
-																cin >> delidtwo;
-
-																if (delid == "c" || delidtwo == "c"){
-																	cout << "<!------ Action canceled. ------!>" << endl;
-																}
-																else if (delid != "c" && delidtwo != "c"){
-																	UserListDatabase->deleteCommentonFriendWall(delid, delidtwo, searchusername, username);
-																}
-
-
-																cout << endl;
-																friendMenu(searchusername, username);
-																break;
-															}
-															case 5:
-															{
-																cout << "I told you not to click this...." << endl;
-																cout << "This is reserved for some other function." << endl;
-
-																for (int i=0; i <100; i++){
-																	cout << "I will not click this button in the future." << endl;
-																}
-
-																cout << endl;
-																friendMenu(searchusername, username);
-																break;
-															}
-															case 6:
-															{
-
-																cout << endl;
-																friendMenu(searchusername, username);
-																break;
-															}
-															default:
-															{
-																cout << " *--------------------------------*" << endl;
-																cout << " |        Invalid choice.         |" << endl;
-																cout << " *--------------------------------*" << endl;
-																cout << endl;
-																break;
 															}
 														}
+														if (searchUser == true && isUserFriend == true){
+															cout << "User "<< searchusername <<" is already your friend." << endl;
+														}
+														else if (searchUser == true){
+															cout << "User(s) exists." << endl;
+														}
+														else{
+															cout << "User(s) does not exist." << endl;
+														}
+														cout << endl;
+														usermenu();
+														break;
 													}
-												}
-												if (searchUser == true && isUserFriend == true){
-													cout << "User "<< searchusername <<" is already your friend." << endl;
-												}
-												else if (searchUser == true){
-													cout << "User(s) exists." << endl;
-												}
-												else{
-													cout << "User(s) does not exist." << endl;
-												}
-												cout << endl;
-												usermenu();
-												break;
-											}
-											case 7:
-											{
-												string friendname;
-												cout << "Please enter the name of the user you'd like to add as a friend." << endl;
-												cin >> friendname;
-												User* friendUser = UserListDatabase->checkUser(friendname);
-												bool checkUser = UserListDatabase->validUser(friendname);
-												bool isUserFriend = UserListDatabase->checkifFriend(friendname, username);
-												if (checkUser == true){
-													if (friendUser->getusername() == currentUser->getusername()){
-														cout << "You cannot add yourself as a friend! Don't be a loner. Go out and make friends!" << endl;
+													case 7:
+													{
+														string friendname;
+														cout << "Please enter the name of the user you'd like to add as a friend." << endl;
+														cin >> friendname;
+														User* friendUser = UserListDatabase->checkUser(friendname);
+														bool checkUser = UserListDatabase->validUser(friendname);
+														bool isUserFriend = UserListDatabase->checkifFriend(friendname, username);
+														if (checkUser == true){
+															if (friendUser->getusername() == currentUser->getusername()){
+																cout << "You cannot add yourself as a friend! Don't be a loner. Go out and make friends!" << endl;
+															}
+															else if (isUserFriend == true){
+																cout << "You are already friends with this person!" << endl;
+															}
+															else{
+																currentUser->addFriend(friendUser);
+																friendUser->addPendingFriend(currentUser);
+																cout << "Success: Friend request added." << endl;
+															}
+														}
+														else {
+															cout << "No user exists." << endl;
+														}
+														break;
 													}
-													else if (isUserFriend == true){
-														cout << "You are already friends with this person!" << endl;
+													case 8:
+													{
+														currentUser->displayFriends();
+														cout << endl;
+														usermenu();
+														break;
 													}
-													else{
-														currentUser->addFriend(friendUser);
-														friendUser->addPendingFriend(currentUser);
-														cout << "Success: Friend request added." << endl;
+													case 9:
+													{
+														string userinput;
+														bool yes;
+
+														cout << "Here are your current friends." << endl;
+														currentUser->displayFriends();
+
+														cout << "Please enter the name you would like to remove." << endl;
+														cin >> userinput;
+
+														yes = currentUser->removeFriend(userinput);
+														if (yes == true){
+															UserListDatabase->removeFromFriend(userinput, username);
+														}
+														cout << endl;
+														usermenu();
+														break;
 													}
-												}
-												else {
-													cout << "No user exists." << endl;
-												}
-												break;
-											}
-											case 8:
-											{
-												currentUser->displayFriends();
-												cout << endl;
-												usermenu();
-												break;
-											}
-											case 9:
-											{
-												string userinput;
-												bool yes;
-
-												cout << "Here are your current friends." << endl;
-												currentUser->displayFriends();
-
-												cout << "Please enter the name you would like to remove." << endl;
-												cin >> userinput;
-
-												yes = currentUser->removeFriend(userinput);
-												if (yes == true){
-													UserListDatabase->removeFromFriend(userinput, username);
-												}
-												cout << endl;
-												usermenu();
-												break;
-											}
-											case 10:
-											{
-												currentUser->displayPendingFriends();
-												if (currentUser->pendingEmpty() == true){
-													cout << "No pending friends." << endl;
-													cout << endl;
-												}
-												else{
-													std::string userinput;
-													std::cout << "Please enter the name you would like to ACCEPT from your pending friend requests." << std::endl;
-													std::cout << "Press c to cancel." << std::endl;
-													std::cout << "Entry: ";
-													std::cin >> userinput;
+													case 10:
+													{
+														currentUser->displayPendingFriends();
+														if (currentUser->pendingEmpty() == true){
+															cout << "No pending friends." << endl;
+															cout << endl;
+														}
+														else{
+															std::string userinput;
+															std::cout << "Please enter the name you would like to ACCEPT from your pending friend requests." << std::endl;
+															std::cout << "Press c to cancel." << std::endl;
+															std::cout << "Entry: ";
+															std::cin >> userinput;
 
 
-													currentUser->acceptFriendRequest(userinput);
-													currentUser->removePendingRequest();
-													UserListDatabase->displayFriendsFriend(userinput);
-												}
-												usermenu();
+															currentUser->acceptFriendRequest(userinput);
+															currentUser->removePendingRequest();
+															UserListDatabase->displayFriendsFriend(userinput);
+														}
 
-												break;
+
+														usermenu();
+														break;
+													}
+													case 11:
+													{
+														UserListDatabase->exportUserDatabase();
+														//cout << "> Database exported." << endl << endl;
+														cout << ">> You have successfully been logged out." << endl;
+														cout << endl;
+														main();
+														break;
+													}
+													default:
+													{
+														cout << " *--------------------------------*" << endl;
+														cout << " |        Invalid choice.         |" << endl;
+														cout << " *--------------------------------*" << endl;
+														cout << endl;
+														break;
+													}
+												} // end switch
+											} // end while
+											return userselection;
+										} // if statement
+											else {
+												cout << "*-----------------------------------------*" << endl;
+												cout << "| Error: User does not exist in database. |" << endl;
+												cout << "*-----------------------------------------*" << endl;
 											}
-											case 11:
-											{
-												UserListDatabase->exportUserDatabase();
-												//cout << "> Database exported." << endl << endl;
-												cout << ">> You have successfully been logged out." << endl;
-												cout << endl;
-												main();
-												break;
-											}
-											default:
-											{
-												cout << " *--------------------------------*" << endl;
-												cout << " |        Invalid choice.         |" << endl;
-												cout << " *--------------------------------*" << endl;
-												cout << endl;
-												break;
-											}
-										} // end switch
-									} // end while
-									return userselection;
-								} // if statement
-									else {
-										cout << "*-----------------------------------------*" << endl;
-										cout << "| Error: User does not exist in database. |" << endl;
-										cout << "*-----------------------------------------*" << endl;
-									}
-									break;
+											menu();
+											break;
 								} // end case 1
 						// Create user function
 							case 2:
@@ -503,7 +700,41 @@ int main(){
 									if (existingUser == NULL){
 										User *tempUser = new User();
 										tempUser->setusername(name);
-										UserListDatabase->addUser(*tempUser);
+
+										char tempaddress[512];
+										string zpassword;
+										string zaddress;
+										string zemail;
+										int length;
+									    unsigned char encrypt[16];
+									    string final;
+
+
+										cout << "Enter your new password." << endl;
+										cin >> zpassword;
+										cout << "Enter your new address." << endl;
+										cin.ignore();		//skips the enter
+										cin.getline(tempaddress,512);
+										zaddress = tempaddress;
+										cout << "Enter your new email." << endl;
+										cin >> zemail;
+
+										length = zpassword.size();
+										char *code = new char[zpassword.size()+1];
+										strcpy(code, zpassword.c_str());
+										md5((unsigned char*)code, length, encrypt);
+
+									    for (int j = 0; j <16; j++){
+									        final += convertIntToHex(encrypt[j]);
+									    }
+
+									// FOR PRINTING
+									/*  for (i = 0; i < 16; i++){
+											fprintf(stderr, "%2.2x", encrypt[i]);
+										}
+									*/
+										UserListDatabase->addUser(*tempUser, final, zaddress, zemail);
+									    delete [] code;
 									}
 									else{
 										cout << endl;

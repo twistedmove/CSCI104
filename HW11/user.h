@@ -20,7 +20,7 @@ class User{
 		void addWallPost(std::string wallmessage);
 		void removeWallPost(int id);
 		void printInformation();
-		void editInformation();
+		void editInformation(std::string, std::string, std::string);
 		Wall* getWall();
 
 		void importWall(std::string array[]);
@@ -39,6 +39,9 @@ class User{
 		void setfriendlist(std::string);
 		void setpendinglist(std::string);
 		std::string getusername();
+		std::string getaddress();
+		std::string getemail();
+		std::string getpassword();
 		std::string getfriendlist();
 		std::string getpendinglist();
 

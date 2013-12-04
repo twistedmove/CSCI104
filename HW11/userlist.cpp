@@ -238,9 +238,9 @@ void UserList::completeList(){
 	}
 }
 
-void UserList::addUser(User& u){
+void UserList::addUser(User& u, std::string p, std::string a, std::string e){
 	std::cout << "Please create your new credentials." << std::endl;
-	u.editInformation();
+	u.editInformation(p,a,e);
 	UserLinkList->push_back(u);
 }
 
@@ -256,6 +256,20 @@ User* UserList::checkUser(std::string username){
 		}
 	}
 		return NULL;
+}
+
+bool UserList::checkPassword(std::string p, std::string u){
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if (u == (*i).getusername()){
+			if ((*i).getpassword() == p){
+				return true;
+			}
+			else{
+				break;
+			}
+		}
+	}
+	return false;
 }
 
 void UserList::removeUser(User* todelete){

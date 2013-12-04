@@ -47,8 +47,8 @@ void Heap<T>::remove(bool(*POINTER)(WallPost*, WallPost*)){
 	if (_size > 1){
 		swap(0,_size-1);
 		_item->remove(_size-1);
-		trickleDown(0, POINTER);
 		_size--;
+		trickleDown(0, POINTER);
 	}
 	else if (_size == 1){
 		_item->remove(0);
@@ -107,7 +107,7 @@ void Heap<T>::trickleDown(int node, bool(*POINTER)(WallPost*, WallPost*)){
 
 	// finds current node's children and add them to the childArray
 	for (int i=0; i<_d-1; i++){
-		if (childIncrementer > _size){
+		if (childIncrementer >= _size){
 			break;
 		}
 		else{
@@ -148,7 +148,7 @@ int Heap<T>::findLargestChildIndex(T childArray[], int sizeChildArray, int first
 	int biggestChildIndex = 0;
 
 	for (int i = 0; i<sizeChildArray; i++){
-		if (biggestChild < childArray[i]){
+		if (POINTER(biggestChild, childArray[i])){
 			biggestChild = childArray[i];
 			biggestChildIndex = firstChildIndex+i;
 		}
@@ -166,7 +166,7 @@ int Heap<T>::findSmallestChildIndex(T childArray[], int sizeChildArray, int firs
 	int smallestChildIndex = 0;
 
 	for (int i = 0; i<sizeChildArray; i++){
-		if (smallestChild > childArray[i]){
+		if (POINTER(smallestChild, childArray[i])){
 			smallestChild = childArray[i];
 			smallestChildIndex = firstChildIndex+i;
 		}
