@@ -286,15 +286,18 @@ int main(){
 											char *tcode = new char[userpword.size()+1];
 											strcpy(tcode, userpword.c_str());
 											md5((unsigned char*)tcode, tlength, tencrypt);
+											delete [] tcode;
+
 											for (int j = 0; j <16; j++){
 												tfinal += convertIntToHex(tencrypt[j]);
 											}
 											bool validPass = UserListDatabase->checkPassword(tfinal, username);
 
+
 											if (currentUser != NULL && validPass == false){
 												cout << "Invalid Password." << endl;
 												menu();
-												delete [] tcode;
+
 												break;
 											}
 											else if (currentUser != NULL && validPass == true){
