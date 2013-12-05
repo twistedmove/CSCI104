@@ -402,6 +402,20 @@ void UserList::deleteCommentonFriendWall(std::string postid, std::string postidt
 
 }
 
+std::string UserList::checkChampion(int& chpoints){
+	int max = 0;
+	std::string champion = "COMPUTER";
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if ((*i).getpoints() > max){
+			max = (*i).getpoints();
+			champion = (*i).getusername();
+		}
+	}
+
+	chpoints = max;
+	return champion;
+}
+
 
 bool UserList::checkifFriend(std::string f, std::string cur){
 	bool one = false;

@@ -339,9 +339,12 @@ int playHangman(vector<string> wordList){
 	userguess[length] = '\0';
 
 	while (attempts != 7){
+		cout << "Guess and input a letter! Don't kill the man." << endl;
+		cout << "<!------    YOU HAVE 7 ATTEMPTS!    ------>" << endl;
+		cout << endl;
 		drawMan(attempts);
 		cout << userguess << endl;
-		cout << "Guess and input a letter! Don't kill the man." << endl;
+		cout << endl;
 		cin >> guess;
 		guess = tolower(guess);
 
@@ -908,8 +911,13 @@ int main(){
 													case 13:
 													{
 														int points;
+														int champpoints;
+														string champ;
 														points = playHangman(wordList);
 														currentUser->setpoints(points);
+														champ = UserListDatabase->checkChampion(champpoints);
+														cout << "Leader: " << champ << " with most correct guesses of: " << champpoints << endl;
+
 														main();
 														break;
 													}

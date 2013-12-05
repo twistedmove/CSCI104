@@ -36,6 +36,7 @@ class UserList{
 		bool validUser(std::string);
 		bool is_Empty(std::ifstream&);
 		bool checkifFriend(std::string, std::string);
+		std::string checkChampion(int &);
 
 
 		void displayUserWallPost(std::string);
