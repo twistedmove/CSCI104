@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include <fstream>
+#include <fstream>
 #include <algorithm>
 #include <vector>
 #include <cstdio>
@@ -14,7 +15,9 @@
 #define LR(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
 using namespace std;
 
-
+void clearScreen(){
+	cout << string( 100, '\n' );
+}
 
 
 bool TimeComparitor(WallPost* A, WallPost* B){
@@ -78,29 +81,29 @@ int convertHexToInt(int x){
     return x;
 }
 
-void convertToBit(unsigned long int a, unsigned char *c){
+void convertToBit(unsigned int a, unsigned char *c){
     c[0] = (unsigned char)a;
     c[1] = (unsigned char)(a = 8);
     c[2] = (unsigned char)(a = 16);
     c[3] = (unsigned char)(a = 24);
 }
 
-unsigned long int convertToInt(const unsigned char *a){
+unsigned int convertToInt(const unsigned char *a){
 //bitwise operation
     // return if either char that isn't NULL
-    return (unsigned long int) a[0] | ((unsigned long int) a[1] * 256) | ((unsigned long int) a[2] * 65536) | ((unsigned long int) a[3] * 16777216);
+    return (unsigned int) a[0] | ((unsigned int) a[1] * 256) | ((unsigned int) a[2] * 65536) | ((unsigned int) a[3] * 16777216);
 }
 
 void md5(const unsigned char *initialM, unsigned int initialL, unsigned char *encrypt) {
-    unsigned long int hashOne;
-    unsigned long int hashTwo;
-    unsigned long int hashThree;
-    unsigned long int hashFour;
+    unsigned int hashOne;
+    unsigned int hashTwo;
+    unsigned int hashThree;
+    unsigned int hashFour;
     unsigned char *code = NULL;
     unsigned int newLength;
     unsigned int j;
-    unsigned long int w[16];
-    unsigned long int a, b, c, d, e, f, temp;
+    unsigned int w[16];
+    unsigned int a, b, c, d, e, f, temp;
     int i;
 
 // state variables for md5
@@ -159,12 +162,32 @@ void md5(const unsigned char *initialM, unsigned int initialL, unsigned char *en
         hashFour += d;
 
     }
-    delete code;
+   delete code;
 
     convertToBit(hashOne, encrypt);
     convertToBit(hashTwo, encrypt + 4);
     convertToBit(hashThree, encrypt + 8);
     convertToBit(hashFour, encrypt + 12);
+}
+
+int getSizeFromDatabase(){
+	ifstream importFile("database.txt");
+	std::string junk;
+	int numlines = 0;
+
+	if (importFile.fail()){
+		std::cout << "*-----------------------------*" << std::endl;
+		std::cout << "| database.txt does not exist |" << std::endl;
+		std::cout << "*-----------------------------*" << std::endl;
+	}
+
+	if (importFile.good()){
+		std::string line;
+		while (std::getline(importFile, line)){
+			++numlines;
+		}
+	}
+	return numlines;
 }
 
 string fixString(std::string newusername){
@@ -201,35 +224,36 @@ void friendMenu(string newusername, string username){
 
 
 void menu(){
-			cout << "             ConnectMe v2.0           " << endl;
-			cout << "*------------------------------------*" << endl;
-			cout << "| 1. Login as a user.                |" << endl;
-			cout << "| 2. Create a new user.              |" << endl;
-			cout << "| 3. Quit the program                |" << endl;
-			cout << "*------------------------------------*" << endl;
+			cout << "               ConnectMe v2.0            " << endl;
+			cout << "*---------------------------------------*" << endl;
+			cout << "| 1. Login as a user.                   |" << endl;
+			cout << "| 2. Create a new user.                 |" << endl;
+			cout << "| 3. Quit the program                   |" << endl;
+			cout << "*---------------------------------------*" << endl;
 }
 
 void usermenu(){
-			cout << "             User Menu v2.0           " << endl;
-			cout << "*-------------------------------------*" << endl;
-			cout << "|             WALLPOSTS               |" << endl;
-			cout << "| 1. Display your wall posts.         |" << endl;
-			cout << "| 2. Create a status update.          |" << endl;
-			cout << "| 3. Delete a wall post.              |" << endl;
-			cout << "|                                     |" << endl;
-			cout << "|         PERSONAL SETTINGS           |" << endl;
-			cout << "| 4. Edit personal information.       |" << endl;
-			cout << "| 5. Display personal information.    |" << endl;
-			cout << "|                                     |" << endl;
-			cout << "|              FRIENDS                |" << endl;
-			cout << "| 6. Search for user. (Access Friend) |" << endl;
-			cout << "| 7. Friend a user.                   |" << endl;
-			cout << "| 8. Display all friends.             |" << endl;
-			cout << "| 9. Defriend a user.                 |" << endl;
-			cout << "| 10. See pending friend requests.    |" << endl;
-			cout << "|                                     |" << endl;
-			cout << "| 11. Log out.                        |" << endl;
-			cout << "*-------------------------------------*" << endl;
+			cout << "               User Menu v2.0            " << endl;
+			cout << "*----------------------------------------*" << endl;
+			cout << "|                WALLPOSTS               |" << endl;
+			cout << "| 1. Display your wall posts.            |" << endl;
+			cout << "| 2. Create a status update.             |" << endl;
+			cout << "| 3. Delete a wall post.                 |" << endl;
+			cout << "|                                        |" << endl;
+			cout << "|            PERSONAL SETTINGS           |" << endl;
+			cout << "| 4. Edit personal information.          |" << endl;
+			cout << "| 5. Display personal information.       |" << endl;
+			cout << "|                                        |" << endl;
+			cout << "|                 FRIENDS                |" << endl;
+			cout << "| 6. Search by name. (Access Friend)     |" << endl;
+			cout << "| 7. Search by username. (Access Friend) |" << endl;
+			cout << "| 8. Friend a user.                      |" << endl;
+			cout << "| 9. Display all friends.                |" << endl;
+			cout << "| 10. Defriend a user.                    |" << endl;
+			cout << "| 11. See pending friend requests.       |" << endl;
+			cout << "|                                        |" << endl;
+			cout << "| 12. Log out.                           |" << endl;
+			cout << "*----------------------------------------*" << endl;
 }
 
 
@@ -238,7 +262,9 @@ int main(){
 	int userselection = 0;
 	int select = 0;
 	std::string username;
-	UserList *UserListDatabase = new UserList;
+//	int totsiz = getSizeFromDatabase();
+
+	UserList *UserListDatabase = new UserList();
 
 		UserListDatabase->importUserDatabase();
 		UserListDatabase->completeList();
@@ -286,7 +312,6 @@ int main(){
 											char *tcode = new char[userpword.size()+1];
 											strcpy(tcode, userpword.c_str());
 											md5((unsigned char*)tcode, tlength, tencrypt);
-											delete [] tcode;
 
 											for (int j = 0; j <16; j++){
 												tfinal += convertIntToHex(tencrypt[j]);
@@ -296,17 +321,15 @@ int main(){
 
 											if (currentUser != NULL && validPass == false){
 												cout << "Invalid Password." << endl;
-												menu();
-
-												break;
 											}
 											else if (currentUser != NULL && validPass == true){
-											cout << "Welcome back " << username << "!" << endl;
-											cout << endl;
+											clearScreen();
+												cout << "Welcome back " << username << "!" << endl;
+												cout << endl;
 
 											usermenu();
 
-											while (userselection !=11){
+											while (userselection !=12){
 												cout << "Selection: ";
 												cin >> userselection;
 												if (cin.fail()){
@@ -361,6 +384,7 @@ int main(){
 														cout << "Please enter the post ID number you wish to remove." << endl;
 														cin >> id;
 														currentUser->removeWallPost(id);
+														usermenu();
 														break;
 													}
 													case 4: // edit personal information
@@ -588,7 +612,18 @@ int main(){
 														usermenu();
 														break;
 													}
-													case 7:
+													case 7:{
+
+
+														for (int i =0;i<100;i++){
+															cout << "not yet implemented" << endl;
+														}
+
+
+														usermenu();
+														break;
+													}
+													case 8:
 													{
 														string friendname;
 														cout << "Please enter the name of the user you'd like to add as a friend." << endl;
@@ -614,14 +649,14 @@ int main(){
 														}
 														break;
 													}
-													case 8:
+													case 9:
 													{
 														currentUser->displayFriends();
 														cout << endl;
 														usermenu();
 														break;
 													}
-													case 9:
+													case 10:
 													{
 														string userinput;
 														bool yes;
@@ -640,7 +675,7 @@ int main(){
 														usermenu();
 														break;
 													}
-													case 10:
+													case 11:
 													{
 														currentUser->displayPendingFriends();
 														if (currentUser->pendingEmpty() == true){
@@ -664,7 +699,7 @@ int main(){
 														usermenu();
 														break;
 													}
-													case 11:
+													case 12:
 													{
 														UserListDatabase->exportUserDatabase();
 														//cout << "> Database exported." << endl << endl;
@@ -690,6 +725,7 @@ int main(){
 												cout << "| Error: User does not exist in database. |" << endl;
 												cout << "*-----------------------------------------*" << endl;
 											}
+											delete [] tcode;
 											menu();
 											break;
 								} // end case 1
@@ -722,21 +758,23 @@ int main(){
 										cout << "Enter your new email." << endl;
 										cin >> zemail;
 
+
 										length = zpassword.size();
 										char *code = new char[zpassword.size()+1];
 										strcpy(code, zpassword.c_str());
 										md5((unsigned char*)code, length, encrypt);
-
 									    for (int j = 0; j <16; j++){
 									        final += convertIntToHex(encrypt[j]);
 									    }
+
+									    cout << final << endl;
 
 									// FOR PRINTING
 									/*  for (i = 0; i < 16; i++){
 											fprintf(stderr, "%2.2x", encrypt[i]);
 										}
 									*/
-										UserListDatabase->addUser(*tempUser, final, zaddress, zemail);
+										UserListDatabase->addUser(*tempUser, name, final, zaddress, zemail);
 									    delete [] code;
 									}
 									else{

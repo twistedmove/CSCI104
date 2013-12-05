@@ -11,6 +11,7 @@
 #include "userlist.h"
 #include "user.h"
 #include "linklist.h"
+#include "hash.h"
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
@@ -20,6 +21,7 @@
 
 UserList::UserList(){
 	UserLinkList = new LinkedList<User>;
+//	UserHashList = new Hashtable<std::string, User>(a * 2000 + 3000);
 }
 
 UserList::~UserList(){
@@ -238,10 +240,10 @@ void UserList::completeList(){
 	}
 }
 
-void UserList::addUser(User& u, std::string p, std::string a, std::string e){
-	std::cout << "Please create your new credentials." << std::endl;
+void UserList::addUser(User& u, std::string us, std::string p, std::string a, std::string e){
 	u.editInformation(p,a,e);
 	UserLinkList->push_back(u);
+//	UserHashList->add(us, u);
 }
 
 void UserList::deleteUser(User& u){
@@ -259,17 +261,19 @@ User* UserList::checkUser(std::string username){
 }
 
 bool UserList::checkPassword(std::string p, std::string u){
+	bool retval = false;
 	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
 		if (u == (*i).getusername()){
 			if ((*i).getpassword() == p){
-				return true;
+				retval = true;
+				break;
 			}
 			else{
 				break;
 			}
 		}
 	}
-	return false;
+	return retval;
 }
 
 void UserList::removeUser(User* todelete){

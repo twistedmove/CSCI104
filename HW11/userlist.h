@@ -13,13 +13,14 @@
 #include "user.h"
 #include "linklist.h"
 #include "wall.h"
+#include "hash.h"
 
 class UserList{
 	public:
 		UserList();
 		~UserList();
 
-		void addUser(User&, std::string, std::string, std::string);
+		void addUser(User&, std::string, std::string, std::string, std::string);
 		void deleteUser(User&);
 		void removeUser(User* todelete);
 		void completeList();
@@ -47,6 +48,7 @@ class UserList{
 
 	private:
 		 LinkedList<User> *UserLinkList;
+//		 Hashtable<std::string, User> *UserHashList;
 };
 
 

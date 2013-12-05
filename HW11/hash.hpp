@@ -11,8 +11,8 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "hash.h"
 #include <exception>
+#include "hash.h"
 
 template <class KeyType, class ValueType>
 Node<KeyType, ValueType>::Node(KeyType key, ValueType value){
