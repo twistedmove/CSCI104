@@ -7,6 +7,8 @@
 #include <vector>
 #include <cstdio>
 #include <sstream>
+#include <ctime>
+#include <cstdlib>
 #include "linklist.h"
 #include "wall.h"
 #include "wallpost.h"
@@ -15,9 +17,11 @@
 #define LR(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
 using namespace std;
 
+
 void clearScreen(){
 	cout << string( 100, '\n' );
 }
+
 
 
 bool TimeComparitor(WallPost* A, WallPost* B){
@@ -203,6 +207,187 @@ string fixString(std::string newusername){
 	return s;
 }
 
+bool is_Empty(std::ifstream& file){
+    return file.peek() == std::ifstream::traits_type::eof();
+}
+
+
+void importHangmanWord(vector<string> &wordList){
+	std::ifstream importFile("hangman.txt");
+		if (importFile.fail()){
+			std::cout << "<!-- hangman.txt does not exist. --!>" << std::endl;
+		}
+			std::string temp;
+
+			if (!is_Empty(importFile)){
+				if (importFile.good()){
+					while(!importFile.eof()){
+							getline(importFile, temp, '\n');
+							wordList.push_back(temp);
+					}
+				}
+			}
+		importFile.close();
+}
+
+
+void drawMan(int a){
+
+	if(a == 1)
+		{
+			cout << endl;
+			cout <<"   *----*   "<<endl;
+			cout <<"   |    |   "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"  --------- "<<endl<<endl;
+		}
+	else if(a == 2)
+		{
+			cout << endl;
+			cout <<"   *----*   "<<endl;
+			cout <<"   |    |   "<<endl;
+			cout <<"   |    o   "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"  --------- "<<endl<<endl;
+		}
+	else if(a == 3)
+		{
+			cout << endl;
+			cout <<"   *----*   "<<endl;
+			cout <<"   |    |   "<<endl;
+			cout <<"   |    o   "<<endl;
+			cout <<"   |    |   "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"  --------- "<<endl<<endl;
+		}
+	else if(a == 4)
+		{
+			cout << endl;
+			cout <<"   *----*   "<<endl;
+			cout <<"   |    |   "<<endl;
+			cout <<"   |    o   "<<endl;
+			cout <<"   |   /|   "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"  --------- "<<endl<<endl;
+		}
+	else if(a == 5)
+		{
+			cout << endl;
+			cout <<"   *----*   "<<endl;
+			cout <<"   |    |   "<<endl;
+			cout <<"   |    o   "<<endl;
+			cout <<"   |   /|\\  "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"  --------- "<<endl<<endl;
+		}
+	else if(a == 6)
+		{
+			cout << endl;
+			cout <<"   *----*   "<<endl;
+			cout <<"   |    |   "<<endl;
+			cout <<"   |    o   "<<endl;
+			cout <<"   |   /|\\  "<<endl;
+			cout <<"   |   /    "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"  --------- "<<endl<<endl;
+		}
+	else if(a == 7)
+		{
+			cout << endl;
+			cout <<"   *----*   "<<endl;
+			cout <<"   |    |   "<<endl;
+			cout <<"   |    o   "<<endl;
+			cout <<"   |   /|\\  "<<endl;
+			cout <<"   |   / \\  "<<endl;
+			cout <<"   |        "<<endl;
+			cout <<"  --------- "<<endl<<endl;
+		}
+}
+
+int playHangman(vector<string> wordList){
+	string stringword;
+	char userchoice[40];
+	char userguess[40];
+	int attempts = 1;
+	int selector = 0;
+	int length = 0;
+	int counter = 0;
+	char guess;
+	int points = 0;
+
+
+
+	srand(time(NULL));
+	selector = rand() % wordList.size();
+	stringword = wordList[selector];
+	for (int k =0; k<stringword.size(); k++){
+		userchoice[k] = stringword[k];
+	}
+	length = stringword.size();
+
+	for (int i=0; i<length; i++){
+		userguess[i] = '-';
+	}
+	userguess[length] = '\0';
+
+	while (attempts != 7){
+		drawMan(attempts);
+		cout << userguess << endl;
+		cout << "Guess and input a letter! Don't kill the man." << endl;
+		cin >> guess;
+		guess = tolower(guess);
+
+		for (int j=0; j<length; j++){
+			if (userchoice[j] == guess){
+				userguess[j] = guess;
+				counter = 1;
+
+				if(stringword == userguess){
+					cout << "Winner winner chicken dinner." << endl;
+					points = 20;
+					return points;
+				}
+			}
+		}
+
+		if (counter == 0){
+			cout << "You're killing Kenny!" << endl;
+			attempts++;
+		}
+
+		counter = 0;
+	}
+
+	drawMan(attempts);
+	// Ascii generator with minor changes to fit code: http://patorjk.com/software/taag/#p=display&f=Big&t=Type%20Something%20
+	cout << "   ____  __  __  _____ _  __     ______  _    _   _  _______ _      _      ______ _____    _  ________ _   _ _   ___     __ __     ______  _    _   ____    _       _       _	 " << endl;
+	cout << "  / __ \\|  \\/  |/ ____| | \\ \\   / / __ \\| |  | | | |/ /_   _| |    | |    |  ____|  __ \\  | |/ /  ____| \\ | | \\ | \\ \\   / / \\ \\   / / __ \\| |  | | |  _ \\/\\| |/\\ /\\| |/\\ /\\| |/\\ " << endl;
+	cout << " | |  | | \\  / | |  __| |  \\ \\_/ / |  | | |  | | | ' /  | | | |    | |    | |__  | |  | | | ' /| |__  |  \\| |  \\| |\\ \\_/ /   \\ \\_/ / |  | | |  | | | |_) \\ ` ' / \\ ` ' / \\ ` ' / " << endl;
+	cout << " | |  | | |\\/| | | |_ | |   \\   /| |  | | |  | | |  <   | | | |    | |    |  __| | |  | | |  < |  __| | . ` | . ` | \\   /     \\   /| |  | | |  | | |  _ <_     _|_     _|_     _|" << endl;
+	cout << " | |__| | |  | | |__| |_|    | | | |__| | |__| | | . \\ _| |_| |____| |____| |____| |__| | | . \\| |____| |\\  | |\\  |  | |_      | | | |__| | |__| | | |_) / , . \\ / , . \\ / , . \\ " << endl;
+	cout << "  \\____/|_|  |_|\\_____(_)    |_|  \\____/ \\____/  |_|\\_\\_____|______|______|______|_____/  |_|\\_\\______|_| \\_|_| \\_|  |_(_)     |_|  \\____/ \\____/  |____/\\/|_|\\/ \\/|_|\\/ \\/|_|\\/ " << endl;
+
+	cout << endl << endl;
+
+	cout << "REFERENCE TO SOUTH PARK, if you don't get it." << endl;
+	cout << "We need our easter eggs, laughs sometimes when coding ridiculous amounts of code." << endl;
+	cout << "Anyway, here's your answer....." << endl;
+	cout << "ANSWER: " << stringword << endl;
+	cout << endl << endl;
+
+	return points;
+}
+
+
+
 void friendMenu(string newusername, string username){
 
 	cout << "You are " << username << endl;
@@ -224,36 +409,39 @@ void friendMenu(string newusername, string username){
 
 
 void menu(){
-			cout << "               ConnectMe v2.0            " << endl;
-			cout << "*---------------------------------------*" << endl;
-			cout << "| 1. Login as a user.                   |" << endl;
-			cout << "| 2. Create a new user.                 |" << endl;
-			cout << "| 3. Quit the program                   |" << endl;
-			cout << "*---------------------------------------*" << endl;
+	cout << "               ConnectMe v2.0            " << endl;
+	cout << "*---------------------------------------*" << endl;
+	cout << "| 1. Login as a user.                   |" << endl;
+	cout << "| 2. Create a new user.                 |" << endl;
+	cout << "| 3. Quit the program                   |" << endl;
+	cout << "*---------------------------------------*" << endl;
 }
 
 void usermenu(){
-			cout << "               User Menu v2.0            " << endl;
-			cout << "*----------------------------------------*" << endl;
-			cout << "|                WALLPOSTS               |" << endl;
-			cout << "| 1. Display your wall posts.            |" << endl;
-			cout << "| 2. Create a status update.             |" << endl;
-			cout << "| 3. Delete a wall post.                 |" << endl;
-			cout << "|                                        |" << endl;
-			cout << "|            PERSONAL SETTINGS           |" << endl;
-			cout << "| 4. Edit personal information.          |" << endl;
-			cout << "| 5. Display personal information.       |" << endl;
-			cout << "|                                        |" << endl;
-			cout << "|                 FRIENDS                |" << endl;
-			cout << "| 6. Search by name. (Access Friend)     |" << endl;
-			cout << "| 7. Search by username. (Access Friend) |" << endl;
-			cout << "| 8. Friend a user.                      |" << endl;
-			cout << "| 9. Display all friends.                |" << endl;
-			cout << "| 10. Defriend a user.                    |" << endl;
-			cout << "| 11. See pending friend requests.       |" << endl;
-			cout << "|                                        |" << endl;
-			cout << "| 12. Log out.                           |" << endl;
-			cout << "*----------------------------------------*" << endl;
+	cout << "               User Menu v2.0            " << endl;
+	cout << "*----------------------------------------*" << endl;
+	cout << "|                WALLPOSTS               |" << endl;
+	cout << "| 1. Display your wall posts.            |" << endl;
+	cout << "| 2. Create a status update.             |" << endl;
+	cout << "| 3. Delete a wall post.                 |" << endl;
+	cout << "|                                        |" << endl;
+	cout << "|            PERSONAL SETTINGS           |" << endl;
+	cout << "| 4. Edit personal information.          |" << endl;
+	cout << "| 5. Display personal information.       |" << endl;
+	cout << "|                                        |" << endl;
+	cout << "|                 FRIENDS                |" << endl;
+	cout << "| 6. Search by name. (Access Friend)     |" << endl;
+	cout << "| 7. Search by username. (Access Friend) |" << endl;
+	cout << "| 8. Friend a user.                      |" << endl;
+	cout << "| 9. Display all friends.                |" << endl;
+	cout << "| 10. Defriend a user.                   |" << endl;
+	cout << "| 11. See pending friend requests.       |" << endl;
+	cout << "|                                        |" << endl;
+	cout << "| 12. Log out.                           |" << endl;
+	cout << "|                                        |" << endl;
+	cout << "|                                        |" << endl;
+	cout << "| 13. Game Center.                       |" << endl;
+	cout << "*----------------------------------------*" << endl;
 }
 
 
@@ -262,6 +450,11 @@ int main(){
 	int userselection = 0;
 	int select = 0;
 	std::string username;
+	std::vector<std::string> wordList;
+	importHangmanWord(wordList);
+
+
+
 //	int totsiz = getSizeFromDatabase();
 
 	UserList *UserListDatabase = new UserList();
@@ -614,11 +807,15 @@ int main(){
 													}
 													case 7:{
 
+														string searchusername;
+														cout << "Please enter the username (case sensitive) of the user you'd like to search." << endl;
+														cin >> searchusername;
+														User* sUser = UserListDatabase->searchByUserName(searchusername);
+														if (sUser == NULL){
 
-														for (int i =0;i<100;i++){
-															cout << "not yet implemented" << endl;
+														}else if(sUser != NULL){
+															cout << "User exists!" << endl;
 														}
-
 
 														usermenu();
 														break;
@@ -705,6 +902,14 @@ int main(){
 														//cout << "> Database exported." << endl << endl;
 														cout << ">> You have successfully been logged out." << endl;
 														cout << endl;
+														main();
+														break;
+													}
+													case 13:
+													{
+														int points;
+														points = playHangman(wordList);
+														currentUser->setpoints(points);
 														main();
 														break;
 													}

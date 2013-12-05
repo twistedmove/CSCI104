@@ -36,14 +36,17 @@ class User{
 		void setpassword(std::string);
 		void setaddress(std::string);
 		void setemail(std::string);
+		void setpoints(int);
 		void setfriendlist(std::string);
 		void setpendinglist(std::string);
+		int getpoints();
 		std::string getusername();
 		std::string getaddress();
 		std::string getemail();
 		std::string getpassword();
 		std::string getfriendlist();
 		std::string getpendinglist();
+
 
 		void displayPendingFriends();
 		void displayFriends();
@@ -60,11 +63,16 @@ class User{
 
 		void exportComments(std::ofstream *);
 
+
+
+
+
 	private:
 		std::string username;
 		std::string password;
 		std::string address;
 		std::string email;
+		int points;
 
 		Wall *UserWall;
 		LinkedList<User*> *Friends;

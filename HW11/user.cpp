@@ -17,7 +17,8 @@
 #include <fstream>
 #include <iterator>
 #include <iostream>
-
+#include <ctime>
+#include <cstdlib>
 
 
 
@@ -25,6 +26,7 @@ User::User(){
 	UserWall = new Wall;
 	Friends = new LinkedList<User*>;
 	PendingFriends = new LinkedList<User*>;
+	points = 0;
 }
 
 
@@ -145,6 +147,10 @@ void User::setemail(std::string newemail){
 	email = newemail;
 }
 
+void User::setpoints(int a){
+	points += a;
+}
+
 void User::addFriend(User* newFriend){
 	Friends->push_back(newFriend);
 }
@@ -163,6 +169,10 @@ std::string User::getemail(){
 
 std::string User::getpassword(){
 	return password;
+}
+
+int User::getpoints(){
+	return points;
 }
 
 void User::displayFriends(){
@@ -321,5 +331,11 @@ std::string User::getfriendlist(){
 std::string User::getpendinglist(){
 	return pendinglist;
 }
+
+
+
+
+
+
 
 #endif /* USER_CPP_ */

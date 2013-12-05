@@ -30,6 +30,7 @@ class UserList{
 		void importUserDatabase();
 
 		User* checkUser(std::string);
+		User* searchByUserName(std::string);
 		bool checkPassword(std::string, std::string);
 		bool findUser(std::string, User*);
 		bool validUser(std::string);
@@ -48,7 +49,7 @@ class UserList{
 
 	private:
 		 LinkedList<User> *UserLinkList;
-//		 Hashtable<std::string, User> *UserHashList;
+		 Hashtable<std::string, User*> *UserHashList;
 };
 
 

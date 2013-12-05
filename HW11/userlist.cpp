@@ -21,11 +21,12 @@
 
 UserList::UserList(){
 	UserLinkList = new LinkedList<User>;
-//	UserHashList = new Hashtable<std::string, User>(a * 2000 + 3000);
+	UserHashList = new Hashtable<std::string, User*>(50000);
 }
 
 UserList::~UserList(){
 	delete UserLinkList;
+	delete UserHashList;
 }
 
 
@@ -174,6 +175,7 @@ void UserList::importUserDatabase(){
 				}
 
 			UserLinkList->push_back(*newUser);
+			UserHashList->add(userinformationarray[0], newUser);
 
 	//		std::cout << newUser->getusername() << " ::: " << newUser->getfriendlist() << " :::: " << std::endl;
 
@@ -243,7 +245,7 @@ void UserList::completeList(){
 void UserList::addUser(User& u, std::string us, std::string p, std::string a, std::string e){
 	u.editInformation(p,a,e);
 	UserLinkList->push_back(u);
-//	UserHashList->add(us, u);
+	UserHashList->add(us, &u);
 }
 
 void UserList::deleteUser(User& u){
@@ -258,6 +260,15 @@ User* UserList::checkUser(std::string username){
 		}
 	}
 		return NULL;
+}
+
+User* UserList::searchByUserName(std::string username){
+	try{
+	return UserHashList->get(username);
+	} catch (std::logic_error &e){
+		std::cout << e.what() << std::endl;
+	}
+	return NULL;
 }
 
 bool UserList::checkPassword(std::string p, std::string u){

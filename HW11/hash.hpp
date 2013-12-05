@@ -37,6 +37,11 @@ Hashtable<KeyType, ValueType>::Hashtable(int initialsize){
 	_loadfactor = 0;
 }
 
+template <class KeyType, class ValueType>
+Hashtable<KeyType, ValueType>::~Hashtable(){
+	this->destroy();
+}
+
 
 template <class KeyType, class ValueType>
 void Hashtable<KeyType, ValueType>::checkLoad(){

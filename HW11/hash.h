@@ -25,6 +25,7 @@ template <class KeyType, class ValueType>
 class Hashtable {
 	public:
 		Hashtable (int initialSize);
+		~Hashtable();
 
 		void add (const KeyType & key, const ValueType & value);
 		void remove (const KeyType & key);
