@@ -1,20 +1,25 @@
 
-Tina`e6081018590810181c08101840081018`1234 McClintock Ave`tina@usc.edu
+Bryan`2368162421181624638162425581624`1234 Elm Dr.`bryan@usc.edu`1
+
+Tina|George|
+
+
+Tina`44816244816246816241581624`1234 Palm Dr.`tina@usc.edu`0
+
+Bryan|
+
+
+David`081624133816241178162413981624`1213 McClintock Rd.`david@usc.edu`0
 
 
 
 
-George`eb0810183a081018bf0810189e081018`1234 Los Angeles Dr`george@usc.edu
+Stephen`1538162417681624678162413381624`1244 Willow St.`stephen@usc.edu`0
+
+George|
 
 
+George`2358162458816241918162415881624`1211 Clifford Dr.`george@ucla.edu`0
 
-
-Bryan`ec081018d30810183f081018ff081018`1234 Rexford`bryan@usc.edu
-
-
-
-
-Tom`60081018b0081018e5081018c7081018`1234 Elm St`tom@usc.edu
-
-
+Bryan|Stephen|Stephen|
 

@@ -19,6 +19,7 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <sstream>
 
 
 
@@ -86,6 +87,12 @@ Wall* User::getWall(){
 	return UserWall;
 }
 
+std::string User::intToString(int number){
+	std::stringstream ss;
+	ss << number;
+	return ss.str();
+}
+
 void User::printInformation(){
 	std::cout << "Information List: Do not share this information." << std::endl;
 	std::cout << "------------------------------------------------" << std::endl;
@@ -105,7 +112,11 @@ void User::editInformation(std::string pword, std::string aress, std::string mai
 
 std::string User::exportprintUser(){
 	std::string tempholder;
-	tempholder = username + "`" + password + "`" + address + "`" + email;
+	std::string strpoints;
+
+	strpoints = intToString(points);
+
+	tempholder = username + "`" + password + "`" + address + "`" + email + "`" + strpoints;
 	return tempholder;
 }
 
@@ -332,9 +343,9 @@ std::string User::getpendinglist(){
 	return pendinglist;
 }
 
-
-
-
+LinkedList<User*> User::returnFriends(){
+	return *Friends;
+}
 
 
 

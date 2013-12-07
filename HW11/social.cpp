@@ -60,15 +60,15 @@ bool addZero(string a){
 
 string convertIntToHex(int x){
     stringstream ss;
-    ss << std::hex << x;
+    ss << std::dec << x;
     string result(ss.str());
-
-    if (result == "0" || result == "1" ||result == "2" ||result == "3" ||result == "4" ||result == "5" ||result == "6" ||result == "7" ||result == "8" ||result == "9"){
-        return '0'+result;
+ /*   if (result == "0" || result == "1" ||result == "2" ||result == "3" ||result == "4" ||result == "5" ||result == "6" ||result == "7" ||result == "8" ||result == "9"){
+    	return "0"+result;
     }
     else if (addZero(result)){
-        return '0'+result;
+        return "0"+result;
     }
+*/
     return result;
 }
 
@@ -355,7 +355,7 @@ int playHangman(vector<string> wordList){
 
 				if(stringword == userguess){
 					cout << "Winner winner chicken dinner." << endl;
-					points = 20;
+					points = 1;
 					return points;
 				}
 			}
@@ -440,10 +440,9 @@ void usermenu(){
 	cout << "| 10. Defriend a user.                   |" << endl;
 	cout << "| 11. See pending friend requests.       |" << endl;
 	cout << "|                                        |" << endl;
-	cout << "| 12. Log out.                           |" << endl;
+	cout << "| 12. Game Center.                       |" << endl;
 	cout << "|                                        |" << endl;
-	cout << "|                                        |" << endl;
-	cout << "| 13. Game Center.                       |" << endl;
+	cout << "| 13. Log out.                           |" << endl;
 	cout << "*----------------------------------------*" << endl;
 }
 
@@ -512,6 +511,7 @@ int main(){
 											for (int j = 0; j <16; j++){
 												tfinal += convertIntToHex(tencrypt[j]);
 											}
+
 											bool validPass = UserListDatabase->checkPassword(tfinal, username);
 
 
@@ -519,13 +519,13 @@ int main(){
 												cout << "Invalid Password." << endl;
 											}
 											else if (currentUser != NULL && validPass == true){
-											clearScreen();
+									//clearScreen();
 												cout << "Welcome back " << username << "!" << endl;
 												cout << endl;
 
 											usermenu();
 
-											while (userselection !=12){
+											while (userselection !=13){
 												cout << "Selection: ";
 												cin >> userselection;
 												if (cin.fail()){
@@ -766,12 +766,7 @@ int main(){
 																	}
 																	case 5:
 																	{
-																		cout << "I told you not to click this...." << endl;
-																		cout << "This is reserved for some other function." << endl;
-
-																		for (int i=0; i <100; i++){
-																			cout << "I will not click this button in the future." << endl;
-																		}
+																		cout << "This does nothing." << endl;
 
 																		cout << endl;
 																		friendMenu(searchusername, username);
@@ -810,15 +805,23 @@ int main(){
 													}
 													case 7:{
 
+														int distance = 0;
 														string searchusername;
 														cout << "Please enter the username (case sensitive) of the user you'd like to search." << endl;
 														cin >> searchusername;
 														User* sUser = UserListDatabase->searchByUserName(searchusername);
 														if (sUser == NULL){
-
 														}else if(sUser != NULL){
 															cout << "User exists!" << endl;
 														}
+
+														try{
+															distance = UserListDatabase->BFS(searchusername, username);
+														} catch (std::logic_error &e){
+															std::cout << e.what() << std::endl;
+														}
+
+														cout << "The distance between you and this user is: " << distance << endl << endl << endl;
 
 														usermenu();
 														break;
@@ -901,15 +904,6 @@ int main(){
 													}
 													case 12:
 													{
-														UserListDatabase->exportUserDatabase();
-														//cout << "> Database exported." << endl << endl;
-														cout << ">> You have successfully been logged out." << endl;
-														cout << endl;
-														main();
-														break;
-													}
-													case 13:
-													{
 														int points;
 														int champpoints;
 														string champ;
@@ -918,6 +912,15 @@ int main(){
 														champ = UserListDatabase->checkChampion(champpoints);
 														cout << "Leader: " << champ << " with most correct guesses of: " << champpoints << endl;
 
+														usermenu();
+														break;
+													}
+													case 13:
+													{
+														UserListDatabase->exportUserDatabase();
+														//cout << "> Database exported." << endl << endl;
+														cout << ">> You have successfully been logged out." << endl;
+														cout << endl;
 														main();
 														break;
 													}

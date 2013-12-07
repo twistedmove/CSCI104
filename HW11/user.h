@@ -47,6 +47,7 @@ class User{
 		std::string getfriendlist();
 		std::string getpendinglist();
 
+		std::string intToString(int);
 
 		void displayPendingFriends();
 		void displayFriends();
@@ -62,6 +63,7 @@ class User{
 		bool isFriend(std::string);
 
 		void exportComments(std::ofstream *);
+		LinkedList<User*> returnFriends();
 
 
 

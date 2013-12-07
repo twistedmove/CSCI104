@@ -166,7 +166,7 @@ void Wall::importComment(std::string array[], int n){
 
 void Wall::exporttoString(std::ofstream * exportFile){
 	for (Iterator<WallPost*> i = UserWallPosts->begin(); i != UserWallPosts->end(); ++i){
-		std::string tempvalue;
+		std::string tempvalue = "";
 		tempvalue = (*i)->exportprintWallPost();
 		*(exportFile) << tempvalue;
 		*(exportFile) << "|";

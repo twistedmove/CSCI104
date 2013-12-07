@@ -46,6 +46,8 @@ class UserList{
 		void displayFriendsFriend(std::string);
 		std::string fixString(std::string);
 		void deleteCommentonFriendWall(std::string, std::string, std::string, std::string);
+		int BFS(std::string, std::string);
+		int BFSLocation(std::string);
 
 
 	private:

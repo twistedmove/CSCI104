@@ -16,7 +16,9 @@
 #include <cstdlib>
 #include <fstream>
 #include <algorithm>
+#include <cstdlib>
 #include <iterator>
+#include <queue>
 
 
 UserList::UserList(){
@@ -86,7 +88,7 @@ void UserList::importUserDatabase(){
 			std::string tempsubpost;
 			std::string tempfriend;
 			std::string temppending;
-			std::string userinformationarray[4];
+			std::string userinformationarray[5];
 			int counter = 0;
 			unsigned long int position = 0;
 
@@ -107,6 +109,8 @@ void UserList::importUserDatabase(){
 				newUser->setpassword(userinformationarray[1]);
 				newUser->setaddress(userinformationarray[2]);
 				newUser->setemail(userinformationarray[3]);
+				int intpoints = std::atoi(userinformationarray[4].c_str());
+				newUser->setpoints(intpoints);
 
 
 			temporary = "";
@@ -415,6 +419,112 @@ std::string UserList::checkChampion(int& chpoints){
 	chpoints = max;
 	return champion;
 }
+
+
+int UserList::BFSLocation(std::string u){
+int loc = 0;
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		loc++;
+		if ((*i).getusername() == u){
+			break;
+		}
+	}
+	return loc;
+}
+
+
+int UserList::BFS(std::string search, std::string currentu){
+	int count = 0;
+	int loc = 0;
+	int n = UserLinkList->size();
+	bool *visited = new bool[n];
+	int *distance = new int[n];
+	User* previous[100000];
+	bool validity = false;
+
+	for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+		if ((*i).getusername() == search){
+			validity = true;
+			break;
+		}
+	}
+
+	for (int i =0; i<n; i++){
+		visited[i] = false;
+		distance[i] = 0;
+	}
+
+
+	std::queue<User*> q;
+
+	if (validity){
+
+		loc = BFSLocation(currentu);
+		visited[loc] = true;
+		distance[loc] = 0;
+
+
+		for (Iterator<User> i = UserLinkList->begin(); i != UserLinkList->end(); ++i){
+			if ((*i).getusername() == currentu){
+				q.push(&(*i));
+			}
+		}
+		while(!q.empty()){
+			User* temp = q.front();
+			int ploc = BFSLocation(temp->getusername());
+			q.pop();
+			LinkedList<User*> tempfriends;
+			tempfriends = temp->returnFriends();
+
+			for (Iterator<User*> j = tempfriends.begin(); j != tempfriends.end(); ++j){
+				int tloc = BFSLocation((*j)->getusername());
+				if (!visited[tloc]){
+					visited[tloc] = true;
+					distance[tloc] = distance[ploc] + 1;
+					previous[tloc] = temp;
+					q.push((*j));
+				}
+			}
+		}
+		int getval = BFSLocation(search);
+//		std::cout << count << std::endl;
+		count = distance[getval];
+//		std::cout << count << std::endl;
+	} else{
+		throw std::logic_error("");
+	}
+
+
+	int cnt = 1;
+	int l = BFSLocation(search);
+	std::cout << search << " > ";
+
+	if(previous[l] != NULL){
+		while (previous[l]->getusername() != currentu){
+			++cnt;
+			std::cout << previous[l]->getusername() << " > ";
+			int f = BFSLocation(previous[l]->getusername());
+			l = f;
+		}
+	} else{
+		cnt = 0;
+		std::cout << "No connections!" << std::endl;
+	}
+	std::cout << currentu << std::endl;
+
+
+	std::queue<User*> empty;
+	std::swap(q, empty);
+//	std::cout << "1" << std::endl;
+	delete [] visited;
+//	std::cout << "2" << std::endl;
+	delete [] distance;
+//	std::cout << "3" << std::endl;
+//	delete [] previous;
+//	std::cout << "4" << std::endl;
+	return cnt;
+}
+
 
 
 bool UserList::checkifFriend(std::string f, std::string cur){
