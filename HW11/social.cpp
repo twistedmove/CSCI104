@@ -9,6 +9,8 @@
 #include <sstream>
 #include <ctime>
 #include <cstdlib>
+#include <cstring>
+#include <string.h>
 #include "linklist.h"
 #include "wall.h"
 #include "wallpost.h"

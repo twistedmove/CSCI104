@@ -1,6 +1,7 @@
 OBJS = wallpostcomments.o wallpost.o wall.o user.o userlist.o social.o
 CC = g++
-CFLAGS += -g -Wall
+CPPFLAGS=-std=c++11 -Wall -g
+#CFLAGS += -g -Wall
 
 all : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o social
