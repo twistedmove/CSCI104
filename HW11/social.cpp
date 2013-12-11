@@ -120,7 +120,7 @@ void md5(const unsigned char *initialM, unsigned int initialL, unsigned char *en
 
     for (newLength = initialL + 1; newLength % (64) != 56; newLength++){};
 
-    code = new unsigned char(newLength + 8);
+    code = new unsigned char[newLength + 8];
     memcpy(code, initialM, initialL);
     code[initialL] = 0x80;
     for (j = initialL + 1; j < newLength; j++){
@@ -168,7 +168,7 @@ void md5(const unsigned char *initialM, unsigned int initialL, unsigned char *en
         hashFour += d;
 
     }
-   delete code;
+   delete [] code;
 
     convertToBit(hashOne, encrypt);
     convertToBit(hashTwo, encrypt + 4);
