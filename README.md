@@ -1,9 +1,11 @@
-USC CS104 Assignments and Lab
-Bryan Chong - 2013
-Professor Kempe
---------
+CS104
+=====
+CSCI104: Data Structures and Object Oriented Design <br>
+Project code snippets for Prof. Kempe's class <br>
+University of Southern California, Fall 2013 
 
-### Assignments
+------
+###Programming Assignments
 1. **Homework One**:  **[ERROR: Recursion, Loops, and Timing][1]**
 2. **Homework Two**:  **[DEBUG: Recursion, Backtracking, and Linked Lists][2]**
 3. **Homework Three**: **[DEBUG: The Social Network: Templates, Linked Lists, Classes][3]**
@@ -17,14 +19,14 @@ Professor Kempe
 11. **Homework Eleven**: **[The Social Network V4: MD5, Hash, Games and Depth First Search][11]**
 
 
-[1]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW1?at=master
-[2]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW2?at=master
-[3]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW3?at=master
-[4]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW4?at=master
-[5]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW5?at=master
-[6]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW6?at=master
-[7]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW7?at=master
-[8]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW8?at=master
-[9]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW9?at=master
-[10]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW10?at=master
-[11]: https://bitbucket.org/bryanchong/cs104_fa2013/src/76401d1bff4c0ea811d95c149c32a85bf609980b/HW11?at=master
+[1]: 
+[2]: 
+[3]: 
+[4]: 
+[5]: 
+[6]: 
+[7]: 
+[8]: 
+[9]: 
+[10]: 
+[11]: 
