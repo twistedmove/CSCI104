@@ -1,4 +1,4 @@
-CS104
+CS104 [![Status](https://rawgit.com/bryan/bryan.github.io/master/images/inactive.svg)](#)
 =====
 CSCI104: Data Structures and Object Oriented Design <br>
 Project code snippets for Prof. Kempe's class <br>
